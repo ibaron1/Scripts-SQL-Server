@@ -1,0 +1,24 @@
+NUMA (Non-Uniform Memory Access) Architecture is a specialized memory architecture for multiprocessor based systems where a set of CPUs on one system memory bus is fixed 
+and another sets of CPUs are on different memory buses and the various processing (computing) nodes are connected by means of a high speed connection. 
+This architecture is in contrast with another computer system architecture SMP (Symmetric Multi-Processing) where all memory access is shared through a single memory bus. 
+
+Normally in a NUMA architecture system, the processors experience very low latencies for accessing the local memory in comparison to the SMP architecture based systems but for accessing the remote memory , the latencies are of relatively higher magnitude. 
+owing to the above description, this type of memory organization architecture has been named as "Non Uniform Memory Access" architecture. 
+
+The NUMA architecture primarily addresses the scalability bottleneck of the SMP architecture in the distributed multiprocessing systems 
+caused by choking of bandwidth of multiple CPUs accessing the same memory bus.
+
+The NUMA architecture based systems are normally cache coherent and are also therefore referred to as ccNUMA. 
+
+Generally, most of the CPU architectures use relatively small but very fast non shared memory to make reference in the vicinity of the memory accesses. 
+This memory, known as cache, in case of the NUMA based architecture is normally localized to the system memory bus. 
+
+The cache coherent NUMA with localized and independent cache for each system bus is much more efficiently managable because it is easier to omit the inconsistencies between 
+the cache and main memory which may arise if the cache is shared across multiple CPU sets in a distributed multiprocessing environment.
+
+Most popular operating systems such as VMS, AIX, HP-UX, Solaris,the current version of Windows XP (SP2) and Windows Server 2003 fully support NUMA systems. 
+
+Some of the current computer systems using NUMA architectures include the multi processor systems based AMD Opteron processor, 
+Intel Itanium systems (generally using Intel E8870 chipsets), HP (Integrity and Superdome) etc.
+
+http://it.toolbox.com/wiki/index.php/NUMA_Architecture

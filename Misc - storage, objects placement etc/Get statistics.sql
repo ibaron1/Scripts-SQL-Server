@@ -1,0 +1,1 @@
+DBCC SHOW_STATISTICS ("DatabaseLog",PK_DatabaseLog_DatabaseLogID)
