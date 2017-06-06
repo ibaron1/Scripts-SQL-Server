@@ -1,0 +1,1 @@
+select load_factor, * from sys.dm_os_schedulers

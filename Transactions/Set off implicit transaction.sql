@@ -1,0 +1,1 @@
+set implicit_transactions off
