@@ -1,0 +1,23 @@
+
+/*
+OK, back to SQL Server.  Assume the following for a single UMS:  SPID 51 is currently running.  
+The Runnable Queue consists of SPIDs 60, 55, 87 & 79.  The Waiter list includes SPIDS 55, 84 & 72.  
+The Work queue is empty.  Now, assume the running SPID 51 needs physical IO.  
+Two things will happen.  SPID 51 is moved to the wait list until the IO is completed and the next session_id 
+in the runnable queue, SPID 60, begins to run.  When the IO is complete, SPID 51 is moved to the bottom of 
+the runnable queue which now consists of SPIDS 55, 87, 79 & 51.
+
+Given this scenario, the total amount of time waiting consists of resource and signal waits.  
+The time waiting for a resource is shown as Resource Waits.  
+The time waiting in the runnable queue for CPU is called Signal Waits.  
+In SQL Server 2005, waits are shown in the Dynamic Management View (DMV) sys.dm_os_wait_stats.  
+The query to measure cpu pressure is as follows:
+
+---- Total waits are wait_time_ms
+*/
+
+Select signal_wait_time_ms=sum(signal_wait_time_ms)
+          ,'%signal (cpu) waits' = cast(100.0 * sum(signal_wait_time_ms) / sum (wait_time_ms) as numeric(20,2))
+          ,resource_wait_time_ms=sum(wait_time_ms - signal_wait_time_ms)
+          ,'%resource waits'= cast(100.0 * sum(wait_time_ms - signal_wait_time_ms) / sum (wait_time_ms) as numeric(20,2))
+From sys.dm_os_wait_stats

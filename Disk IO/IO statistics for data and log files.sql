@@ -1,0 +1,1 @@
+select DB_NAME(database_id),file_name(file_id),* from sys.dm_io_virtual_file_stats(-1,-1)

@@ -1,0 +1,9 @@
+
+The problem with different collations between server and db is as is mention before that temp tables will default be created with the server collation. 
+That will make any comparisons on character fields between a temp table and a regular table fail. 
+This can be avoided by the developers of the 3rd-party apps by using COLLATE database_default for character fields of temp tables.
+
+create table #Tmp(Col1 nvarchar(50) COLLATE database_default)
+I come from the "other" side. I'm not a DBA but a 3rd party software developer and I think that it is my responsibility 
+to build my app to work in an environment where the collation is different between database and server. 
+It is also my responsibility that my app will work with case sensitive collation.

@@ -1,0 +1,17 @@
+What are good io_stall numbers from sys.dm_io_virtual_file_stats?
+
+http://social.msdn.microsoft.com/Forums/en-US/sqldatabaseengine/thread/61c4290e-6263-41ae-ae7a-b45e8e9fe395
+
+I've seen some great queries posted here to look at the io_stall numbers using sys.dm_io_virtual_file_stats.  
+If I divide the stall ms by the read/write counts, I get a number that looks like ms/io. 
+ Is that valid, I mean, should it look like the ms/read numbers one gets from perfmon?  If so, I'm in trouble!
+So, in summary, what kind of numbers are good for io_stall / (num_of_read + num_of_writes)?
+And yes, of course "it depends", but assume typical OLTP workload of small rows.  
+But should the numbers be in the 10ms range, or 100ms because it actually includes some internal SQL time, or what?
+
+IO Stalls are a sign of disk subsystem bottlenecks on the server.  The lower the better is the general rule of thumb for these.  
+What is acceptible depends a lot on your SLA's and what associated wait types are being reported as the top waits in dm_os_wait_stats 
+when you order by the wait_time_ms descending and remove the typical system based waits. 
+
+
+
