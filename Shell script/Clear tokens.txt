@@ -1,0 +1,80 @@
+pa179c2n7 /ms/user/a/amaresh 15$ /ms/dist/aurora/bin/kdestroy
+pa179c2n7 /ms/user/a/amaresh 16$
+pa179c2n7 /ms/user/a/amaresh 16$
+pa179c2n7 /ms/user/a/amaresh 16$ tokens
+ 
+Tokens held by the Cache Manager:
+ 
+   --End of list--
+pa179c2n7 /ms/user/a/amaresh 17$
+pa179c2n7 /ms/user/a/amaresh 17$
+pa179c2n7 /ms/user/a/amaresh 17$ touch 1234
+touch: creating `1234': Permission denied
+pa179c2n7 /ms/user/a/amaresh 18$
+pa179c2n7 /ms/user/a/amaresh 18$
+pa179c2n7 /ms/user/a/amaresh 18$ kinit
+Password for amaresh@is1.morgan:
+pa179c2n7 /ms/user/a/amaresh 19$
+pa179c2n7 /ms/user/a/amaresh 19$
+pa179c2n7 /ms/user/a/amaresh 19$ touch 1234
+pa179c2n7 /ms/user/a/amaresh 20$
+pa179c2n7 /ms/user/a/amaresh 20$
+pa179c2n7 /ms/user/a/amaresh 20$ tokens
+ 
+Tokens held by the Cache Manager:
+ 
+User's (AFS ID 85038) tokens for afs@a.hl.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.dp.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.pm.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.cg.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@b.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@c.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@d.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@m.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@n.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@q.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@w.ln.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@b.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@m.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@n.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@q.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ca.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ls.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.pf.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.cc.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.jg.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.bs.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.sf.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.sr.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.kw.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ct.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ec.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.cv.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.cs.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ti.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@z.sa.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.hq.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@b.hq.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@b.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.id.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@d.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@e.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@f.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@q.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@v.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@z.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@b.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@c.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@m.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@n.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@q.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@w.tk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@a.pp.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@u.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@w.ny.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@w.hk.ms.com [Expires Apr 27 10:32]
+User's (AFS ID 85038) tokens for afs@c.ny.ms.com [Expires Apr 27 10:32]

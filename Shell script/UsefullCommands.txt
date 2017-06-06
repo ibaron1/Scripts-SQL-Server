@@ -1,0 +1,5 @@
+#### (1) to resize xterm window after manually resizing it to use the max number of columns (characters)
+eval $(resize)
+
+#### (2) to set the max columns number place it in .profile  - like this : 
+####     export COLUMNS=400

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ConnectionConfiguration>
+
+  <ConnectionInfo AssetClass="CREDIT">
+    <Conn Environment="DEV" ServerName="NYKDCM05831V05A\FAL_MAIN1_DEV" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="EMIRDEV" ServerName="NYKPCM05575V05D\NF2_MAIN4_DEV" DBName="FALCON_SRF_Credit_EMIR" CacheName="FALCON_SRF_Cache_EMIR" PortNumber="10504"/>
+    <Conn Environment="QA" ServerName="NYKPCM05777V05A\FAL_MAIN3_UAT" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="QA2" ServerName="NYKDCM05831V05B\FAL_MAIN2_DEV" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="UAT" ServerName="FalconCreditRates-NYK-db-UAT\FAL_MAIN2_UAT" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="REGRESSION" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="PROD" ServerName="FalconCredit-NYK-db-prod\FAL_MAIN1_LIVE" DBName="FALCON_SRF_Credit" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+  </ConnectionInfo>
+
+
+  <ConnectionInfo AssetClass="RATES">
+    <Conn Environment="DEV" ServerName="NYKDCM05831V05A\FAL_MAIN1_DEV" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="EMIRDEV" ServerName="NYKPCM05575V05D\NF2_MAIN4_DEV" DBName="FALCON_SRF_Rates_EMIR" CacheName="FALCON_SRF_Cache_EMIR" PortNumber="10504"/>
+    <Conn Environment="JFSADEV" ServerName="NYKPCM05575V05D\NF2_MAIN4_DEV" DBName="FALCON_SRF_Rates_JFSA" CacheName="FALCON_SRF_Cache" PortNumber="10504"/>
+    <Conn Environment="QA" ServerName="NYKPCM05746V05B\EQ_MAIN1_UAT" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="QA2" ServerName="NYKDCM05831V05B\FAL_MAIN2_DEV" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="UAT" ServerName="FalconCreditRates-NYK-db-UAT\FAL_MAIN2_UAT" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRFRates_Cache" PortNumber="10502"/>
+    <Conn Environment="JFSAUAT" ServerName="NYKPCM05777V05B\FAL_MAIN4_UAT" DBName="FALCON_SRF_Rates" CacheName="" PortNumber="10502"/>
+    <Conn Environment="REGRESSION" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="PROD" ServerName="FalconRates-NYK-db-prod\FAL_MAIN2_LIVE" DBName="FALCON_SRF_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="JFSAPROD" ServerName="NYKPCM05743V05B\FAL_MAIN2_LIVE" DBName="FALCON_SRF_JFSA_Rates" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+  </ConnectionInfo>
+
+  <ConnectionInfo AssetClass="FX">
+    <Conn Environment="DEV" ServerName="NYKDCM05831V05A\FAL_MAIN1_DEV" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="JFSADEV" ServerName="NYKDCM05831V05A\FAL_MAIN1_DEV" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="QA" ServerName="NYKPCM05777V05A\FAL_MAIN3_UAT" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="QA2" ServerName="NYKDCM05831V05B\FAL_MAIN2_DEV" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="SIT" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_FX_Cache" PortNumber="10501"/>
+    <Conn Environment="UAT" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache_P2" PortNumber="10501"/>
+    <Conn Environment="REGRESSION" ServerName="NYKPCM05701V05B\FAL_MAIN2_UAT" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_Cache_P2" PortNumber="10502"/>
+    <Conn Environment="PROD" ServerName="NYKPCM05780V05A\FAL_MAIN3_LIVE" DBName="FALCON_SRF_FX" CacheName="FALCON_SRF_FX_Cache" PortNumber="10501"/>
+  </ConnectionInfo>
+
+  <ConnectionInfo AssetClass="EQ">
+    <Conn Environment="DEV" ServerName="NYKDCM05831V05A\FAL_MAIN1_DEV" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="SIT" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache" PortNumber="10501"/>
+    <Conn Environment="QA" ServerName="NYKPCM05746V05B\EQ_MAIN1_UAT" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="QA2" ServerName="NYKDCM05831V05B\FAL_MAIN2_DEV" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache" PortNumber="10502"/>
+    <Conn Environment="UAT" ServerName="NYKPCM05701V05A\FAL_MAIN1_UAT" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache_P2" PortNumber="10501"/>
+    <Conn Environment="REGRESSION" ServerName="NYKPCM05701V05B\FAL_MAIN2_UAT" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_Cache_P2" PortNumber="10502"/>
+    <Conn Environment="PROD" ServerName="NYKPCM05821V05B\EQ_MAIN1_LIVE" DBName="FALCON_SRF_EQ" CacheName="FALCON_SRF_EQ_Cache" PortNumber="10502"/>
+  </ConnectionInfo>
+
+</ConnectionConfiguration>
