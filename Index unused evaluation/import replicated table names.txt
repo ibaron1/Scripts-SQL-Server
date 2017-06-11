@@ -1,0 +1,60 @@
+create table CUSTOM..repTbl
+(name varchar(30))
+
+bcp CUSTOM..repTbl in replicated_tbls.txt -Up489920 -SGLSRD -c
+
+select ltrim(name) name
+into CUSTOM..repTbl1
+from CUSTOM..repTbl
+
+drop table CUSTOM..repTbl
+
+CUSTOM..sp_rename repTbl1, repTbl 
+
+/**** get replicated tbls ****/
+
+select name '' 
+from GPS..sysobjects o
+where exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
+select name '' 
+from GPS3..sysobjects o
+where exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
+select name '' 
+from GPS4..sysobjects o
+where exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
+/**** get not replicated tbls ****/
+
+select o.name 
+from GPS..sysobjects o
+where not exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
+
+select o.name '' 
+from GPS3..sysobjects o
+where not exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
+select o.name '' 
+from GPS4..sysobjects o
+where not exists 
+(select '1' from CUSTOM..repTbl
+where name = ltrim(o.name))
+and type='U'
+
