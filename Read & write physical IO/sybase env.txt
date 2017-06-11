@@ -1,0 +1,7 @@
+PATH=/usr/local/sybase/OCS-12_0/bin:/usr/openwin/bin:$PATH
+LD_LIBRARY_PATH=/u/sybase/OCS-12_0/lib
+SYBASE=/usr/local/sybase
+export PATH
+export LD_LIBRARY_PATH
+export SYBASE
+

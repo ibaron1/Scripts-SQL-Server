@@ -1,0 +1,4572 @@
+From: <Saved by Windows Internet Explorer 7>
+Subject: Jose Barreto's Blog : SQL Server 2008 Partitioning
+Date: Fri, 19 Jun 2009 16:33:41 -0400
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01C9F0FB.B4CF45B0"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/josebda/archive/2009/03/19/sql-server-2008-partitioning.aspx
+
+=EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" =
+"http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<HTML lang=3Den xml:lang=3D"en" =
+xmlns=3D"http://www.w3.org/1999/xhtml"><HEAD><TITLE>Jose Barreto's Blog =
+: SQL Server 2008 Partitioning</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8">
+<META content=3D"SQL Server" name=3Dkeywords>
+<META=20
+content=3D'Here are some notes on "SQL Server 2008 Partitioning" I took =
+while attending an advanced class on SQL Server taught by Kimberly Tripp =
+( http://sqlskills.com/AboutKimberlyLTripp.asp ). Please note that, =
+although these notes were taken during the class,'=20
+name=3Ddescription>
+<META content=3D"MSHTML 6.00.6000.16825" name=3DGENERATOR><LINK=20
+href=3D"http://blogs.technet.com/josebda/pingback.aspx" =
+rel=3Dpingback><LINK=20
+media=3Dscreen=20
+href=3D"http://blogs.technet.com/Themes/Blogs/luxinterior/style/style.css=
+"=20
+type=3Dtext/css rel=3Dstylesheet><LINK media=3Dprint=20
+href=3D"/Themes/Blogs/luxinterior/style/print.css" type=3Dtext/css=20
+rel=3Dstylesheet><LINK media=3Dscreen=20
+href=3D"http://blogs.technet.com/Themes/Blogs/luxinterior/style/light_sid=
+ebar_left_wide.css"=20
+type=3Dtext/css rel=3Dstylesheet><LINK href=3D"/favicon.ico" =
+type=3Dimage/ico=20
+rel=3D"shortcut icon"><LINK title=3D"Jose Barreto's Blog (RSS 2.0)"=20
+href=3D"http://blogs.technet.com/josebda/rss.xml" =
+type=3Dapplication/rss+xml=20
+rel=3Dalternate><LINK title=3D"Jose Barreto's Blog (Atom 1.0)"=20
+href=3D"http://blogs.technet.com/josebda/atom.xml" =
+type=3Dapplication/atom+xml=20
+rel=3Dalternate><LINK title=3D"SQL Server 2008 Partitioning Comment RSS =
+(RSS 2.0)"=20
+href=3D"http://blogs.technet.com/josebda/commentrss.aspx?PostID=3D3215534=
+"=20
+type=3Dapplication/rss+xml rel=3Dalternate>
+<SCRIPT =
+src=3D"http://blogs.technet.com/Utility/global.js?Version=3D2.1.61025.2" =
+
+type=3Dtext/javascript></SCRIPT>
+</HEAD>
+<BODY>
+<FORM id=3DaspnetForm name=3DaspnetForm=20
+action=3D/josebda/archive/2009/03/19/sql-server-2008-partitioning.aspx=20
+method=3Dpost>
+<DIV><INPUT id=3D__EVENTTARGET type=3Dhidden name=3D__EVENTTARGET> =
+<INPUT=20
+id=3D__EVENTARGUMENT type=3Dhidden name=3D__EVENTARGUMENT> <INPUT =
+id=3D__VIEWSTATE=20
+type=3Dhidden=20
+value=3D/wEPDwUKLTMyNjg0MDc1MWQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tle=
+V9fFgEFI2N0bDAwJF8kY3RsMDAkXyRicyRfJHdzJF8kU2VhcmNoQm94rkRXbV1z5ohWybmugg=
+6l5bfTy3M=3D=20
+name=3D__VIEWSTATE> </DIV>
+<SCRIPT type=3Dtext/javascript>
+//<![CDATA[
+var theForm =3D document.forms['aspnetForm'];
+if (!theForm) {
+    theForm =3D document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() !=3D false)) {
+        theForm.__EVENTTARGET.value =3D eventTarget;
+        theForm.__EVENTARGUMENT.value =3D eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</SCRIPT>
+
+<SCRIPT language=3Djavascript=20
+src=3D"http://blogs.technet.com/Utility/telligent_web_ui/1_0_3/Telligent_=
+Modal.js"=20
+type=3Dtext/javascript></SCRIPT>
+
+<SCRIPT language=3Djavascript type=3Dtext/javascript>=0A=
+// <![CDATA[=0A=
+Telligent_Modal.Configure('/utility/loading.htm',['Modal'],['ModalTitle']=
+,['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalM=
+ask'],100);=0A=
+// ]]>=0A=
+</SCRIPT>
+
+<DIV id=3Dmasthead>
+<DIV id=3Dwelcome align=3Dright>Welcome to TechNet Blogs <A=20
+id=3Dctl00___ctl00___duw1_ac1___Login=20
+href=3D"http://blogs.technet.com/login.aspx?ReturnUrl=3D%2fjosebda%2farch=
+ive%2f2009%2f03%2f19%2fsql-server-2008-partitioning.aspx">Sign=20
+in</A> | <A id=3Dctl00___ctl00___duw1_ac1___Register=20
+href=3D"http://blogs.technet.com/user/CreateUser.aspx?ReturnUrl=3D/josebd=
+a/archive/2009/03/19/sql-server-2008-partitioning.aspx">Join</A>=20
+| <A id=3Dctl00___ctl00___duw1_Faq1=20
+href=3D"http://blogs.technet.com/languages/en-US/docs/faq.aspx">Help</A> =
+
+</DIV></DIV>
+<DIV id=3Dwrapper>
+<DIV id=3Dcontainer>
+<DIV id=3Dheader>
+<DIV id=3Dtitle>
+<H1><A class=3Dheadermaintitle id=3Dctl00___ctl00___bt___BlogTitle=20
+href=3D"http://blogs.technet.com/josebda/default.aspx">Jose Barreto's=20
+Blog</A></H1>
+<P id=3Dtagline>These are the top-of-mind issues and random thoughts of =
+Jose=20
+Barreto, a member of the Storage Solutions Division at Microsoft=20
+Corporation.</P></DIV>
+<DIV id=3DSubscriptionsSideBar>
+<DIV id=3Dsubscriptions>
+<UL>
+  <LI><A id=3Dctl00___ctl00___bt___s___rss=20
+  href=3D"http://blogs.technet.com/josebda/rss.xml">RSS 2.0</A>=20
+  <LI><A id=3Dctl00___ctl00___bt___s___atom=20
+  href=3D"http://blogs.technet.com/josebda/atom.xml">Atom 1.0</A>=20
+</LI></UL></DIV></DIV>
+<DIV id=3Dnav>
+<UL>
+  <LI><A id=3Dctl00___ctl00___bt___home=20
+  href=3D"http://blogs.technet.com/josebda/default.aspx">Home</A>=20
+  <LI><A id=3Dctl00___ctl00___bt___Aboutlink1=20
+  href=3D"http://blogs.technet.com/josebda/about.aspx">About</A>=20
+  <LI><A id=3Dctl00___ctl00___bt___Contactlink1=20
+  href=3D"http://blogs.technet.com/josebda/contact.aspx">Email</A>=20
+</LI></UL></DIV></DIV>
+<DIV id=3Dcontentwrapper>
+<DIV id=3Dsidebar-a>
+<DIV id=3DTasksSideBar></DIV>
+<DIV id=3DSearchSideBar>
+<DIV id=3Dsearch>
+<H3>Search</H3><INPUT class=3DsearchBox =
+id=3Dctl00___ctl00___bs___ws___SearchBox=20
+onkeydown=3DKeyDownHandlerctl00___ctl00___bs___ws___SearchButton(event); =
+
+name=3Dctl00$_$ctl00$_$bs$_$ws$_$SearchBox> <A=20
+id=3Dctl00___ctl00___bs___ws___SearchButton=20
+href=3D"javascript:__doPostBack('ctl00$_$ctl00$_$bs$_$ws$_$SearchButton',=
+'')">Go</A>=20
+</DIV><BR></DIV>
+<DIV id=3DTagSideBar>
+<H3>Tags</H3>
+<UL>
+  <UL class=3DSidebarTagCloud>
+    <LI class=3DTag5><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/activex/default.asp=
+x"=20
+    rel=3Dtag>activex</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/applications/defaul=
+t.aspx"=20
+    rel=3Dtag>applications</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Blob/default.aspx" =
+
+    rel=3Dtag>Blob</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Brazil/default.aspx=
+"=20
+    rel=3Dtag>Brazil</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Clustering/default.=
+aspx"=20
+    rel=3Dtag>Clustering</A>=20
+    <LI class=3DTag3><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/DFS/default.aspx"=20
+    rel=3Dtag>DFS</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/DPM/default.aspx"=20
+    rel=3Dtag>DPM</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Events/default.aspx=
+"=20
+    rel=3Dtag>Events</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Excel/default.aspx"=
+=20
+    rel=3Dtag>Excel</A>=20
+    <LI class=3DTag5><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/FSCT/default.aspx" =
+
+    rel=3Dtag>FSCT</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Hyper-V/default.asp=
+x"=20
+    rel=3Dtag>Hyper-V</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Indexing/default.as=
+px"=20
+    rel=3Dtag>Indexing</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Interoperability/de=
+fault.aspx"=20
+    rel=3Dtag>Interoperability</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/iSCSI/default.aspx"=
+=20
+    rel=3Dtag>iSCSI</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/ITIL/default.aspx" =
+
+    rel=3Dtag>ITIL</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Management/default.=
+aspx"=20
+    rel=3Dtag>Management</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/NFS/default.aspx"=20
+    rel=3Dtag>NFS</A>=20
+    <LI class=3DTag5><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/outlook/default.asp=
+x"=20
+    rel=3Dtag>outlook</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/PDC/default.aspx"=20
+    rel=3Dtag>PDC</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Search/default.aspx=
+"=20
+    rel=3Dtag>Search</A>=20
+    <LI class=3DTag3><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/security/default.as=
+px"=20
+    rel=3Dtag>security</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Server+Core/default=
+.aspx"=20
+    rel=3Dtag>Server Core</A>=20
+    <LI class=3DTag1><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SharePoint/default.=
+aspx"=20
+    rel=3Dtag>SharePoint</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SIS/default.aspx"=20
+    rel=3Dtag>SIS</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SMB/default.aspx"=20
+    rel=3Dtag>SMB</A>=20
+    <LI class=3DTag1><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SQL+Server/default.=
+aspx"=20
+    rel=3Dtag>SQL Server</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SQL+Server+2008/def=
+ault.aspx"=20
+    rel=3Dtag>SQL Server 2008</A>=20
+    <LI class=3DTag1><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Storage/default.asp=
+x"=20
+    rel=3Dtag>Storage</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/The+Basics/default.=
+aspx"=20
+    rel=3Dtag>The Basics</A>=20
+    <LI class=3DTag1><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Training/default.as=
+px"=20
+    rel=3Dtag>Training</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/VDS/default.aspx"=20
+    rel=3Dtag>VDS</A>=20
+    <LI class=3DTag6><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/virtual+pc/default.=
+aspx"=20
+    rel=3Dtag>virtual pc</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/VSS/default.aspx"=20
+    rel=3Dtag>VSS</A>=20
+    <LI class=3DTag4><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Windows+7/default.a=
+spx"=20
+    rel=3Dtag>Windows 7</A>=20
+    <LI class=3DTag1><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Windows+Server+2008=
+/default.aspx"=20
+    rel=3Dtag>Windows Server 2008</A>=20
+    <LI class=3DTag3><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Windows+Server+2008=
++R2/default.aspx"=20
+    rel=3Dtag>Windows Server 2008 R2</A>=20
+    <LI class=3DTag2><A=20
+    =
+href=3D"http://blogs.technet.com/josebda/archive/tags/Windows+Storage+Ser=
+ver/default.aspx"=20
+    rel=3Dtag>Windows Storage Server</A> </LI></UL></UL></DIV>
+<DIV id=3DNewsSideBar>
+<H3>News</H3>
+<DIV id=3Dnews>
+<P>All messages posted to this blog are provided "AS IS" with no =
+warranties, and=20
+confer no rights. </P>
+<P>Information on unreleased products are subject to change without =
+notice. </P>
+<P>Dates related to unreleased products are estimates and are subject to =
+change=20
+without notice. </P>
+<P>The content of this site are personal opinions and might not =
+represent the=20
+Microsoft Corporation view. </P>
+<P>The information contained in this blog represents my view on the =
+issues=20
+discussed as of the date of publication.</P>
+<P>You should not consider older, out-of-date posts to reflect my =
+current=20
+thoughts and opinions. </P>
+<P>(C) Copyright 2009 by Jose Barreto. All rights reserved.</P>
+<HR>
+
+<P>
+<SCRIPT =
+src=3D"http://translator.live.com/TranslatePageLink.aspx?pl=3Den"=20
+type=3Dtext/javascript></SCRIPT>
+</P></DIV></DIV>
+<DIV id=3DArchiveSideBar>
+<H3>Archives</H3>
+<UL>
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2009/05.aspx">May 2009=20
+  (5)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2009/04.aspx">April =
+2009=20
+  (17)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2009/03.aspx">March =
+2009=20
+  (40)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2009/02.aspx">February=20
+  2009 (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2009/01.aspx">January=20
+  2009 (7)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/12.aspx">December=20
+  2008 (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/11.aspx">November=20
+  2008 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/10.aspx">October=20
+  2008 (9)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/09.aspx">September =
+
+  2008 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/08.aspx">August=20
+  2008 (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/07.aspx">July 2008 =
+
+  (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/06.aspx">June 2008 =
+
+  (8)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/05.aspx">May 2008=20
+  (6)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/04.aspx">April =
+2008=20
+  (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/03.aspx">March =
+2008=20
+  (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/02.aspx">February=20
+  2008 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2008/01.aspx">January=20
+  2008 (5)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/12.aspx">December=20
+  2007 (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/11.aspx">November=20
+  2007 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/10.aspx">October=20
+  2007 (8)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/09.aspx">September =
+
+  2007 (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/08.aspx">August=20
+  2007 (9)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/07.aspx">July 2007 =
+
+  (11)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/06.aspx">June 2007 =
+
+  (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/05.aspx">May 2007=20
+  (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/04.aspx">April =
+2007=20
+  (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/03.aspx">March =
+2007=20
+  (8)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2007/01.aspx">January=20
+  2007 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/12.aspx">December=20
+  2006 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/11.aspx">November=20
+  2006 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/10.aspx">October=20
+  2006 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/09.aspx">September =
+
+  2006 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/07.aspx">July 2006 =
+
+  (13)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/06.aspx">June 2006 =
+
+  (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/05.aspx">May 2006=20
+  (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/04.aspx">April =
+2006=20
+  (9)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/03.aspx">March =
+2006=20
+  (10)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/02.aspx">February=20
+  2006 (4)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2006/01.aspx">January=20
+  2006 (3)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/09.aspx">September =
+
+  2005 (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/08.aspx">August=20
+  2005 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/07.aspx">July 2005 =
+
+  (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/06.aspx">June 2005 =
+
+  (7)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/05.aspx">May 2005=20
+  (7)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/04.aspx">April =
+2005=20
+  (6)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/03.aspx">March =
+2005=20
+  (5)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2005/01.aspx">January=20
+  2005 (1)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2004/12.aspx">December=20
+  2004 (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2004/08.aspx">August=20
+  2004 (2)</A>=20
+  <LI><A =
+href=3D"http://blogs.technet.com/josebda/archive/2004/07.aspx">July 2004 =
+
+  (6)</A> </LI></UL></DIV>
+<DIV id=3DLinkSideBar></DIV></DIV>
+<DIV id=3Dcontent>
+<DIV id=3Dcontent2>
+<STYLE>.DoNotDisplay {
+	DISPLAY: none
+}
+</STYLE>
+
+<DIV class=3Dpost>
+<DIV class=3Dposthead>Thursday, March 19, 2009 6:35 PM <A=20
+id=3Dctl00___ctl00___ctl01___Entry___AuthorLink=20
+href=3D"http://blogs.technet.com/user/Profile.aspx?UserID=3D3813">josebda=
+</A>=20
+<H2>SQL Server 2008 Partitioning </H2></DIV>
+<DIV class=3Dpostcontent>
+<P>Here are some notes on "SQL Server 2008 Partitioning" I took while =
+attending=20
+an advanced class on SQL Server taught by Kimberly Tripp&nbsp;(<A=20
+href=3D"http://sqlskills.com/AboutKimberlyLTripp.asp"=20
+mce_href=3D"http://sqlskills.com/AboutKimberlyLTripp.asp">http://sqlskill=
+s.com/AboutKimberlyLTripp.asp</A>).=20
+</P>
+<P>Please note that, although these notes were taken during the class, I =
+might=20
+have added some of my own (mis)interpretation :-). Always check your =
+facts on=20
+Books Online (I try to provide links when applicable). As with anything =
+else you=20
+get from a blog, never use any of this in production before you =
+thoroughly=20
+validate it a test environment. Please keep in mind that some of those =
+will be=20
+hard to follow without the right pre-requisite knowledge and the right =
+context.=20
+Reading the post from top to bottom will help.</P>
+<HR>
+
+<P>Partitioning misconceptions</P>
+<UL>
+  <LI>It's not all about speeding up for parallelism=20
+  <LI>It's not all about scaling out databases for performance=20
+  <LI>It's not all about very large and slow databases=20
+  <LI>It's also (mostly?) about range-based inserts or range-based =
+deletes=20
+  <LI>It's also (mostly?) about the sliding window scenario=20
+  <LI>There are cases when you do get peformance/paralelism =
+benefits</LI></UL>
+<P>Need partitioning</P>
+<UL>
+  <LI>Problem: Customer query was slow and asked for partitioning=20
+  <LI>Solution: fixed the problem with indexing=20
+  <LI>They did not need partitioning in that scenario</LI></UL>
+<P>Partitioning strategies</P>
+<UL>
+  <LI>SQL Server 7 or later: read only partitioned views=20
+  <LI>SQL Server 2000 or later: updatable partitioned views=20
+  <LI>SQL Server 2005 or later: partitioned tables=20
+  <LI>SQL Server 2008 or later: enhanced partitioned tables</LI></UL>
+<P>Vertical partitioning</P>
+<UL>
+  <LI>Case: Large Patient table. Lots of columns, including picture.=20
+  <LI>You could: Have a table for critical columns.=20
+  <LI>Leave all the less used and BLOB columns in a second =
+table.</LI></UL>
+<P>Horizontal partitioning</P>
+<UL>
+  <LI>Case: Sales table for last few years.=20
+  <LI>Problem: Weekly full backup of 1 billion rows.=20
+  <LI>Problem: INSERTs blocked by queries on historical data.=20
+  <LI>You could: Create multiple tables with partition views (PV).=20
+  <LI>Uses constraints to implement the partitioning rules.=20
+  <LI>You could: Create partitioned tables (PT) with read-only file =
+groups.=20
+  <LI>Uses a partition function and a partition scheme.=20
+  <LI>Saves in management, backup. Could have different SLAs per =
+year.</LI></UL>
+<P>Easier Maintenance</P>
+<UL>
+  <LI>Loading options=20
+  <LI>Index maintanence=20
+  <LI>Backup/restore</LI></UL>
+<P>Files and File Groups</P>
+<UL>
+  <LI>Multiple files in same file group: round robin between files=20
+  <LI>If you lose one file in the FG, you can't access the data=20
+  <LI>Multiple file groups with partitions: spread by partitioning =
+scheme.=20
+  <LI>You can lose just one FG and still acess some of the =
+data</LI></UL>
+<P>The range-based delete problem</P>
+<UL>
+  <LI>Large table, large delete of old data takes a lot of time=20
+  <LI>It's all about reducing the impact on the multiple indexes=20
+  <LI>Turn into an instant operation with the right =
+partitioning</LI></UL>
+<P>The data load problem</P>
+<UL>
+  <LI>Typical issue: need to load a lot of data into a table=20
+  <LI>Again, it's all about reducing the impact on the multiple indexes=20
+  <LI>Typical: Load into heap, build clustered index, then non-clustered =
+
+  <LI>If source data is ordered and ever increasing: Load into clustered =
+index,=20
+  then non-clustered=20
+  <LI>Will not work so well if you're parellelizing the load operation=20
+  <LI>Do not shrink in the end! It will cause massive fragmentation=20
+  <LI>In any case, the impact on the log is big. Consider going to bulk =
+logging=20
+  mode.</LI></UL>
+<P>Sliding window numbers</P>
+<UL>
+  <LI>Single processor, 5.7 million rows, 2 non-clustered indexes=20
+  <LI>Data load - from 28m to 1m26s with partitioned table=20
+  <LI>Data delete - from 15m to &lt;1s with partitioned table=20
+  <LI>Partitioned scneario benefits greatly from multiple processor=20
+  <LI>Parallel bulk load and parallel index creation - almost linear=20
+gains</LI></UL>
+<P>PVs</P>
+<UL>
+  <LI>Partitioned Views - Many tables, single view : SELECTS + UNION ALL =
+
+  <LI>Manually create the tables with constraints, place in separate FG=20
+  <LI>Constraint: CHECK (SalesDate &gt;=3D '20090101' AND SalesDate &lt; =
+
+  '20090201')=20
+  <LI>Create the view, which are then updateable=20
+  <LI>Be careful not to make mistakes when creating the table and =
+constraints=20
+  <LI>SQL does not know of the PV when you create the tables=20
+  <LI>Lots of tables, indexes, constraints - do it right</LI></UL>
+<P>PVs and Constraints</P>
+<UL>
+  <LI>SQL uses the constraints to figure it all out=20
+  <LI>Constraints need to allways be trusted - on create table, always =
+check,=20
+  never disable=20
+  <LI>SQL can't prune tree if the constraints are not trusted=20
+  <LI>Check if NOT =
+OBJECTPROPERTY(OBJECT_ID('constraint'),'CnstIsNotTrusted')=20
+  <LI>Use DBCC CHECKCONSTRAINTS. If not trusted, DROP and re-CREATE.=20
+  <LI>See <A=20
+  =
+href=3D"http://sqlblog.com/blogs/kalen_delaney/archive/2006/10/10/281.asp=
+x"=20
+  =
+mce_href=3D"http://sqlblog.com/blogs/kalen_delaney/archive/2006/10/10/281=
+.aspx">http://sqlblog.com/blogs/kalen_delaney/archive/2006/10/10/281.aspx=
+</A></LI></UL>
+<P>PTs</P>
+<UL>
+  <LI>Partitioned tables are defined in a more structured fashion.=20
+  <LI>You define specific partitioning points "on a line". 4 points =3D =
+5=20
+  partitions.=20
+  <LI>Classic case is years or months on a time line. Which changes over =
+time.=20
+  <LI>It's OK if you end up with an empty partition in the beginning or=20
+end.</LI></UL>
+<P>Partitioning Function</P>
+<UL>
+  <LI>Partition Function - Logical - Defines the points on the line =
+(right or=20
+  left)=20
+  <LI>Classic case is years or months on a time line. Which changes over =
+time.=20
+  <LI>Left is OK, but be careful with date boundaries - '01/31/2009=20
+  23:59:59.997'=20
+  <LI>You can get lost in the syntax - Do it in a white board first - do =
+the=20
+  code later=20
+  <LI>It has to be over a single column - typically a date, country=20
+  <LI>Partition function with n items creates n+1 partitions=20
+  <LI>MOD function on an identity field? Possible, with maintanence=20
+  issues...</LI></UL>
+<P>Partitioning Scheme</P>
+<UL>
+  <LI>Partition Scheme - Physical - Maps to the file groups (could be a =
+single=20
+  one)=20
+  <LI>You can add one extra file group that is not allocated - Next used =
+
+  <LI>Typically, you want different FG in different drives (or sets of =
+drives)=20
+  <LI>You cannot remove the first file in the file group</LI></UL>
+<P>Final Step</P>
+<UL>
+  <LI>Create the table on the scheme - same place where you specify the =
+file=20
+  group=20
+  <LI>Add the data to the table, which flow to the right partition=20
+  <LI>Create non-clustered indexes also aligned with the partitions - =
+many=20
+  benefits=20
+  <LI>You can even rebuild a table with a clustered index on the scheme =
+as an=20
+  online operation=20
+  <LI>This is done with ALTER TABLE ... ON psdate(SalesDate)</LI></UL>
+<P>Rolling windows</P>
+<UL>
+  <LI>Create new metadata on filegroup: table, constraints, indexes, =
+views (same=20
+  schema)=20
+  <LI>Switch the partition live. It's all physically just updating the =
+IAM=20
+  pointers.=20
+  <LI>You can only add one partition in a command.=20
+  <LI>Could do a switch in and switch out together as a transaction.=20
+  <LI>The first (in RIGHT) partition will remain empty as data =
+slides/rolls=20
+  forward=20
+  <LI>Be careful not to merge when there's data on it, or else data =
+needs to=20
+  move (expensive)</LI></UL>
+<P>Other</P>
+<UL>
+  <LI>Cannot rebuild indexes online for only one partition, only for =
+entire=20
+  partitioned table.=20
+  <LI>Separate into multiple tables to be able to do this. Benefits in =
+doing=20
+  this...=20
+  <LI>Can use read-only and read-write partitioned tables. Benefits in =
+doing=20
+  this...=20
+  <LI>New in SQL Server 2008: partition-aligned indexed views.=20
+  <LI>Partitioned table parallelism. "Non-selective leading index =
+columns". Skip=20
+  scanning.</LI></UL>
+<HR>
+
+<P>White Paper: Partitioned Tables and Indexes in SQL Server 2005<BR><A=20
+href=3D"http://msdn.microsoft.com/en-us/library/ms345146.aspx"=20
+mce_href=3D"http://msdn.microsoft.com/en-us/library/ms345146.aspx">http:/=
+/msdn.microsoft.com/en-us/library/ms345146.aspx</A></P></DIV>
+<DIV><SPAN =
+id=3Dctl00___ctl00___ctl01___Entry___InlineTagEditorPanel>Filed under:=20
+<A =
+href=3D"http://blogs.technet.com/josebda/archive/tags/SQL+Server/default.=
+aspx"=20
+rel=3Dtag>SQL Server</A></SPAN><INPUT=20
+id=3Dctl00___ctl00___ctl01___Entry___InlineTagEditorPanel_State =
+type=3Dhidden=20
+value=3Dnochange=20
+name=3Dctl00$_$ctl00$_$ctl01$_$Entry$_$InlineTagEditorPanel></DIV></DIV>
+<DIV class=3Dpostfoot></DIV>
+<DIV id=3Dcomments>
+<H3>Comments </H3>
+<DIV class=3Dcomment>
+<H4><A id=3Dctl00___ctl00___ctl01___Comments___Comments_ctl01_PermaLink=20
+title=3Dpermalink=20
+href=3D"http://blogs.technet.com/josebda/archive/2009/03/19/sql-server-20=
+08-partitioning.aspx#3215703">#</A>=20
+Sql Server | Trendy Net News<A name=3D3215703></A> </H4>
+<DIV class=3Dcommentssubhead><SPAN class=3Dcommentspan></SPAN>Friday, =
+March 20, 2009=20
+9:57 AM by <A =
+id=3Dctl00___ctl00___ctl01___Comments___Comments_ctl01_NameLink=20
+title=3DTrackBack href=3D"http://trendynetnews.8baiduo.com/sql-server/"=20
+target=3D_blank rel=3Dnofollow>Sql Server | Trendy Net News</A> </DIV>
+<DIV class=3Dcommentsbody>
+<P>PingBack from <A =
+href=3D"http://trendynetnews.8baiduo.com/sql-server/"=20
+target=3D_new=20
+rel=3Dnofollow>http://trendynetnews.8baiduo.com/sql-server/</A></P></DIV>=
+</DIV></DIV><EM>Anonymous=20
+comments are disabled</EM>=20
+<H2 class=3DCommonSubTitle>About josebda</H2>Jose Barreto is a Principal =
+Program=20
+Manager with the File Server Foundation team and has been with Microsoft =
+since=20
+2002. He graduated in Computer Science at the Universidade Federal do =
+Ceara in=20
+Brazil in 1989 and holds several industry certifications, including =
+CISSP, ITIL,=20
+MCM, MCITS, MCT and many other Microsoft certifications. </DIV></DIV>
+<DIV id=3Dcontentfooter>&nbsp;</DIV></DIV>
+<DIV id=3Dfooter>
+<DIV>=C2=A9 2009 Microsoft Corporation. All rights reserved. <A=20
+href=3D"http://www.microsoft.com/info/cpyright.mspx">Terms of Use</A>=20
+&nbsp;|&nbsp; <A=20
+href=3D"http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.msp=
+x">Trademarks</A>=20
+&nbsp;|&nbsp; <A =
+href=3D"http://privacy.microsoft.com/en-us/default.aspx">Privacy=20
+Statement</A> </DIV></DIV></DIV></DIV>
+<SCRIPT language=3Djavascript type=3Dtext/javascript>=0A=
+<!--=0A=
+function KeyDownHandlerctl00___ctl00___bs___ws___SearchButton(event)=0A=
+{=0A=
+	if (event.keyCode =3D=3D 13)=0A=
+	{=0A=
+		event.returnValue =3D false;=0A=
+		event.cancel =3D true;=0A=
+     __doPostBack('ctl00$_$ctl00$_$bs$_$ws$_$SearchButton','')	}=0A=
+}=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+<!--
+<rdf:RDF xmlns:rdf=3D"http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc=3D"http://purl.org/dc/elements/1.1/"=0A=
+xmlns:trackback=3D"http://madskills.com/public/xml/rss/module/trackback/"=
+>
+<rdf:Description
+rdf:about=3D"http://blogs.technet.com/josebda/archive/2009/03/19/sql-serv=
+er-2008-partitioning.aspx"
+dc:identifier=3D"http://blogs.technet.com/josebda/archive/2009/03/19/sql-=
+server-2008-partitioning.aspx"
+dc:title=3D"SQL Server 2008 Partitioning"
+trackback:ping=3D"http://blogs.technet.com/josebda/trackback.aspx?PostID=3D=
+3215534" />
+</rdf:RDF>
+--></FORM>
+<SCRIPT =
+src=3D"http://blogs.technet.com/themes/common/omni_rsid_blogs.js"=20
+type=3Dtext/javascript></SCRIPT>
+<NOSCRIPT><A title=3D"Web Analytics" =
+href=3D"http://www.omniture.com/"><IMG height=3D1=20
+alt=3D""=20
+src=3D"http://msstonojsblogs.112.2o7.net/b/ss/msstonojsblogs/1/H.20.2--NS=
+/0"=20
+width=3D1 border=3D0></A></NOSCRIPT> <!-- WT MT Inline v.2.0 -->
+<SCRIPT type=3Dtext/javascript>
+var gTrackEvents=3D0;
+var gDomain=3D"m.webtrends.com";
+var gDcsId=3D"dcs8zd2bz00000w0adote0s3l_1d8j";
+var gFpc=3D"WT_FPC";
+if(document.cookie.indexOf(gFpc+"=3D")=3D=3D-1){document.write("<SCR"+"IP=
+T TYPE=3D'text/javascript' =
+SRC=3D'"+"http"+(window.location.protocol.indexOf('https:')=3D=3D0?'s':''=
+)+"://"+gDomain+"/"+gDcsId+"/wtid.js"+"'><\/SCR"+"IPT>");}
+</SCRIPT>
+
+<SCRIPT src=3D"http://blogs.technet.com/wt.js" =
+type=3Dtext/javascript></SCRIPT>
+<NOSCRIPT><IMG id=3DDCSIMG height=3D1 alt=3D""=20
+src=3D"http://m.webtrends.com/dcs8zd2bz00000w0adote0s3l_1d8j/njs.gif?dcsu=
+ri=3D/nojavascript&amp;WT.js=3DNo"=20
+width=3D1 border=3D0> </NOSCRIPT><IMG height=3D0 alt=3D"Page view =
+tracker"=20
+src=3D"http://c.microsoft.com/trans_pixel.aspx?TYPE=3DPV&amp;r=3Dhttp%3a%=
+2f%2fwww.google.com%2fsearch%3fhl%3den%26q%3dtable%2bpartitioning%26aq%3d=
+0%26oq%3dtable%2bpartition"=20
+width=3D0> </BODY></HTML>
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://msstonojsblogs.112.2o7.net/b/ss/msstonojsblogs/1/H.20.2--NS/0
+
+R0lGODlhAgACAIAAAP///wAAACH5BAEAAAAALAAAAAACAAIAAAIChFEAOw==
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://m.webtrends.com/dcs8zd2bz00000w0adote0s3l_1d8j/njs.gif?dcsuri=/nojavascript&WT.js=No
+
+R0lGODlhAQABAJH/AP///wAAAP///wAAACH/C0FET0JFOklSMS4wAt7tACH5BAEAAAIALAAAAAAB
+AAEAAAICVAEAOw==
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Location: http://c.microsoft.com/trans_pixel.aspx?TYPE=PV&r=http%3a%2f%2fwww.google.com%2fsearch%3fhl%3den%26q%3dtable%2bpartitioning%26aq%3d0%26oq%3dtable%2bpartition
+
+R0lGODlhAQABAIAAAP8zzAAAACH5BAEAAAAALAAAAAABAAEAQAIChFEAOwA=
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/Themes/Blogs/luxinterior/style/style.css
+
+HTML {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+auto; COLOR: #fff; PADDING-TOP: 0px
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+auto; COLOR: #fff; PADDING-TOP: 0px
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #333; =
+PADDING-BOTTOM: 0px; FONT: 76%/1.2em Verdana, Arial, Helvetica, =
+sans-serif; PADDING-TOP: 0px; TEXT-ALIGN: center
+}
+A:visited {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+A:link {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+H1 {
+	FONT-SIZE: 1.5em; MARGIN: 0px
+}
+H1 A:visited {
+	COLOR: #fff
+}
+H1 A:active {
+	COLOR: #fff
+}
+H1 A:link {
+	COLOR: #fff
+}
+H1 A:hover {
+	TEXT-DECORATION: none
+}
+H2 {
+	MARGIN-TOP: 1em; FONT-SIZE: 1em
+}
+H3 {
+	FONT-SIZE: 1.1em
+}
+P {
+	MARGIN: 1em 0px
+}
+#masthead {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-SIZE: 0.9em; =
+BACKGROUND: #535353; PADDING-BOTTOM: 0.5em; COLOR: #ccc; PADDING-TOP: =
+0.5em; BORDER-BOTTOM: #666 2px solid; TEXT-ALIGN: right
+}
+#masthead UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; COLOR: #ccc; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#masthead UL LI {
+	DISPLAY: inline
+}
+#masthead UL LI A {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; TEXT-DECORATION: none
+}
+#masthead A:link {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+#masthead A:visited {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+#masthead A:active {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+#masthead A:hover {
+	COLOR: #f90; TEXT-DECORATION: none
+}
+#wrapper {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; =
+PADDING-TOP: 1em
+}
+#container {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+auto; WIDTH: 760px; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+#header {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; VERTICAL-ALIGN: middle; TEXT-TRANSFORM: uppercase; PADDING-TOP: =
+0px; FONT-FAMILY: "Trebuchet MS"; TEXT-ALIGN: center
+}
+#header H1 {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; FONT-SIZE: 2em; PADDING-BOTTOM: =
+0.5em; MARGIN: 0px; PADDING-TOP: 0.5em
+}
+#header P {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; FONT-SIZE: 1.1em; =
+PADDING-BOTTOM: 1em; MARGIN: 0px; PADDING-TOP: 0.5em
+}
+#title {
+=09
+}
+#nav {
+	PADDING-BOTTOM: 0.2em; MARGIN: 0px; PADDING-TOP: 0.2em; BORDER-BOTTOM: =
+#666 1px solid; TEXT-ALIGN: left
+}
+#nav UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#nav UL LI {
+	DISPLAY: inline
+}
+#nav UL LI A {
+	PADDING-RIGHT: 1.2em; MARGIN-TOP: 0px; PADDING-LEFT: 1.2em; =
+FONT-WEIGHT: bold; MARGIN-BOTTOM: 0.1em; PADDING-BOTTOM: 0.2em; =
+PADDING-TOP: 0.2em; TEXT-DECORATION: none
+}
+#subscriptions {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 0.9em; FLOAT: right; =
+PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 50%; PADDING-TOP: 0px; =
+TEXT-ALIGN: right
+}
+#subscriptions UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#subscriptions UL LI {
+	DISPLAY: inline
+}
+#subscriptions UL LI A {
+	PADDING-RIGHT: 0.5em; MARGIN-TOP: 0px; PADDING-LEFT: 0.5em; =
+MARGIN-BOTTOM: 0.1em; PADDING-BOTTOM: 0.2em; PADDING-TOP: 0.2em; =
+TEXT-DECORATION: none
+}
+#contentwrapper {
+	OVERFLOW: hidden; WIDTH: 100%
+}
+#content {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; MARGIN: 0px =
+210px 0px 0px; PADDING-TOP: 1em; HEIGHT: 1%
+}
+#content2 {
+	OVERFLOW: hidden; WIDTH: 100%
+}
+#contentfooter {
+	CLEAR: both
+}
+#sidebar-a {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-SIZE: 0.9em; FLOAT: =
+right; PADDING-BOTTOM: 0.5em; MARGIN: 0px 0px 0px 0.5em; BORDER-LEFT: =
+#666 1px solid; WIDTH: 200px; PADDING-TOP: 0.5em
+}
+#sidebar-a H3 {
+	MARGIN-TOP: 2em; FONT-SIZE: 0.9em; MARGIN-LEFT: 1em; TEXT-TRANSFORM: =
+uppercase; COLOR: #ccc; BORDER-BOTTOM: #ccc 1px solid; LETTER-SPACING: =
+2px
+}
+#sidebar-a P {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 0px
+}
+#sidebar-a UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+0px 1em 1em; WIDTH: 100%; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#sidebar-a LI {
+	MARGIN-TOP: 0.2em
+}
+#sidebar-a A:active {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+MARGIN-RIGHT: 0px; PADDING-TOP: 0px; TEXT-DECORATION: none
+}
+#sidebar-a A:visited {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+MARGIN-RIGHT: 0px; PADDING-TOP: 0px; TEXT-DECORATION: none
+}
+#sidebar-a A:link {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+MARGIN-RIGHT: 0px; PADDING-TOP: 0px; TEXT-DECORATION: none
+}
+#sidebar-a A:hover {
+	TEXT-DECORATION: underline
+}
+#footer {
+	CLEAR: both; PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: =
+0.5em; MARGIN: 0px; PADDING-TOP: 0.5em
+}
+.BlogCalendar {
+	FONT-SIZE: 90%; WIDTH: 100%
+}
+.BlogCalendarTitle {
+	FONT-WEIGHT: bold; MARGIN-LEFT: auto; MARGIN-RIGHT: auto; TEXT-ALIGN: =
+center
+}
+.BlogCalendarNextPrev {
+=09
+}
+TD.BlogCalendarNextPrev A:link {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.BlogCalendarNextPrev A:active {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.BlogCalendarNextPrev A:visited {
+	COLOR: #fff; TEXT-DECORATION: none
+}
+.BlogCalendarNextPrev A:hover {
+	TEXT-DECORATION: none
+}
+.BlogCalendarDays {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; =
+PADDING-BOTTOM: 2px; PADDING-TOP: 2px
+}
+.BlogCalendarDay A:link {
+	FONT-WEIGHT: bold
+}
+.BlogCalendarDay A:active {
+	FONT-WEIGHT: bold
+}
+.BlogCalendarDay A:visited {
+	FONT-WEIGHT: bold
+}
+.BlogCalendarDay A:hover {
+	FONT-WEIGHT: bold
+}
+.post {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.posthead {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 0.9em; =
+PADDING-BOTTOM: 0.5em; MARGIN: 0px; PADDING-TOP: 1em; TEXT-ALIGN: right
+}
+.posthead H2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 1.1em; =
+PADDING-BOTTOM: 0.5em; MARGIN: 0px; TEXT-TRANSFORM: uppercase; =
+PADDING-TOP: 0.5em; LETTER-SPACING: 1px; TEXT-ALIGN: left
+}
+.posthead IMG {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: =
+0.5em; PADDING-BOTTOM: 0px; MARGIN: 0px; BORDER-LEFT: 0px; PADDING-TOP: =
+0px; BORDER-BOTTOM: 0px
+}
+.posthead A:hover {
+	TEXT-DECORATION: none
+}
+.postcontent {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.postcontent IMG {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 1em =
+1em 0.5em 0px; LINE-HEIGHT: 2em; PADDING-TOP: 0px
+}
+.postfoot {
+	PADDING-RIGHT: 0px; BORDER-TOP: #666 1px solid; PADDING-LEFT: 0px; =
+FONT-SIZE: 0.9em; PADDING-BOTTOM: 0.5em; MARGIN: 1.5em 0px; PADDING-TOP: =
+0.5em; BORDER-BOTTOM: #666 1px solid
+}
+.postcategoryheading {
+	FONT-SIZE: 0.9em; MARGIN-BOTTOM: 1.5em; PADDING-BOTTOM: 0.5em; =
+BORDER-BOTTOM: #666 1px solid
+}
+.comment {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.commentowner {
+	BORDER-RIGHT: #666 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #666 1px =
+solid; PADDING-LEFT: 4px; MARGIN-BOTTOM: 3em; PADDING-BOTTOM: 4px; =
+BORDER-LEFT: #666 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #666 1px =
+solid; BACKGROUND-COLOR: #444
+}
+#comments H4 {
+	FONT-SIZE: 1em; MARGIN: 0px
+}
+#comments {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+.commentssubhead {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 0.85em; =
+PADDING-BOTTOM: 0px; MARGIN: 0.5em 0px 0px; COLOR: #ccc; PADDING-TOP: =
+0px
+}
+.commentspan {
+	PADDING-LEFT: 0.5em; FLOAT: right; WIDTH: 200px; TEXT-ALIGN: right
+}
+.commentsbody {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 0.9em; =
+PADDING-BOTTOM: 0.5em; MARGIN: 1em 0px 3em; PADDING-TOP: 0px; =
+BORDER-BOTTOM: #666 1px solid
+}
+#commentform {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+1em; PADDING-TOP: 0px
+}
+#commentform H3 {
+	PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; FONT-SIZE: 1em; =
+PADDING-BOTTOM: 1em; MARGIN: 0px; PADDING-TOP: 0px
+}
+#commentform DL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: =
+0px; PADDING-TOP: 0px
+}
+#commentform DT {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0px; FONT-SIZE: 1em; =
+PADDING-BOTTOM: 0.5em; MARGIN: 0px; PADDING-TOP: 0.5em
+}
+#commentform DT EM {
+	FONT-SIZE: 0.9em
+}
+#commentform .smallbox {
+	BORDER-RIGHT: #666 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #666 1px =
+solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: #666 1px =
+solid; WIDTH: 300px; PADDING-TOP: 2px; BORDER-BOTTOM: #666 1px solid
+}
+#commentform TEXTAREA {
+	BORDER-RIGHT: #666 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: #666 =
+1px solid; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0.2em; FONT: 1em =
+Verdana, Arial, Helvetica, sans-serif; BORDER-LEFT: #666 1px solid; =
+WIDTH: 450px; PADDING-TOP: 0.2em; BORDER-BOTTOM: #666 1px solid; HEIGHT: =
+180px
+}
+#emailsubscriptions {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 1em; MARGIN: =
+0px; PADDING-TOP: 1em
+}
+#emailsubscriptions H3 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 1em; PADDING-BOTTOM: =
+0px; MARGIN: 0px 1em 0px 0.5em; PADDING-TOP: 1em
+}
+#emailsubscriptions TABLE {
+	FONT-SIZE: 1em
+}
+#news {
+	PADDING-RIGHT: 1em; PADDING-LEFT: 1em; PADDING-BOTTOM: 0.5em; MARGIN: =
+1em; PADDING-TOP: 0.5em
+}
+#search .searchBox {
+	BORDER-RIGHT: #666 1px solid; PADDING-RIGHT: 0.2em; BORDER-TOP: #666 =
+1px solid; PADDING-LEFT: 0.2em; PADDING-BOTTOM: 0.2em; MARGIN: 0px 1em; =
+BORDER-LEFT: #666 1px solid; WIDTH: 130px; PADDING-TOP: 0.2em; =
+BORDER-BOTTOM: #666 1px solid
+}
+#search {
+	MARGIN-BOTTOM: 0.5em
+}
+.media {
+	FONT-WEIGHT: bold; FONT-SIZE: 0.9em; MARGIN: 1em 1em 0.5em
+}
+.spacer {
+	CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px; HEIGHT: 0px
+}
+#skinbutton {
+	FLOAT: right; MARGIN-RIGHT: 1em
+}
+#skinbutton UL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px =
+0px 10px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; TEXT-ALIGN: left
+}
+#skinbutton LI {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; MARGIN: 5px =
+0px 0px 20px; BORDER-LEFT: #999 1px solid; WIDTH: 9em; BORDER-BOTTOM: =
+#999 1px solid
+}
+#skinbutton LI A {
+	COLOR: #333; TEXT-DECORATION: none
+}
+HEAD:first-child + BODY #skinbutton LI {
+	PADDING-RIGHT: 2px
+}
+.skinbuttonlink {
+	BORDER-RIGHT: white 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: white =
+1px solid; DISPLAY: block; PADDING-LEFT: 0px; BACKGROUND: #ddd; =
+PADDING-BOTTOM: 2px; FONT: 0.75em verdana, arial, sans-serif; =
+BORDER-LEFT: white 1px solid; WIDTH: 100%; COLOR: #333; PADDING-TOP: =
+2px; BORDER-BOTTOM: white 1px solid; TEXT-DECORATION: none
+}
+.skinbuttonlink SPAN {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 2px; FONT: bold =
+1em verdana, arial, sans-serif; COLOR: #fff; PADDING-TOP: 2px
+}
+.cs SPAN {
+	BACKGROUND: #666
+}
+.TagCloud {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 16px; MARGIN: =
+16px 0px; COLOR: #999999; LINE-HEIGHT: 180%; PADDING-TOP: 16px; =
+LIST-STYLE-TYPE: none; BACKGROUND-COLOR: #444444
+}
+.SidebarTagCloud {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 80%; PADDING-BOTTOM: =
+0px; MARGIN: 0px; LINE-HEIGHT: 200%; PADDING-TOP: 0px; LIST-STYLE-TYPE: =
+none
+}
+.Tag1 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag2 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag3 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag4 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag5 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag6 {
+	PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; PADDING-BOTTOM: =
+0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+.Tag1 A:link {
+	FONT-WEIGHT: 900; FONT-SIZE: 160%; COLOR: #a40; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag1 A:visited {
+	FONT-WEIGHT: 900; FONT-SIZE: 160%; COLOR: #a40; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag1 A:active {
+	FONT-WEIGHT: 900; FONT-SIZE: 160%; COLOR: #a40; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag2 A:link {
+	FONT-WEIGHT: 800; FONT-SIZE: 145%; COLOR: #b50; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag2 A:visited {
+	FONT-WEIGHT: 800; FONT-SIZE: 145%; COLOR: #b50; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag2 A:active {
+	FONT-WEIGHT: 800; FONT-SIZE: 145%; COLOR: #b50; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag3 A:link {
+	FONT-WEIGHT: 600; FONT-SIZE: 130%; COLOR: #c60; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag3 A:visited {
+	FONT-WEIGHT: 600; FONT-SIZE: 130%; COLOR: #c60; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag3 A:active {
+	FONT-WEIGHT: 600; FONT-SIZE: 130%; COLOR: #c60; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag4 A:link {
+	FONT-WEIGHT: 500; FONT-SIZE: 120%; COLOR: #d70; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag4 A:visited {
+	FONT-WEIGHT: 500; FONT-SIZE: 120%; COLOR: #d70; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag4 A:active {
+	FONT-WEIGHT: 500; FONT-SIZE: 120%; COLOR: #d70; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag5 A:link {
+	FONT-WEIGHT: 300; FONT-SIZE: 110%; COLOR: #e80; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag5 A:visited {
+	FONT-WEIGHT: 300; FONT-SIZE: 110%; COLOR: #e80; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag5 A:active {
+	FONT-WEIGHT: 300; FONT-SIZE: 110%; COLOR: #e80; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag6 A:link {
+	FONT-WEIGHT: 200; FONT-SIZE: 100%; COLOR: #f90; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag6 A:visited {
+	FONT-WEIGHT: 200; FONT-SIZE: 100%; COLOR: #f90; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag6 A:active {
+	FONT-WEIGHT: 200; FONT-SIZE: 100%; COLOR: #f90; MARGIN-RIGHT: 6px; =
+TEXT-DECORATION: none
+}
+.Tag1 A:hover {
+	TEXT-DECORATION: underline
+}
+.Tag2 A:hover {
+	TEXT-DECORATION: underline
+}
+.Tag3 A:hover {
+	TEXT-DECORATION: underline
+}
+.Tag4 A:hover {
+	TEXT-DECORATION: underline
+}
+.Tag5 A:hover {
+	TEXT-DECORATION: underline
+}
+.Tag6 A:hover {
+	TEXT-DECORATION: underline
+}
+.SearchStatistics {
+	MARGIN-TOP: 16px; MARGIN-BOTTOM: 16px
+}
+.InlineTagEditor {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: =
+#999999 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: =
+#999999 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #999999 1px solid; =
+BACKGROUND-COLOR: #f3f3f3
+}
+.TextButton {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: =
+#cccccc 1px solid; DISPLAY: inline-block; PADDING-LEFT: 4px; =
+FONT-WEIGHT: bold; FONT-SIZE: 80%; PADDING-BOTTOM: 4px; MARGIN: 1px; =
+BORDER-LEFT: #cccccc 1px solid; COLOR: #333333; PADDING-TOP: 4px; =
+BORDER-BOTTOM: #999999 1px solid; FONT-FAMILY: Tahoma, Arial, Helvetica; =
+WHITE-SPACE: nowrap; BACKGROUND-COLOR: #eeeeee
+}
+.TextButton:link {
+	COLOR: #333333; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none
+}
+.TextButton:visited {
+	COLOR: #333333; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none
+}
+.TextButton:active {
+	COLOR: #333333; TEXT-DECORATION: none
+}
+.TextButton:hover {
+	COLOR: #333333; BACKGROUND-COLOR: #dddddd; TEXT-DECORATION: underline
+}
+.ModalMask {
+	FILTER: alpha(opacity=3D40); BACKGROUND-COLOR: #333333; opacity: .4
+}
+.Modal {
+	BORDER-RIGHT: #888888 3px solid; BORDER-TOP: #888888 1px solid; =
+BORDER-LEFT: #888888 1px solid; BORDER-BOTTOM: #888888 3px solid; =
+BACKGROUND-COLOR: #eeeeee
+}
+.ModalTitle {
+	BORDER-RIGHT: #cccccc 0px solid; PADDING-RIGHT: 5px; BORDER-TOP: =
+#cccccc 0px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: =
+16px; PADDING-BOTTOM: 7px; OVERFLOW: hidden; BORDER-LEFT: #cccccc 0px =
+solid; CURSOR: move; COLOR: #000000; PADDING-TOP: 5px; BORDER-BOTTOM: =
+#cccccc 1px solid; FONT-FAMILY: Tahoma, Arial, Helvetica; HEIGHT: 18px; =
+BACKGROUND-COLOR: #dddddd; TEXT-ALIGN: left
+}
+.ModalClose {
+	FLOAT: right; BACKGROUND-IMAGE: =
+url(../../../default/images/common/close.gif); OVERFLOW: hidden; WIDTH: =
+33px; CURSOR: pointer; BACKGROUND-REPEAT: no-repeat; HEIGHT: 12px
+}
+.ModalContent {
+	BACKGROUND-COLOR: #ffffff
+}
+.ModalFooter {
+	BORDER-RIGHT: #cccccc 0px solid; PADDING-RIGHT: 2px; BORDER-TOP: =
+#cccccc 1px solid; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; BORDER-LEFT: =
+#cccccc 0px solid; PADDING-TOP: 2px; BORDER-BOTTOM: #cccccc 0px solid; =
+BACKGROUND-COLOR: #eeeeee
+}
+.ModalResize {
+	FLOAT: right; BACKGROUND-IMAGE: =
+url(../../../default/images/common/resize.gif); OVERFLOW: hidden; WIDTH: =
+14px; CURSOR: se-resize; BACKGROUND-REPEAT: no-repeat; HEIGHT: 14px
+}
+.CommonRateControlReadOnly {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: =
+#999999 1px solid; DISPLAY: inline-block; PADDING-LEFT: 1px; =
+PADDING-BOTTOM: 1px; BORDER-LEFT: #999999 1px solid; PADDING-TOP: 1px; =
+BORDER-BOTTOM: #999999 1px solid; BACKGROUND-COLOR: #ffffff
+}
+.ratemenu {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: =
+#999999 1px solid; DISPLAY: inline-block; PADDING-LEFT: 1px; =
+PADDING-BOTTOM: 1px; BORDER-LEFT: #999999 1px solid; CURSOR: pointer; =
+PADDING-TOP: 1px; BORDER-BOTTOM: #999999 1px solid; BACKGROUND-COLOR: =
+#eeeeee
+}
+.CommonRateControlActive {
+	BORDER-RIGHT: #cc9933 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: =
+#cc9933 1px solid; DISPLAY: inline-block; PADDING-LEFT: 1px; =
+PADDING-BOTTOM: 1px; BORDER-LEFT: #cc9933 1px solid; CURSOR: pointer; =
+PADDING-TOP: 1px; BORDER-BOTTOM: #cc9933 1px solid; BACKGROUND-COLOR: =
+#ffcc66
+}
+.CommonRateControlReadOnly IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; =
+MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.ratemenu IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; =
+MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.CommonRateControlActive IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; =
+BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; =
+MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/Themes/Blogs/luxinterior/style/light_sidebar_left_wide.css
+
+HTML {
+	COLOR: #333
+}
+BODY {
+	COLOR: #333
+}
+BODY {
+	BACKGROUND: #fff
+}
+A:visited {
+	COLOR: #00c
+}
+A:active {
+	COLOR: #00c
+}
+A:link {
+	COLOR: #00c
+}
+H1 A:visited {
+	COLOR: #333
+}
+H1 A:active {
+	COLOR: #333
+}
+H1 A:link {
+	COLOR: #333
+}
+#container {
+	WIDTH: 100%
+}
+#nav {
+	BORDER-BOTTOM-COLOR: #aaa
+}
+#content {
+	MARGIN-LEFT: 210px; MARGIN-RIGHT: 0px
+}
+#sidebar-a {
+	BORDER-RIGHT: #aaa 1px solid; FLOAT: left; MARGIN: 0px 0.5em 0px 0em; =
+BORDER-LEFT: 0px
+}
+#sidebar-a H3 {
+	MARGIN-LEFT: 0em; MARGIN-RIGHT: 1em
+}
+#sidebar-a UL {
+	MARGIN-LEFT: 0em; MARGIN-RIGHT: 1em
+}
+#sidebar-a H3 {
+	BORDER-BOTTOM-COLOR: #666; COLOR: #666
+}
+.calendar .calOtherMonthDay {
+	COLOR: #ccc
+}
+.calNextPrev A:link {
+	COLOR: #00c! important
+}
+.calNextPrev A:active {
+	COLOR: #00c! important
+}
+.calNextPrev A:visited {
+	COLOR: #00c! important
+}
+.calNextPrev A:hover {
+	COLOR: #00c! important
+}
+.postfoot {
+	BORDER-BOTTOM-COLOR: #aaa; BORDER-TOP-COLOR: #aaa
+}
+.postcategoryheading {
+	BORDER-BOTTOM-COLOR: #aaa
+}
+.ratemenu {
+	BORDER-LEFT-COLOR: #666; BACKGROUND: #fff; BORDER-BOTTOM-COLOR: #666; =
+BORDER-TOP-COLOR: #666; BORDER-RIGHT-COLOR: #666
+}
+.comment {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; =
+PADDING-TOP: 4px
+}
+.commentowner {
+	BORDER-RIGHT: #dddddd 1px solid; BORDER-TOP: #dddddd 1px solid; =
+BORDER-LEFT: #dddddd 1px solid; BORDER-BOTTOM: #dddddd 1px solid; =
+BACKGROUND-COLOR: #f3f3f3
+}
+.commentssubhead {
+	COLOR: #666
+}
+.commentsbody {
+	BORDER-BOTTOM-COLOR: #aaa
+}
+#commentform .smallbox {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; BORDER-LEFT: =
+#999 1px solid; BORDER-BOTTOM: #999 1px solid
+}
+#commentform TEXTAREA {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; BORDER-LEFT: =
+#999 1px solid; BORDER-BOTTOM: #999 1px solid
+}
+#search .searchBox {
+	BORDER-RIGHT: #999 1px solid; BORDER-TOP: #999 1px solid; BORDER-LEFT: =
+#999 1px solid; BORDER-BOTTOM: #999 1px solid
+}
+#masthead {
+	BACKGROUND: #f0f0f0; COLOR: #333; BORDER-BOTTOM: #aaa 2px solid
+}
+#masthead A:link {
+	COLOR: #00c
+}
+#masthead A:visited {
+	COLOR: #00c
+}
+#masthead A:active {
+	COLOR: #00c
+}
+#masthead A:hover {
+	COLOR: #00c
+}
+.TagCloud {
+	BACKGROUND-COLOR: #f4f4f4
+}
+.Tag1 A:link {
+	COLOR: #007
+}
+.Tag1 A:visited {
+	COLOR: #007
+}
+.Tag1 A:active {
+	COLOR: #007
+}
+.Tag2 A:link {
+	COLOR: #008
+}
+.Tag2 A:visited {
+	COLOR: #008
+}
+.Tag2 A:active {
+	COLOR: #008
+}
+.Tag3 A:link {
+	COLOR: #009
+}
+.Tag3 A:visited {
+	COLOR: #009
+}
+.Tag3 A:active {
+	COLOR: #009
+}
+.Tag4 A:link {
+	COLOR: #00a
+}
+.Tag4 A:visited {
+	COLOR: #00a
+}
+.Tag4 A:active {
+	COLOR: #00a
+}
+.Tag5 A:link {
+	COLOR: #00b
+}
+.Tag5 A:visited {
+	COLOR: #00b
+}
+.Tag5 A:active {
+	COLOR: #00b
+}
+.Tag6 A:link {
+	COLOR: #00c
+}
+.Tag6 A:visited {
+	COLOR: #00c
+}
+.Tag6 A:active {
+	COLOR: #00c
+}
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/Utility/global.js?Version=2.1.61025.2
+
+  /*******/
+
+  var IE4 =3D document.all;
+  var NS6 =3D document.getElementById && !document.all;
+  var disappearDelay =3D 500; // miliseconds
+     =20
+  function DynamicHide (node, e) {
+    if ((IE4 && !node.contains(e.toElement)) ||
+        (NS6 && e.currentTarget !=3D e.relatedTarget && !NS6_Contains( =
+e.currentTarget, e.relatedTarget )))=20
+    {
+      InitTimer( node );
+    }=20
+  } =20
+ =20
+  function HideObject (nodeID) {   =20
+    var node =3D document.getElementById( nodeID );
+   =20
+    if (typeof node !=3D "undefined") {
+      if (IE4 || NS6) {
+        node.style.visibility =3D "hidden";
+        node.style.display =3D 'none';
+      }
+    }
+  }
+ =20
+  function ReleaseTimer (node) {   =20
+    if (typeof node !=3D "undefined") {
+      if (typeof node.HideTimer !=3D "undefined") {
+        clearTimeout( node.HideTimer );
+      }
+    }
+  }
+ =20
+  function InitTimer (node) {
+    if (typeof node !=3D "undefined") {
+      var callBack =3D 'HideObject( "' + node.getAttribute( 'id' ) + '" =
+)';     =20
+      node.HideTimer =3D setTimeout( callBack, disappearDelay );
+    }
+  }
+   =20
+  function NS6_Contains (a, b) {
+    while (b.parentNode) {
+      if ((b =3D b.parentNode) =3D=3D a)
+        return true;
+    }
+   =20
+    return false;
+  }
+       =20
+  /*******/
+  =20
+  function ToggleSendToFriend() {
+    sendToFriendForm =3D document.getElementById('SendToFriendForm');
+    sendToFriendButton =3D =
+document.getElementById('SendToFriendButton');
+
+    if (sendToFriendForm.style.visibility =3D=3D "hidden") {
+      sendToFriendForm.style.visibility =3D "visible";
+      sendToFriendForm.style.display =3D 'block';
+    } else {
+      sendToFriendForm.style.visibility =3D "hidden";
+      sendToFriendForm.style.display =3D 'none';
+    }
+
+    //sendToFriendForm.style.left =3D getposOffset(sendToFriendButton, =
+"left") - sendToFriendForm.offsetWidth + sendToFriendButton.offsetWidth;
+    sendToFriendForm.style.left =3D getposOffset(sendToFriendButton, =
+"left") - (sendToFriendForm.offsetWidth / 2) + =
+(sendToFriendButton.offsetWidth / 2);
+    sendToFriendForm.style.top =3D getposOffset(sendToFriendButton, =
+"top") + sendToFriendButton.offsetHeight;
+  }
+ =20
+  function ToggleAddComment() {
+    commentMenu =3D document.getElementById('CommentMenu');
+    commentButton =3D document.getElementById('CommentButton');
+
+    commentMenu.style.left =3D getposOffset(commentButton, "left");
+    commentMenu.style.top =3D getposOffset(commentButton, "top") + =
+commentButton.offsetHeight;
+
+    if (commentMenu.style.visibility =3D=3D "hidden") {
+      commentMenu.style.visibility =3D "visible";
+      commentMenu.style.display =3D 'block';
+    } else {
+      commentMenu.style.visibility =3D "hidden";
+      commentMenu.style.display =3D 'none';
+    }
+  }
+ =20
+  function ToggleGalleryThumbnail(pictureID) {
+    largeThumbDiv =3D document.getElementById('SecondaryThumbDiv' + =
+pictureID);
+    smallThumb =3D document.getElementById('SmallThumb' + pictureID);
+
+    if (largeThumbDiv.className =3D=3D "secondaryThumbnailHidden") {
+      largeThumbDiv.className =3D "secondaryThumbnailPopup";
+      largeThumbDiv.style.left =3D getposOffset(smallThumb, "left") - =
+((largeThumbDiv.offsetWidth - smallThumb.offsetWidth) / 2) + "px";
+      largeThumbDiv.style.top =3D getposOffset(smallThumb, "top")  - =
+((largeThumbDiv.offsetHeight - smallThumb.offsetHeight) / 2) + "px";
+      setTimeout(function() { largeThumbDiv.style.visibility =3D =
+"visible"; }, 5);
+    } else {
+	  largeThumbDiv.className =3D "secondaryThumbnailHidden";
+    }
+  }
+ =20
+  function ToggleRateMenu() {
+    rateMenu =3D document.getElementById('RateMenu');
+    rateButton =3D document.getElementById('RateButton');
+   =20
+    rateMenu.style.left =3D getposOffset(rateButton, "left");
+    rateMenu.style.top =3D getposOffset(rateButton, "top") + =
+rateButton.offsetHeight;
+
+    if (rateMenu.style.visibility =3D=3D "hidden") {
+      rateMenu.style.visibility =3D "visible";
+      rateMenu.style.display =3D 'block';
+    } else {
+      rateMenu.style.visibility =3D "hidden";
+      rateMenu.style.display =3D 'none';
+    }
+   =20
+    // Init autohide
+    if (window.event) {
+      event.cancelBubble =3D true;
+    }
+   =20
+    ReleaseTimer( rateMenu );
+  }
+ =20
+  function ToggleRatePostMenu(control) {
+	rateButton =3D control.parentNode;
+	rateMenu =3D rateButton.nextSibling.nextSibling;
+
+	if ((rateButton.id !=3D "RateButton") || (rateMenu.id !=3D "RateMenu"))
+		return;
+
+    rateMenu.style.left =3D getposOffset(rateButton, "left");
+    rateMenu.style.top =3D getposOffset(rateButton, "top") + =
+rateButton.offsetHeight;
+
+    if (rateMenu.style.visibility =3D=3D "hidden") {
+      rateMenu.style.visibility =3D "visible";
+      rateMenu.style.display =3D 'block';
+    } else {
+      rateMenu.style.visibility =3D "hidden";
+      rateMenu.style.display =3D 'none';
+    }
+   =20
+    // Init autohide
+    if (window.event) {
+      event.cancelBubble =3D true;
+    }
+   =20
+    ReleaseTimer( rateMenu );
+  }
+
+  function ToggleSearchMenu() {
+    searchMenu =3D document.getElementById('SearchMenu');
+    searchButton =3D document.getElementById('SearchButton');
+
+    searchMenu.style.left =3D getposOffset(searchButton, "left");
+    searchMenu.style.top =3D getposOffset(searchButton, "top") + =
+searchButton.offsetHeight;
+
+    if (searchMenu.style.visibility =3D=3D "hidden") {
+      searchMenu.style.visibility =3D "visible";
+      searchMenu.style.display =3D 'block';
+    } else {
+      searchMenu.style.visibility =3D "hidden";
+      searchMenu.style.display =3D 'none';
+    }
+  }
+
+function getposOffset(what, offsettype){
+  var totaloffset=3D(offsettype=3D=3D"left")? what.offsetLeft : =
+what.offsetTop;
+  var parentEl=3Dwhat.offsetParent;
+  while (parentEl!=3Dnull){
+    totaloffset=3D(offsettype=3D=3D"left")? =
+totaloffset+parentEl.offsetLeft : totaloffset+parentEl.offsetTop;
+    parentEl=3DparentEl.offsetParent;
+  }
+  return totaloffset;
+}
+
+function ToggleMenuOnOff (menuName) {
+    var menu =3D document.getElementById(menuName);
+
+    if (menu.style.display =3D=3D 'none') {
+      menu.style.display =3D 'block';
+    } else {
+      menu.style.display =3D 'none';
+    }
+
+}
+
+function OpenWindow (target) {=20
+  window.open(target, "_Child", =
+"toolbar=3Dno,scrollbars=3Dyes,resizable=3Dyes,width=3D400,height=3D400")=
+;=20
+}
+
+function OpenPostWindow (target) {=20
+  window.open(target, "_Child", =
+"resizable=3Dyes,width=3D500,height=3D700");=20
+}
+
+/*
+Keep the user's cookie alive
+*/
+
+function MakeKeepAliveRequest()
+{
+	if (!KeepAliveUrl)
+		return;
+
+	if (KeepAliveTimer !=3D null)
+		window.clearTimeout(KeepAliveTimer);
+
+	var x =3D null;
+	if (typeof XMLHttpRequest !=3D "undefined")=20
+	{
+		x =3D new XMLHttpRequest();
+	}=20
+	else=20
+	{
+		try=20
+		{
+			x =3D new ActiveXObject("Msxml2.XMLHTTP");
+		}=20
+		catch (e)=20
+		{
+			try=20
+			{
+				x =3D new ActiveXObject("Microsoft.XMLHTTP");
+			}=20
+			catch (e)=20
+			{
+			}
+		}
+	}
+=09
+	try
+	{
+		// don't do this asynchronously
+		x.open("GET", KeepAliveUrl, false, "", "");
+		x.send(null);
+	}
+	catch (e)
+	{
+	}
+=09
+	KeepAliveTimer =3D window.setTimeout(MakeKeepAliveRequest, 599999);
+}
+
+function DetermineKeepAliveUrl()
+{
+	var scripts =3D document.getElementsByTagName("SCRIPT");
+	var i;
+	var url;
+=09
+	for (i =3D 0; i < scripts.length; i++)
+	{
+		url =3D scripts[i].src.toLowerCase();
+		if (url.indexOf('utility/global.js') !=3D -1)
+			return url.replace('utility/global.js', 'utility/keepalive.aspx');
+	}
+=09
+	return null;
+}
+
+var KeepAliveUrl =3D DetermineKeepAliveUrl();
+var KeepAliveTimer =3D window.setTimeout(MakeKeepAliveRequest, 599999);
+
+function ShowEditBlock(block) {
+	block.className =3D "CommonContentPartBorderOn";
+}
+function HideEditBlock(block) {
+	block.className =3D "CommonContentPartBorderOff";
+}
+
+function getCookie(sName) {
+	var cookie =3D "" + document.cookie;
+	var start =3D cookie.indexOf(sName);
+	if (cookie =3D=3D "" || start =3D=3D -1)=20
+		return "";
+	var end =3D cookie.indexOf(';',start);
+	if (end =3D=3D -1)
+		end =3D cookie.length;
+	return unescape(cookie.substring(start+sName.length + 1,end));
+}
+function setCookie(sName, value) {
+	document.cookie =3D sName + "=3D" + escape(value) + ";path=3D/;";
+}
+function setCookieForever(sName, value) {
+	document.cookie =3D sName + "=3D" + escape(value) + =
+";path=3D/;expires=3DFri, 1 Jan 2010 00:00:00 GMT;";
+}
+
+function inLineEditOn(control)
+{
+    control.className =3D "CommonInlineEditOn";
+}
+
+function inLineEditOff(control)
+{
+    control.className =3D "CommonInlineEditOff";
+}
+
+//Ajax Start
+
+function Ajax_GetXMLHttpRequest() {
+	if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else {
+		if (window.Ajax_XMLHttpRequestProgID) {
+			return new ActiveXObject(window.Ajax_XMLHttpRequestProgID);
+		} else {
+			var progIDs =3D ["Msxml2.XMLHTTP.5.0", "Msxml2.XMLHTTP.4.0", =
+"MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"];
+			for (var i =3D 0; i < progIDs.length; ++i) {
+				var progID =3D progIDs[i];
+				try {
+					var x =3D new ActiveXObject(progID);
+					window.Ajax_XMLHttpRequestProgID =3D progID;
+					return x;
+				} catch (e) {
+				}
+			}
+		}
+	}
+	return null;
+}
+function Ajax_CallBack(type, id, method, args, clientCallBack, =
+debugRequestText, debugResponseText, debugErrors, =
+includeControlValuesWithCallBack, url) {
+=09
+	if (!url)
+	{
+		url =3D window.location.href;
+		url =3D url.replace(/\#.*$/, '');
+		if (url.indexOf('?') > -1)
+			url +=3D "&Ajax_CallBack=3Dtrue";
+		else
+		{
+			if (url.substr(url.length - 1, 1) =3D=3D "/")
+				url +=3D "default.aspx";
+			=09
+			url +=3D "?Ajax_CallBack=3Dtrue";
+		}
+	}
+
+	var x =3D Ajax_GetXMLHttpRequest();
+	var result =3D null;
+	if (!x) {
+		result =3D { "value":null, "error": "NOXMLHTTP"};
+		if (debugErrors) {
+			alert("error: " + result.error);
+		}
+		if (clientCallBack) {
+			clientCallBack(result);
+		}
+		return result;
+	}
+
+	x.open("POST", url, clientCallBack ? true : false);
+	x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; =
+charset=3Dutf-8");
+	if (clientCallBack) {
+		x.onreadystatechange =3D function() {
+			var result =3D null;
+	=09
+			if (x.readyState !=3D 4) {
+				return;
+			}
+		=09
+			if (debugResponseText) {
+				alert(x.responseText);
+			}
+		=09
+			try
+			{
+				var result =3D eval("(" + x.responseText + ")");
+				if (debugErrors && result.error) {
+					alert("error: " + result.error);
+				}
+			}
+			catch (err)
+			{
+				if (window.confirm('The following error occured while processing an =
+AJAX request: ' + err.message + '\n\nWould you like to see the =
+response?'))
+				{
+					var w =3D window.open();
+					w.document.open('text/plain');
+					w.document.write(x.responseText);
+					w.document.close();
+				}
+			=09
+				result =3D new Object();
+				result.error =3D 'An AJAX error occured.  The response is invalid.';
+			}
+		=09
+			clientCallBack(result);		=09
+		}
+	}
+	var encodedData =3D "Ajax_CallBackType=3D" + type;
+	if (id) {
+		encodedData +=3D "&Ajax_CallBackID=3D" + id.split("$").join(":");
+	}
+	encodedData +=3D "&Ajax_CallBackMethod=3D" + method;
+	if (args) {
+		for (var i in args) {
+			encodedData +=3D "&Ajax_CallBackArgument" + i + "=3D" + =
+encodeURIComponent(args[i]);
+		}
+	}
+	if (includeControlValuesWithCallBack && document.forms.length > 0) {
+		var form =3D document.forms[0];
+		for (var i =3D 0; i < form.length; ++i) {
+			var element =3D form.elements[i];
+			if (element.name) {
+				var elementValue =3D null;
+				if (element.nodeName =3D=3D "INPUT") {
+					var inputType =3D element.getAttribute("TYPE").toUpperCase();
+					if (inputType =3D=3D "TEXT" || inputType =3D=3D "PASSWORD" || =
+inputType =3D=3D "HIDDEN") {
+						elementValue =3D element.value;
+					} else if (inputType =3D=3D "CHECKBOX" || inputType =3D=3D "RADIO") =
+{
+						if (element.checked) {
+							elementValue =3D element.value;
+						}
+					}
+				} else if (element.nodeName =3D=3D "SELECT") {
+					elementValue =3D element.value;
+				} else if (element.nodeName =3D=3D "TEXTAREA") {
+					elementValue =3D element.value;
+				}
+				if (elementValue) {
+					encodedData +=3D "&" + element.name + "=3D" + =
+encodeURIComponent(elementValue);
+				}
+			}
+		}
+	}
+	if (debugRequestText) {
+		alert(encodedData);
+	}
+	x.send(encodedData);
+	if (!clientCallBack) {
+		if (debugResponseText) {
+			alert(x.responseText);
+		}
+		result =3D eval("(" + x.responseText + ")");
+		if (debugErrors && result.error) {
+			alert("error: " + result.error);
+		}
+	}
+	delete x;
+	return result;
+}
+
+//Ajax End
+
+//Element Items Borrowed From Prototype
+
+function $() {
+  var elements =3D new Array();
+
+  for (var i =3D 0; i < arguments.length; i++) {
+    var element =3D arguments[i];
+    if (typeof element =3D=3D 'string')
+      element =3D document.getElementById(element);
+
+    if (arguments.length =3D=3D 1)=20
+      return element;
+
+    elements.push(element);
+  }
+
+  return elements;
+}
+
+
+var Element =3D {
+ =20
+  toggle: function() {
+    for (var i =3D 0; i < arguments.length; i++) {
+      var element =3D $(arguments[i]);
+      element.style.display =3D=20
+        (element.style.display =3D=3D 'none' ? '' : 'none');
+    }
+  },
+
+  hide: function() {
+    for (var i =3D 0; i < arguments.length; i++) {
+      var element =3D $(arguments[i]);
+      element.style.display =3D 'none';
+    }
+  },
+
+  show: function() {
+    for (var i =3D 0; i < arguments.length; i++) {
+      var element =3D $(arguments[i]);
+      element.style.display =3D '';
+    }
+  },
+
+  remove: function(element) {
+    element =3D $(element);
+    element.parentNode.removeChild(element);
+  },
+  =20
+  getHeight: function(element) {
+    element =3D $(element);
+    return element.offsetHeight;=20
+  }
+}
+
+
+//End Element Items
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/Utility/telligent_web_ui/1_0_3/Telligent_Modal.js
+
+=0A=
+Telligent_Modal=3Dnew =
+Object();Telligent_Modal._variableName=3D'Telligent_Modal';Telligent_Moda=
+l.LoadingHtmlUrl=3Dnull;Telligent_Modal.WindowCssClasses=3Dnew =
+Array();Telligent_Modal.WindowTitleCssClasses=3Dnew =
+Array();Telligent_Modal.WindowCloseCssClasses=3Dnew =
+Array();Telligent_Modal.WindowContentCssClasses=3Dnew =
+Array();Telligent_Modal.WindowMaskCssClasses=3Dnew =
+Array();Telligent_Modal.WindowFooterCssClasses=3Dnew =
+Array();Telligent_Modal.WindowResizeCssClasses=3Dnew =
+Array();Telligent_Modal.ZIndex=3D100;Telligent_Modal._isShown=3Dfalse;Tel=
+ligent_Modal._initialized=3Dfalse;Telligent_Modal._modal=3Dnull;Telligent=
+_Modal._modalTitle=3Dnull;Telligent_Modal._modalClose=3Dnull;Telligent_Mo=
+dal._modalAnimationMask=3Dnull;Telligent_Modal._modalMask=3Dnull;Telligen=
+t_Modal._modalIframe=3Dnull;Telligent_Modal._modalResize=3Dnull;Telligent=
+_Modal._modalFooter=3Dnull;Telligent_Modal._modalContent=3Dnull;Telligent=
+_Modal._animationHandle=3Dnull;Telligent_Modal._isOpening=3Dfalse;Tellige=
+nt_Modal._hiddenSelects=3Dnull;Telligent_Modal._checkForScrollResizeHandl=
+e=3Dnull;Telligent_Modal._lastModalInfo=3Dnull;Telligent_Modal._lastWindo=
+wInfo=3Dnull;Telligent_Modal._isDragging=3Dfalse;Telligent_Modal._moveMod=
+alInfo=3Dnull;Telligent_Modal._resizeModalInfo=3Dnull;Telligent_Modal._is=
+Resizing=3Dfalse;Telligent_Modal.Configure=3Dfunction(loadingHtmlUrl,wind=
+owCssClasses,windowTitleCssClasses,windowCloseCssClasses,windowContentCss=
+Classes,windowFooterCssClasses,windowResizeCssClasses,windowMaskCssClasse=
+s,zIndex)=0A=
+{this.LoadingHtmlUrl=3DloadingHtmlUrl;this.WindowCssClasses=3DwindowCssCl=
+asses;this.WindowTitleCssClasses=3DwindowTitleCssClasses;this.WindowClose=
+CssClasses=3DwindowCloseCssClasses;this.WindowContentCssClasses=3DwindowC=
+ontentCssClasses;this.WindowMaskCssClasses=3DwindowMaskCssClasses;this.Wi=
+ndowFooterCssClasses=3DwindowFooterCssClasses;this.WindowResizeCssClasses=
+=3DwindowResizeCssClasses;this.ZIndex=3DzIndex;}=0A=
+Telligent_Modal.IsShown=3Dfunction()=0A=
+{return this._isShown;}=0A=
+Telligent_Modal._getWindowInfo=3Dfunction()=0A=
+{var =
+scrollX=3D0,scrollY=3D0,width=3D0,height=3D0,contentWidth=3D0,contentHeig=
+ht=3D0;if(typeof(window.pageXOffset)=3D=3D'number')=0A=
+{scrollX=3Dwindow.pageXOffset;scrollY=3Dwindow.pageYOffset;}=0A=
+else =
+if(document.body&&(document.body.scrollLeft||document.body.scrollTop))=0A=
+{scrollX=3Ddocument.body.scrollLeft;scrollY=3Ddocument.body.scrollTop;}=0A=
+else =
+if(document.documentElement&&(document.documentElement.scrollLeft||docume=
+nt.documentElement.scrollTop))=0A=
+{scrollX=3Ddocument.documentElement.scrollLeft;scrollY=3Ddocument.documen=
+tElement.scrollTop;}=0A=
+if(typeof(window.innerWidth)=3D=3D'number')=0A=
+{width=3Dwindow.innerWidth;height=3Dwindow.innerHeight;}=0A=
+else =
+if(document.documentElement&&(document.documentElement.clientWidth||docum=
+ent.documentElement.clientHeight))=0A=
+{width=3Ddocument.documentElement.clientWidth;height=3Ddocument.documentE=
+lement.clientHeight;}=0A=
+else =
+if(document.body&&(document.body.clientWidth||document.body.clientHeight)=
+)=0A=
+{width=3Ddocument.body.clientWidth;height=3Ddocument.body.clientHeight;}=0A=
+if(document.documentElement&&(document.documentElement.scrollHeight||docu=
+ment.documentElement.offsetHeight))=0A=
+{if(document.documentElement.scrollHeight>document.documentElement.offset=
+Height)=0A=
+{contentWidth=3Ddocument.documentElement.scrollWidth;contentHeight=3Ddocu=
+ment.documentElement.scrollHeight;}=0A=
+else=0A=
+{contentWidth=3Ddocument.documentElement.offsetWidth;contentHeight=3Ddocu=
+ment.documentElement.offsetHeight;}}=0A=
+else =
+if(document.body&&(document.body.scrollHeight||document.body.offsetHeight=
+))=0A=
+{if(document.body.scrollHeight>document.body.offsetHeight)=0A=
+{contentWidth=3Ddocument.body.scrollWidth;contentHeight=3Ddocument.body.s=
+crollHeight;}=0A=
+else=0A=
+{contentWidth=3Ddocument.body.offsetWidth;contentHeight=3Ddocument.body.o=
+ffsetHeight;}}=0A=
+else=0A=
+{contentWidth=3Dwidth;contentHeight=3Dheight;}=0A=
+if(height>contentHeight)=0A=
+height=3DcontentHeight;if(width>contentWidth)=0A=
+width=3DcontentWidth;var rect=3Dnew =
+Object();rect.ScrollX=3DscrollX;rect.ScrollY=3DscrollY;rect.Width=3Dwidth=
+;rect.Height=3Dheight;rect.ContentWidth=3DcontentWidth;rect.ContentHeight=
+=3DcontentHeight;return rect;}=0A=
+Telligent_Modal._getCurrentStyleValue=3Dfunction(element,styleRule,jsStyl=
+eRule)=0A=
+{var =
+value=3D0;if(document.defaultView&&document.defaultView.getComputedStyle)=0A=
+value=3DparseInt(document.defaultView.getComputedStyle(element,"").getPro=
+pertyValue(styleRule),0);else if(element.currentStyle)=0A=
+value=3DparseInt(element.currentStyle[jsStyleRule],0);if(!isNaN(value))=0A=
+return value;else=0A=
+return 0;}=0A=
+Telligent_Modal._calculateStyleOffset=3Dfunction(element)=0A=
+{var result=3Dnew =
+Object();result.Height=3Dthis._getCurrentStyleValue(element,'border-top-w=
+idth','borderTopWidth')+=0A=
+this._getCurrentStyleValue(element,'border-bottom-width','borderBottomWid=
+th')+=0A=
+this._getCurrentStyleValue(element,'padding-top','paddingTop')+=0A=
+this._getCurrentStyleValue(element,'padding-bottom','paddingBottom');resu=
+lt.Width=3Dthis._getCurrentStyleValue(element,'border-left-width','border=
+LeftWidth')+=0A=
+this._getCurrentStyleValue(element,'border-right-width','borderRightWidth=
+')+=0A=
+this._getCurrentStyleValue(element,'padding-left','paddingLeft')+=0A=
+this._getCurrentStyleValue(element,'padding-right','paddingRight');return=
+ result;}=0A=
+Telligent_Modal.Open=3Dfunction(url,width,height,onCloseFunction,x,y,igno=
+reCloseAndAnimation)=0A=
+{if(!ignoreCloseAndAnimation&&this._isShown)=0A=
+this.Close();else if(this._hiddenSelects)=0A=
+{for(var i=3D0;i<this._hiddenSelects.length;i++)=0A=
+{if(this._hiddenSelects[i].Element.style.visibility=3D=3D'hidden')=0A=
+this._hiddenSelects[i].Element.style.visibility=3Dthis._hiddenSelects[i].=
+Visibility;}=0A=
+this._hiddenSelects=3Dnull;}=0A=
+if(!this._initialized)=0A=
+this._initialize();try=0A=
+{this._modalTitle.childNodes[1].innerHTML=3Dthis._modalIframe.contentWind=
+ow.document.title;}=0A=
+catch(err)=0A=
+{}=0A=
+if(!ignoreCloseAndAnimation)=0A=
+this._modalIframe.src=3Durl;try=0A=
+{this._modalIframe.contentWindow.opener=3Dwindow;}=0A=
+catch(err)=0A=
+{}=0A=
+this._modalAnimationMask.style.display=3D'none';this._modalMask.style.dis=
+play=3D'none';this._lastWindowInfo=3Dthis._getWindowInfo();this._modalAni=
+mationMask.style.display=3D'block';if(width>this._lastWindowInfo.Width)=0A=
+width=3Dthis._lastWindowInfo.Width;this._modalAnimationMask.style.positio=
+n=3D'absolute';this._modalAnimationMask.style.zIndex=3Dthis.ZIndex;this._=
+modalAnimationMask.style.display=3D'block';this._modalAnimationMask.style=
+.visibility=3D'hidden';this._modalAnimationMask.style.overflow=3D'hidden'=
+;this._modalAnimationMask.style.width=3Dwidth+'px';this._modalContent.sty=
+le.width=3Dwidth+'px';this._modal.style.position=3D'absolute';this._modal=
+.style.display=3D'block';this._modal.style.visibility=3D'hidden';this._mo=
+dal.style.left=3D'0px';this._modal.style.top=3D'0px';this._modalMask.styl=
+e.position=3D'absolute';this._modalMask.style.display=3D'block';this._mod=
+alMask.style.zIndex=3Dthis.ZIndex;this._modalMask.style.visibility=3D'vis=
+ible';var =
+modalContentOffset=3Dthis._calculateStyleOffset(this._modalContent);var =
+offset=3D(this._modal.offsetHeight-this._modalContent.offsetHeight)-modal=
+ContentOffset.Height;if(height+offset>this._lastWindowInfo.Height)=0A=
+height=3Dthis._lastWindowInfo.Height-offset;if(width<this._modalResize.of=
+fsetWidth*2)=0A=
+width=3Dthis._modalResize.offsetWidth*2;if(width<this._modalClose.offsetW=
+idth*2)=0A=
+width=3Dthis._modalClose.offsetWidth*2;if(height<this._modalTitle.offsetH=
+eight+this._modalFooter.offsetHeight)=0A=
+height=3Dthis._modalTitle.offsetHeight+this._modalFooter.offsetHeight;thi=
+s._modalIframe.style.height=3Dheight+'px';this._modalContent.style.height=
+=3Dheight+'px';this._modalContent.style.width=3D(width-(this._modal.offse=
+tWidth-this._modalContent.offsetWidth)-modalContentOffset.Width)+'px';thi=
+s._modalAnimationMask.style.width=3Dwidth+'px';this._modalAnimationMask.s=
+tyle.height=3Dthis._modal.offsetHeight+'px';this._modalMask.style.left=3D=
+'0px';this._modalMask.style.top=3D'0px';this._modalMask.style.width=3Dthi=
+s._lastWindowInfo.ContentWidth+'px';this._modalMask.style.height=3Dthis._=
+lastWindowInfo.ContentHeight+'px';this._lastWindowInfo=3Dthis._getWindowI=
+nfo();var panelWidth=3Dthis._modal.offsetWidth;var =
+panelHeight=3Dthis._modal.offsetHeight;var =
+animatePropertyName,animateTargetValue,animateNextValue;if(typeof(x)=3D=3D=
+'undefined'||isNaN(parseInt(x,10)))=0A=
+x=3D((this._lastWindowInfo.Width-panelWidth)/2)+this._lastWindowInfo.Scro=
+llX;if(x+panelWidth>this._lastWindowInfo.Width+this._lastWindowInfo.Scrol=
+lX)=0A=
+x=3Dthis._lastWindowInfo.Width+this._lastWindowInfo.ScrollX-panelWidth;if=
+(x<this._lastWindowInfo.ScrollX)=0A=
+x=3Dthis._lastWindowInfo.ScrollX;if(typeof(y)=3D=3D'undefined'||isNaN(par=
+seInt(y,10)))=0A=
+y=3D((this._lastWindowInfo.Height-panelHeight)/2)+this._lastWindowInfo.Sc=
+rollY;if(y+panelHeight>this._lastWindowInfo.Height+this._lastWindowInfo.S=
+crollY)=0A=
+y=3Dthis._lastWindowInfo.Height+this._lastWindowInfo.ScrollY-panelHeight;=
+if(y<this._lastWindowInfo.ScrollY)=0A=
+y=3Dthis._lastWindowInfo.ScrollY;this._modalAnimationMask.style.left=3Dx+=
+'px';this._modalAnimationMask.style.top=3Dy+'px';animateTargetValue=3D0;a=
+nimateNextValue=3D-panelHeight;this._modal.style.visibility=3D'visible';t=
+his._modalAnimationMask.style.visibility=3D'visible';this._modalAnimation=
+Mask.style.overflow=3D'hidden';if(this._modalAnimationMask.getClientRects=
+)=0A=
+{var =
+selectBoxes=3Ddocument.getElementsByTagName('select');this._hiddenSelects=
+=3Dnew Array();for(var i=3D0;i<selectBoxes.length;i++)=0A=
+{this._hiddenSelects[this._hiddenSelects.length]=3D{Element:selectBoxes[i=
+],Visibility:selectBoxes[i].style.visibility};selectBoxes[i].style.visibi=
+lity=3D'hidden';}}=0A=
+this._isOpening=3Dtrue;if(ignoreCloseAndAnimation)=0A=
+this._animationHandle=3Dwindow.setTimeout(new =
+Function(this._variableName+'._animate(0,0,0,0);'),9);else=0A=
+{this._modalIframe.style.display=3D'none';this._animate(0,-panelHeight,pa=
+nelHeight/3,.67);}=0A=
+this._lastModalInfo=3D{Url:this._modalIframe.src,OnCloseFunction:onCloseF=
+unction,X:x,Y:y,Width:parseInt(width,10),Height:parseInt(height,10)};this=
+._isShown=3Dtrue;}=0A=
+Telligent_Modal._checkForScrollResize=3Dfunction()=0A=
+{if(this._checkForScrollResizeHandle)=0A=
+window.clearTimeout(this._checkForScrollResizeHandle);if(this._isShown&&!=
+this._isOpening&&this._lastWindowInfo)=0A=
+{try=0A=
+{this._modalTitle.childNodes[1].innerHTML=3Dthis._modalIframe.contentWind=
+ow.document.title;}=0A=
+catch(err)=0A=
+{}=0A=
+var =
+windowInfo=3Dthis._getWindowInfo();if(windowInfo.ScrollX!=3Dthis._lastWin=
+dowInfo.ScrollX||windowInfo.ScrollY!=3Dthis._lastWindowInfo.ScrollY||wind=
+owInfo.Width!=3Dthis._lastWindowInfo.Width||windowInfo.Height!=3Dthis._la=
+stWindowInfo.Height)=0A=
+this.Open(null,this._lastModalInfo.Width,this._lastModalInfo.Height,this.=
+_lastModalInfo.OnCloseFunction,this._lastModalInfo.X,this._lastModalInfo.=
+Y,true);else=0A=
+this._checkForScrollResizeHandle=3Dwindow.setTimeout(new =
+Function('window.'+this._variableName+'._checkForScrollResize();'),999);}=
+}=0A=
+Telligent_Modal.Close=3Dfunction(returnValue)=0A=
+{if(this._isShown)=0A=
+{if(!this._initialized)=0A=
+this._initialize();this._modal.style.position=3D'absolute';this._modal.st=
+yle.display=3D'none';this._modalAnimationMask.style.position=3D'absolute'=
+;this._modalAnimationMask.style.display=3D'none';this._modalMask.style.po=
+sition=3D'absolute';this._modalMask.style.display=3D'none';this._modalIfr=
+ame.src=3Dthis.LoadingHtmlUrl;var =
+onCloseFunction=3Dthis._lastModalInfo.OnCloseFunction;this._isShown=3Dfal=
+se;this._lastModalInfo=3Dnull;this._windowInfo=3Dnull;if(this._hiddenSele=
+cts)=0A=
+{for(var i=3D0;i<this._hiddenSelects.length;i++)=0A=
+{if(this._hiddenSelects[i].Element.style.visibility=3D=3D'hidden')=0A=
+this._hiddenSelects[i].Element.style.visibility=3Dthis._hiddenSelects[i].=
+Visibility;}=0A=
+this._hiddenSelects=3Dnull;}=0A=
+if(onCloseFunction)=0A=
+onCloseFunction(returnValue);this.Dispose();}}=0A=
+Telligent_Modal.Refresh=3Dfunction()=0A=
+{if(this._animationHandle)=0A=
+window.clearTimeout(this._animationHandle);this.Dispose();if(this._isShow=
+n&&this._lastModalInfo)=0A=
+this.Open(this._lastModalInfo.Url,this._lastModalInfo.Width,this._lastMod=
+alInfo.OnCloseFunction,this._lastModalInfo.Height,this._lastModalInfo.OnC=
+loseFunction,this._lastModalInfo.X,this._lastModalInfo.Y);}=0A=
+Telligent_Modal._initialize=3Dfunction()=0A=
+{this._modalMask=3Ddocument.createElement('div');this._modalMask.style.wi=
+dth=3D'auto';this._modalMask.style.height=3D'auto';this._modalMask.style.=
+position=3D'absolute';this._modalMask.style.display=3D'none';var =
+mm=3Dthis._modalMask;if(this.WindowMaskCssClasses.length>0)=0A=
+{mm.className=3Dthis.WindowMaskCssClasses[0];for(var =
+i=3D1;i<this.WindowMaskCssClasses.length;i++)=0A=
+{mm.appendChild(document.createElement('div'));mm=3Dmm.childNodes[0];mm.c=
+lassName=3Dthis.WindowMaskCssClasses[i];mm.style.width=3D'auto';mm.style.=
+height=3D'auto';}}=0A=
+document.body.appendChild(this._modalMask);this._modalAnimationMask=3Ddoc=
+ument.createElement('div');this._modalAnimationMask.style.position=3D'abs=
+olute';this._modalAnimationMask.style.display=3D'none';this._modalAnimati=
+onMask.style.overflow=3D'hidden';this._modal=3Ddocument.createElement('di=
+v');this._modal.style.width=3D'auto';this._modal.style.height=3D'auto';th=
+is._modal.style.position=3D'absolute';this._modal.style.display=3D'none';=
+var m=3Dthis._modal;if(this.WindowCssClasses.length>0)=0A=
+{m.className=3Dthis.WindowCssClasses[0];for(var =
+i=3D1;i<this.WindowCssClasses.length;i++)=0A=
+{m.appendChild(document.createElement('div'));m=3Dm.childNodes[0];m.class=
+Name=3Dthis.WindowCssClasses[i];m.style.width=3D'auto';m.style.height=3D'=
+auto';}}=0A=
+this._modalTitle=3Ddocument.createElement('div');m.appendChild(this._moda=
+lTitle);if(this.WindowTitleCssClasses.length>0)=0A=
+{this._modalTitle.className=3Dthis.WindowTitleCssClasses[0];for(var =
+i=3D1;i<this.WindowTitleCssClasses.length;i++)=0A=
+{this._modalTitle.appendChild(document.createElement('div'));this._modalT=
+itle=3Dthis._modalTitle.childNodes[0];this._modalTitle.className=3Dthis.W=
+indowTitleCssClasses[i];}}=0A=
+this._modalTitle.onmousedown=3Dnew =
+Function('event','window.'+this._variableName+'._startDrag(event); =
+return =
+false;');this._modalClose=3Ddocument.createElement('div');this._modalTitl=
+e.appendChild(this._modalClose);var =
+mc=3Dthis._modalClose;if(this.WindowCloseCssClasses.length>0)=0A=
+{mc.className=3Dthis.WindowCloseCssClasses[0];for(var =
+i=3D1;i<this.WindowCloseCssClasses.length;i++)=0A=
+{mc.appendChild(document.createElement('div'));mc=3Dmc.childNodes[0];mc.c=
+lassName=3Dthis.WindowCloseCssClasses[i];}}=0A=
+this._modalClose.onclick=3Dnew =
+Function('window.'+this._variableName+'.Close();');this._modalTitle.appen=
+dChild(document.createElement('span'));var =
+e=3Ddocument.createElement('div');e.style.clear=3D'both';this._modalTitle=
+.appendChild(e);this._modalContent=3Ddocument.createElement('div');m.appe=
+ndChild(this._modalContent);if(this.WindowContentCssClasses.length>0)=0A=
+{this._modalContent.className=3Dthis.WindowContentCssClasses[0];for(var =
+i=3D1;i<this.WindowContentCssClasses.length;i++)=0A=
+{this._modalContent.appendChild(document.createElement('div'));this._moda=
+lContent=3Dthis._modalContent.childNodes[0];this._modalContent.className=3D=
+this.WindowContentCssClasses[i];}}=0A=
+this._modalIframe=3Ddocument.createElement('iframe');this._modalIframe.sr=
+c=3Dthis.LoadingHtmlUrl;this._modalIframe.width=3D'100%';this._modalIfram=
+e.border=3D'0';this._modalIframe.frameBorder=3D'no';this._modalIframe.sty=
+le.borderLeftWidth=3D'0px';this._modalIframe.style.borderRightWidth=3D'0p=
+x';this._modalIframe.style.borderTopWidth=3D'0px';this._modalIframe.style=
+.borderBottomWidth=3D'0px';this._modalContent.appendChild(this._modalIfra=
+me);this._modalFooter=3Ddocument.createElement('div');m.appendChild(this.=
+_modalFooter);var =
+mf=3Dthis._modalFooter;if(this.WindowFooterCssClasses.length>0)=0A=
+{mf.className=3Dthis.WindowFooterCssClasses[0];for(var =
+i=3D1;i<this.WindowFooterCssClasses.length;i++)=0A=
+{mf.appendChild(document.createElement('div'));mf=3Dmf.childNodes[0];mf.c=
+lassName=3Dthis.WindowFooterCssClasses[i];}}=0A=
+this._modalResize=3Ddocument.createElement('div');mf.appendChild(this._mo=
+dalResize);var =
+e=3Ddocument.createElement('div');e.style.clear=3D'both';mf.appendChild(e=
+);var mr=3Dthis._modalResize;if(this.WindowResizeCssClasses.length>0)=0A=
+{mr.className=3Dthis.WindowResizeCssClasses[0];for(var =
+i=3D1;i<this.WindowResizeCssClasses.length;i++)=0A=
+{mr.appendChild(document.createElement('div'));mr=3Dmr.childNodes[0];mr.c=
+lassName=3Dthis.WindowResizeCssClasses[i];}}=0A=
+this._modalResize.onmousedown=3Dnew =
+Function('event','window.'+this._variableName+'._startResize(event); =
+return =
+false;');this._modalAnimationMask.appendChild(this._modal);document.body.=
+appendChild(this._modalAnimationMask);this._initialized=3Dtrue;}=0A=
+Telligent_Modal.Dispose=3Dfunction()=0A=
+{if(this._initialized)=0A=
+{if(this._animationHandle)=0A=
+window.clearTimeout(this._animationHandle);this._isShown=3Dfalse;this._is=
+Opening=3Dfalse;if(document&&document.body)=0A=
+{document.body.removeChild(this._modalAnimationMask);document.body.remove=
+Child(this._modalMask);this._modalClose.onclick=3Dnull;this._modalTitle.o=
+nmousedown=3Dnull;this._modalResize.onmousedown=3Dnull;this._modal=3Dnull=
+;this._modalTitle=3Dnull;this._modalClose=3Dnull;this._modalAnimationMask=
+=3Dnull;this._modalMask=3Dnull;this._modalIframe=3Dnull;this._modalResize=
+=3Dnull;this._modalFooter=3Dnull;this._modalContent=3Dnull;}=0A=
+this._initialized=3Dfalse;}}=0A=
+Telligent_Modal._animate=3Dfunction(targetValue,nextValue,step,accelerati=
+on)=0A=
+{if(this._animationHandle)=0A=
+window.clearTimeout(this._animationHandle);if(!this._isOpening)=0A=
+return;var =
+currValue=3DparseInt(this._modal.style.top,10);if((step<0&&currValue<targ=
+etValue)||(step>0&&currValue>targetValue)||Math.abs(step)<1)=0A=
+{if(this._hiddenSelects)=0A=
+{for(var i=3D0;i<this._hiddenSelects.length;i++)=0A=
+this._hiddenSelects[i].Element.style.visibility=3D'hidden';}=0A=
+this._modal.style.top=3DtargetValue+'px';this._modal.style.position=3D'st=
+atic';this._modalAnimationMask.style.overflow=3D'visible';this._animation=
+Handle=3Dnull;if(!this._isResizing&&!this._isDragging)=0A=
+this._modalIframe.style.display=3D'block';this._isOpening=3Dfalse;this._l=
+astWindowInfo=3Dthis._getWindowInfo();this._checkForScrollResizeHandle=3D=
+window.setTimeout(new =
+Function('window.'+this._variableName+'._checkForScrollResize();'),999);}=0A=
+else=0A=
+{this._modal.style.top=3DnextValue+'px';nextValue=3DnextValue+step;if(ste=
+p>0&&nextValue>targetValue)=0A=
+nextValue=3DtargetValue;else if(step<0&&nextValue<targetValue)=0A=
+nextValue=3DtargetValue;step=3Dstep*acceleration;this._animationHandle=3D=
+window.setTimeout(new =
+Function(this._variableName+'._animate('+targetValue+','+nextValue+','+st=
+ep+','+acceleration+');'),19);}}=0A=
+Telligent_Modal._startDrag=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();if(!event)=0A=
+event=3Dwindow.event;this._moveModalInfo=3Dnew =
+Object();this._moveModalInfo.StartMouseX=3Devent.pageX?event.pageX:event.=
+screenX;this._moveModalInfo.StartMouseY=3Devent.pageY?event.pageY:event.s=
+creenY;this._moveModalInfo.StartModalX=3Dthis._lastModalInfo.X;this._move=
+ModalInfo.StartModalY=3Dthis._lastModalInfo.Y;this._moveModalInfo.Button=3D=
+event.button;document.onmouseup=3Dnew =
+Function('event','window.'+this._variableName+'._endDrag(event); return =
+false;');document.onmousemove=3Dnew =
+Function('event','window.'+this._variableName+'._drag(event); return =
+false;');this._modalIframe.style.display=3D'none';this._isDragging=3Dtrue=
+;}=0A=
+Telligent_Modal._endDrag=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();this._isDragging=3Dfalse;this._moveModalInfo=3Dnull;do=
+cument.onmouseup=3Dnull;document.onmousemove=3Dnull;this._modalIframe.sty=
+le.display=3D'block';}=0A=
+Telligent_Modal._drag=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();if(!event)=0A=
+event=3Dwindow.event;if(event.button!=3Dthis._moveModalInfo.Button)=0A=
+{this._endDrag(event);return;}=0A=
+var =
+eventX=3Dtypeof(event.pageX)!=3D'undefined'?event.pageX:event.screenX;var=
+ =
+eventY=3Dtypeof(event.pageY)!=3D'undefined'?event.pageY:event.screenY;var=
+ xChange=3DeventX-this._moveModalInfo.StartMouseX;var =
+yChange=3DeventY-this._moveModalInfo.StartMouseY;this.Open(null,this._las=
+tModalInfo.Width,this._lastModalInfo.Height,this._lastModalInfo.OnCloseFu=
+nction,this._moveModalInfo.StartModalX+xChange,this._moveModalInfo.StartM=
+odalY+yChange,true);}=0A=
+Telligent_Modal._startResize=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();if(!event)=0A=
+event=3Dwindow.event;this._resizeModalInfo=3Dnew =
+Object();this._resizeModalInfo.StartMouseX=3Devent.pageX?event.pageX:even=
+t.screenX;this._resizeModalInfo.StartMouseY=3Devent.pageY?event.pageY:eve=
+nt.screenY;this._resizeModalInfo.StartModalWidth=3Dthis._lastModalInfo.Wi=
+dth;this._resizeModalInfo.StartModalHeight=3Dthis._lastModalInfo.Height;t=
+his._resizeModalInfo.Button=3Devent.button;document.onmouseup=3Dnew =
+Function('event','window.'+this._variableName+'._endResize(event); =
+return false;');document.onmousemove=3Dnew =
+Function('event','window.'+this._variableName+'._resize(event); return =
+false;');this._modalIframe.style.display=3D'none';this._isResizing=3Dtrue=
+;}=0A=
+Telligent_Modal._endResize=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();this._isResizing=3Dfalse;this._resizeModalInfo=3Dnull;=
+document.onmouseup=3Dnull;document.onmousemove=3Dnull;this._modalIframe.s=
+tyle.display=3D'block';}=0A=
+Telligent_Modal._resize=3Dfunction(event)=0A=
+{if(!this._initialized)=0A=
+this._initialize();if(!event)=0A=
+event=3Dwindow.event;if(event.button!=3Dthis._resizeModalInfo.Button)=0A=
+{this._endResize(event);return;}=0A=
+var =
+eventX=3Dtypeof(event.pageX)!=3D'undefined'?event.pageX:event.screenX;var=
+ =
+eventY=3Dtypeof(event.pageY)!=3D'undefined'?event.pageY:event.screenY;var=
+ xChange=3DeventX-this._resizeModalInfo.StartMouseX;var =
+yChange=3DeventY-this._resizeModalInfo.StartMouseY;this.Open(null,this._r=
+esizeModalInfo.StartModalWidth+xChange,this._resizeModalInfo.StartModalHe=
+ight+yChange,this._lastModalInfo.OnCloseFunction,this._lastModalInfo.X,th=
+is._lastModalInfo.Y,true);}
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://translator.live.com/TranslatePageLink.aspx?pl=en
+
+=EF=BB=BFif(location.pathname && =
+location.pathname.toLowerCase().indexOf('bvframe.aspx') =3D=3D -1){
+document.write('&nbsp;&nbsp;');
+document.write('<select id=3D"MST_Tgt" onchange=3D"MST_SetTgt(this);" =
+style=3D"vertical-align: middle">');
+document.write('<option id=3D"MST_ProdName" value=3D"en">Translate this =
+page</option>');
+document.write('<option id=3D"MST_Tgt_ar" value=3D"ar" =
+>=D8=AA=D8=B1=D8=AC=D9=85=D8=A9 =D9=87=D8=B0=D9=87 =
+=D8=A7=D9=84=D8=B5=D9=81=D8=AD=D8=A9</option>');
+document.write('<option id=3D"MST_Tgt_zh-CHS" value=3D"zh-CHS" =
+>=E7=BF=BB=E8=AF=91=E6=AD=A4=E9=A1=B5</option>');
+document.write('<option id=3D"MST_Tgt_zh-CHT" value=3D"zh-CHT" =
+>=E7=BF=BB=E8=AD=AF=E6=AD=A4=E7=B6=B2=E9=A0=81</option>');
+document.write('<option id=3D"MST_Tgt_nl" value=3D"nl" >Deze pagina =
+vertalen</option>');
+document.write('<option id=3D"MST_Tgt_en" value=3D"en" =
+selected=3D"selected">Translate this page</option>');
+document.write('<option id=3D"MST_Tgt_fr" value=3D"fr" >Traduire cette =
+page</option>');
+document.write('<option id=3D"MST_Tgt_de" value=3D"de" >Diese Seite =
+=C3=BCbersetzen</option>');
+document.write('<option id=3D"MST_Tgt_it" value=3D"it" >Traduci questa =
+pagina</option>');
+document.write('<option id=3D"MST_Tgt_ja" value=3D"ja" =
+>=E3=81=93=E3=81=AE=E3=83=9A=E3=83=BC=E3=82=B8=E3=82=92=E7=BF=BB=E8=A8=B3=
+=E3=81=97=E3=81=BE=E3=81=99</option>');
+document.write('<option id=3D"MST_Tgt_ko" value=3D"ko" =
+>=EB=B2=88=EC=97=AD =EB=B3=B4=EA=B8=B0</option>');
+document.write('<option id=3D"MST_Tgt_pl" value=3D"pl" >Przet=C5=82umacz =
+t=C4=99 stron=C4=99</option>');
+document.write('<option id=3D"MST_Tgt_pt" value=3D"pt" >Traduzir esta =
+p=C3=A1gina</option>');
+document.write('<option id=3D"MST_Tgt_ru" value=3D"ru" =
+>=D0=9F=D0=B5=D1=80=D0=B5=D0=B2=D0=B5=D1=81=D1=82=D0=B8 =
+=D1=8D=D1=82=D1=83 =
+=D1=81=D1=82=D1=80=D0=B0=D0=BD=D0=B8=D1=86=D1=83</option>');
+document.write('<option id=3D"MST_Tgt_es" value=3D"es" >Traducir esta =
+p=C3=A1gina</option>');
+document.write('</select>');
+document.write('<a id=3D"MST_Link" target=3D"_blank" =
+href=3D"http://www.microsofttranslator.com/BV.aspx?ref=3DAddIn&lp=3Den_en=
+&a=3D'+encodeURIComponent(document.location.href)+'">');
+document.write('<img =
+src=3D"http://www.microsofttranslator.com/static/102508/img/Go.gif" =
+alt=3D"Translate this page" style=3D"vertical-align: middle" /></a>');
+function MST_SetTgt(eMSTTgt)
+{
+	var eMSTLink=3Ddocument.getElementById('MST_Link');
+	eMSTLink.href=3DeMSTLink.href.substring(0, =
+eMSTLink.href.indexOf('?ref=3DAddIn')+10)+
+		=
+'&lp=3Den_'+eMSTTgt.value+'&a=3D'+encodeURIComponent(document.location.hr=
+ef);
+}
+}
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/themes/common/omni_rsid_blogs.js
+
+// for sites using analytics.aspx, update omniGuidPath with the path to =
+the analytics.aspx file, omitting the protocol
+
+var _om_gbls =3D {
+	omniGuidPath : "",=20
+	s_account : "",  market : "", app : "",center : "", library : "", =
+subdom : "", catpath : "", site:"",
+	host : "", path : "", href : "", extraRsids : "", gAnalyticsId : "", =
+gAnalyticsIdStatus : "",
+	patharr : "", rsidprefix : "mssto", apl : "", split : "", addrsid : "",
+	pathHelper : function(arr,start) {
+			var catpath =3D "";
+			if (arr.length > start) {
+			for (var i =3D start; i < arr.length; i++) {
+				catpath +=3D arr[i];
+				if (i < (arr.length - 1)) catpath +=3D "/";
+			}
+			return catpath;
+		}
+		return "";
+	},
+	cleanupPath : function(txt) { return txt.replace(/\([^\)]*\)/g,""); }
+}
+var _om_tn_centers =3D {
+magazine : "tnctmag", netframework : "tnctnet", office : "tnctoff", =
+openspecifications : "tnctopen",
+sqlserver : "tnctsql", subscriptions : "tnctsub", teamsystem : =
+"tnctteam", vbasic : "tnctvbasic",
+vcsharp : "tnctcsharp", visualc : "tnctvisualc", vstudio : =
+"tnctvstudio", windows : "tnctwin",
+windowsmobile : "tnctwinmob", windowsserver : "tnctwinserv"
+}
+var _om_msdn_centers =3D {
+windowsserver : "ctwinserv", windows : "ctwin", security : "ctsec", =
+forefront : "ctfore",
+office : "ctoffice", systemcenter : "ctsyscent", sysinternals : =
+"ctsysint", exchange : "ctexch",
+sqlserver : "ctsql"
+}
+var _om_markets =3D {
+enus:1,zhcn:1,zhtw:1,frfr:1,dede:1,itit:1,jajp:1,kokr:1,ptbr:1,ruru:1,ese=
+s:1,enau:1,deat:1,nlbe:1,frbe:1,bgbg:1,cscz:1,=09
+dadk:1,fifi:1,elgr:1,idid:1,enie:1,ruru:1,enmy:1,nlnl:1,ennz:1,nbno:1,plp=
+l:1,roro:1,ensg:1,sksk:1,enza:1,svse:1,frch:1,=09
+dech:1,thth:1,trtr:1,ukua:1,vivn:1,hiin:1,heil:1,arsa:1
+}
+var _om_mscom_hosts =3D {
+answers_microsoft_com:1,blogs_msdn_com:1,blogs_technet_com:1,code_msdn_mi=
+crosoft_com:1,connect_microsoft_com:1,expression_microsoft_com:1,
+gallery_expression_microsoft_com:1,msdn_microsoft_com:1,social_answers_mi=
+crosoft_com:1,social_expression_microsoft_com:1,
+social_microsoft_com:1,social_msdn_microsoft_com:1,social_technet_microso=
+ft_com:1,technet_microsoft_com:1,
+visualstudiogallery_msdn_microsoft_com:1,www_microsoft_com:1,help_outlook=
+_com:1
+}
+
+_om_gbls.apl=3Dnew Function("l","v","d","u",""
++"var s=3Dthis,m=3D0;if(!l)l=3D'';if(u){var =
+i,n,a=3D_om_gbls.split(l,d);for(i=3D0;i<a."
++"length;i++){n=3Da[i];m=3Dm||(u=3D=3D1?(n=3D=3Dv):(n.toLowerCase()=3D=3D=
+v.toLowerCas"
++"e()));}}if(!m)l=3Dl?l+d+v:v;return l");
+
+_om_gbls.split=3Dnew Function("l","d",""
++"var i,x=3D0,a=3Dnew =
+Array;while(l){i=3Dl.indexOf(d);i=3Di>-1?i:l.length;a[x"
++"++]=3Dl.substring(0,i);l=3Dl.substring(i+d.length);}return a");
+
+_om_gbls.addrsid=3D function(matchType,str,rsid) {
+	if (matchType=3D=3D'h' && _om_gbls.host.indexOf(str) > -1) {
+		_om_gbls.s_account =3D _om_gbls.apl(_om_gbls.s_account,rsid,",",2);
+	} else if (matchType=3D=3D'f' && _om_gbls.href.indexOf(str) > -1) {=20
+		_om_gbls.s_account =3D _om_gbls.apl(_om_gbls.s_account,rsid,",",2);
+	}
+}
+
+_om_gbls.host =3D window.location.hostname.toLowerCase();
+_om_gbls.path =3D window.location.pathname.toLowerCase();
+
+// add test values for host and path here
+
+_om_gbls.href =3D _om_gbls.host + _om_gbls.path;
+
+(function () {
+
+// globals and rollups
+if (_om_gbls.host.indexOf('technet') > -1 || =
+_om_gbls.path.indexOf('/technet') =3D=3D 0) {=20
+	_om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstotn",",",2);=20
+	_om_gbls.site=3D"technet";=20
+}
+if (_om_gbls.host =3D=3D 'technet.microsoft.com') _om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstotnonly",",",2);
+if (_om_gbls.host.indexOf('msdn')>-1) {=20
+	_om_gbls.site=3D"msdn";=20
+	_om_gbls.addrsid('h','msdn','msstomsdn');
+}
+if (_om_gbls.host =3D=3D 'msdn.microsoft.com') _om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstomsdnonly",",",2); =20
+
+_om_gbls.addrsid('h','connect.microsoft.com','msstoconnect');
+_om_gbls.addrsid('h','answers.microsoft.com','msstoanswer');
+_om_gbls.addrsid('h','blogs.msdn.com','msstomsdnblogs');
+_om_gbls.addrsid('h','blogs.technet.com','msstotnblogs');
+_om_gbls.addrsid('h','code.msdn.microsoft.com','msstomsdncode');
+
+if (_om_gbls.host.indexOf('expression.microsoft.com')>-1) { =20
+	_om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstoexpall",",",2); 	// will include =
+social.expression
+	_om_gbls.site=3D"expression";=20
+}
+if (_om_gbls.host =3D=3D 'expression.microsoft.com') _om_gbls.s_account =
+=3D _om_gbls.apl(_om_gbls.s_account,"msstoexp",",",2); // expression =
+proper only
+
+if (_om_gbls.host.indexOf('social') > -1) {
+_om_gbls.addrsid('f','social.expression.microsoft.com/forums','msstoexpfo=
+rums');
+_om_gbls.addrsid('f','social.expression.microsoft.com/search','msstoexpse=
+arch');
+_om_gbls.addrsid('f','social.msdn.microsoft.com/forums','msstomsdnforums'=
+);
+_om_gbls.addrsid('f','social.msdn.microsoft.com/search','msstomsdnsearch'=
+);
+_om_gbls.addrsid('f','social.msdn.microsoft.com/profile','msstomsdnprofil=
+e');
+_om_gbls.addrsid('f','social.technet.microsoft.com/forums','msstotnforums=
+');
+_om_gbls.addrsid('f','social.technet.microsoft.com/search','msstotnsearch=
+');
+_om_gbls.addrsid('f','social.technet.microsoft.com/profile','msstotnprofi=
+le');
+_om_gbls.addrsid('f','social.microsoft.com/forums','msstomscomforums');
+}
+
+if (_om_gbls.host.indexOf('.net') > -1) {
+_om_gbls.addrsid('h','iis.net','msstoiisnet');
+_om_gbls.addrsid('h','asp.net','msstoaspnet');
+_om_gbls.addrsid('h','silverlight.net','msstoslvnet');
+_om_gbls.addrsid('h','windowsclient.net','msstowinnet');
+}
+_om_gbls.addrsid('h','codeplex.com','msstocodeplex');
+_om_gbls.addrsid('h','help.outlook.com','msstooutlook');
+
+if (_om_gbls.s_account.indexOf('forums') > -1) _om_gbls.app=3D"forums";
+if (_om_gbls.s_account.indexOf('search') > -1) _om_gbls.app=3D"search";
+if (_om_gbls.s_account.indexOf('profile') > -1) =
+_om_gbls.app=3D"profile";
+
+_om_gbls.patharr =3D _om_gbls.path.substring(1).split('\/');=09
+
+// determine additional report suites and variables for app, center, =
+etc.
+
+switch (_om_gbls.host)
+{
+	case "msdn.microsoft.com":
+		_om_gbls.subdom =3D "msdn";
+		_om_gbls.market =3D (_om_gbls.patharr.length > 0) ? =
+_om_gbls.patharr[0] : "";=20
+		// market specific report suites
+		if (_om_gbls.market) {=20
+			try {
+				if (_om_markets[_om_gbls.market.replace(/\-/,"")]) =
+_om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstomsdnmkt"+_om_gbls.market.replace(/\=
+-/,""),",",2);
+			} catch(err) {}
+		}
+		_om_gbls.center =3D (_om_gbls.patharr.length>1 =
+&&_om_gbls.patharr[1].indexOf('.')=3D=3D -1 && _om_gbls.patharr[1]) ? =
+_om_gbls.patharr[1] : "";
+		_om_gbls.center =3D _om_gbls.cleanupPath(_om_gbls.center);
+		if (_om_gbls.center) {=20
+			// center specific report suites
+			try {
+				if (_om_msdn_centers[_om_gbls.center]) _om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"mssto"+_om_msdn_centers[_om_gbls.center]=
+,",",2);
+			} catch(err) {}
+		}
+		_om_gbls.catpath =3D _om_gbls.pathHelper(_om_gbls.patharr,1);
+	  break;
+	case "technet.microsoft.com":
+		_om_gbls.subdom =3D "technet"; // deprecated
+		_om_gbls.market =3D (_om_gbls.patharr.length > 0) ? =
+_om_gbls.patharr[0] : "";=20
+		// market specific report suites
+		if (_om_gbls.market) {=20
+			try {
+				if (_om_markets[_om_gbls.market.replace(/\-/,"")]) =
+_om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"msstotnmkt"+_om_gbls.market.replace(/\-/=
+,""),",",2);
+			} catch(err) {}
+		}
+		_om_gbls.center =3D (_om_gbls.patharr.length>1 =
+&&_om_gbls.patharr[1].indexOf('.')=3D=3D -1 && _om_gbls.patharr[1]) ? =
+_om_gbls.patharr[1] : "";
+		_om_gbls.center =3D _om_gbls.cleanupPath(_om_gbls.center);
+		if (_om_gbls.center) {=20
+			// center specific report suites
+			try {
+				if (_om_tn_centers[_om_gbls.center]) _om_gbls.s_account =3D =
+_om_gbls.apl(_om_gbls.s_account,"mssto"+_om_tn_centers[_om_gbls.center],"=
+,",2);
+			} catch(err) {}
+		}
+		// add special cased centers
+		=
+_om_gbls.addrsid('f','www.microsoft.com/technet/scriptcenter','msstoctscr=
+ipt');	=09
+		=
+_om_gbls.addrsid('f','www.microsoft.com/technet/security','msstoctsec');	=
+=09
+
+		_om_gbls.catpath =3D _om_gbls.pathHelper(_om_gbls.patharr,1);
+	  break;
+}
+
+if (_om_gbls.host.indexOf('social') > -1) _om_gbls.market =3D =
+(_om_gbls.patharr.length > 1) ? _om_gbls.patharr[1] : "";=20
+if (_om_gbls.host =3D=3D'expression.microsoft.com') _om_gbls.market =3D =
+(_om_gbls.patharr.length > 0) ? _om_gbls.patharr[0] : "";=20
+
+
+// filter out dashes etc
+_om_gbls.s_account =3D _om_gbls.s_account.replace(/[\-\.]/g,"");
+
+// check if production, else append dev to rsid
+var _isprod=3Dfalse;
+var temphost=3D_om_gbls.host.replace(/\./g,"_");
+try {
+	if (_om_mscom_hosts[temphost]) _isprod=3Dtrue;
+} catch(err) {}
+
+var _om_nonmscom_hosts =3D =
+["asp.net","codeplex.com","iis.net","silverlight.net","windowsclient.net"=
+];
+if (!_isprod) {
+	for(var i=3D0; i < _om_nonmscom_hosts.length; i++) {
+		if (_om_gbls.host.indexOf(_om_nonmscom_hosts[i]) > -1) _isprod=3Dtrue;
+	}
+}
+
+if (!_isprod) {
+	// make sure all rsids end in dev. if not, append dev
+	var s2 =3D _om_gbls.s_account.split(",");
+	for (var i=3D0; i < s2.length; i++) {
+		if (s2[i].search(/dev$/) =3D=3D -1) s2[i] +=3D"dev";
+	}
+	_om_gbls.s_account =3D s2.join(",");
+}
+
+if(_om_gbls.s_account =3D=3D "dev") _om_gbls.s_account =3D "msstodev";
+=09
+})();
+
+//----------------
+// s_code.js file
+//----------------
+
+var t_omni_utils =3D {
+	omniGetCookie : function(name){
+		var pos=3Ddocument.cookie.indexOf(name+"=3D");
+		if (pos!=3D-1){
+			var start=3Dpos+name.length+1;
+			var end=3Ddocument.cookie.indexOf(";",start);
+			if (end=3D=3D-1){
+				end=3Ddocument.cookie.length;
+			}
+			return unescape(document.cookie.substring(start,end));
+		}
+		return null;
+	}
+	, cleanupPath : function(txt) {
+		return txt.replace(/\([^\)]*\)/g,"");
+	}
+	, logError : function(e,txt) {
+		var =
+sourceURL=3D"http://mssto.112.2o7.net/b/ss/msstoerrors/1/H.20.2--NS/0";
+		sourceURL +=3D =
+"?c1=3D"+escape(txt)+"&c2=3D"+escape(e.name)+"&c3=3D"+escape(e.message)+"=
+&events=3Devent1&v47=3DD%3DUser-Agent";
+		var debugImage =3D new Image();
+		debugImage.src =3D sourceURL;
+	}
+	, normalizePagename :	function(pval) {=09
+		if (pval =3D=3D "" || pval =3D=3D "default.aspx" || pval =3D=3D =
+"default.mspx") { pval =3D "homepage";  }
+		return pval;
+	}
+
+	, getOmniMetaTagData : function(val) {
+	  var metas =3D document.getElementsByTagName('META');
+	  var i;
+	  for (i =3D 0; i < metas.length; i++) {
+		var strX =3D metas[i].getAttribute('NAME');
+		if(strX)=20
+			{
+			if(strX.toLowerCase() =3D=3D val) {
+				return metas[i].getAttribute('CONTENT');
+			}=20
+		}
+	   }
+	   if (window[val]) return window[val];
+	  =20
+	   return false;
+	}
+
+	, getOmniPath : function(pval,skipBeginning,skipEnd) {
+		if (skipEnd > 0 && (pval.substring(pval.length - 1) =3D=3D "/")) pval =
++=3D "o"; // handle URLs ending in just /
+		if (skipEnd > 0 && (pval.substring(pval.length - 1) =3D=3D "/")) pval =
++=3D "o"; // handle URLs ending in just /
+		var pathArray =3D pval.split( '/' );
+		var len =3D pathArray.length - skipEnd;
+		var path =3D "";
+		for (var i =3D skipBeginning; i < len; i++ ) {
+		path +=3D pathArray[i];
+		(i < (len - 1)) ? path +=3D ": " : ""
+		}
+		return path;
+	}
+
+	, omniAddPVEvent : function() {
+		 if (!s.linkType) {=20
+			 s.eVar17 =3D s.pageName; =20
+			 s.events=3Ds.apl(s.events,"event1",",",2);
+		}
+	}
+	, omni_S4 : function() {
+		return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	}
+	, createRandomOmniId : function(e) {
+		return =
+(e+"_"+t_omni_utils.omni_S4()+"_"+t_omni_utils.omni_S4()+"_"+t_omni_utils=
+.omni_S4()+"_"+t_omni_utils.omni_S4()+t_omni_utils.omni_S4()+t_omni_utils=
+.omni_S4());
+	}
+
+	, setOmniID : function() {=20
+		if (!_om_gbls.gAnalyticsId) {
+			_om_gbls.gAnalyticsIdStatus=3D"fallback";
+		}
+		else {
+			_om_gbls.gAnalyticsId =3D _om_gbls.gAnalyticsId.replace(/\-/g,"_");
+		}
+		var e=3Dnew Date();=20
+		var eTime =3D e.getTime();
+		tempID =3D (_om_gbls.gAnalyticsId) ? _om_gbls.gAnalyticsId : =
+t_omni_utils.createRandomOmniId(eTime);
+		e.setTime(eTime+366*24*60*60*1000);
+		s.c_w('omniID',tempID,e);
+		return tempID;
+	}
+}
+
+_om_gbls.gAnalyticsId =3D t_omni_utils.omniGetCookie('omniID');
+_om_gbls.gAnalyticsIdStatus =3D (_om_gbls.gAnalyticsId) ? "fpc" : "";
+
+if (!_om_gbls.gAnalyticsId) {
+	try {=20
+		_om_gbls.gAnalyticsId =3D omni_guid;=20
+		_om_gbls.gAnalyticsIdStatus =3D (_om_gbls.gAnalyticsId) ? "jsvar" : =
+"";	=09
+	} catch(err) {};=20
+}
+if (_om_gbls.omniGuidPath && !_om_gbls.gAnalyticsId) {
+	try {=20
+		_om_gbls.gAnalyticsIdStatus =3D "aspx";=09
+		document.write("<SCR"+"IPT TYPE=3D'text/javascript' =
+SRC=3D'"+"http"+(window.location.protocol.indexOf('https:')=3D=3D0?'s':''=
+)+_om_gbls.omniGuidPath+"'><\/SCR"+"IPT>");
+	} catch(e) {
+		t_omni_utils.logError(e,"error in omniGuidPath call");
+	};=20
+}
+
+_om_gbls.extraRsids =3D t_omni_utils.getOmniMetaTagData("t_omni_rsids");
+if (_om_gbls.extraRsids) _om_gbls.s_account =3D _om_gbls.s_account + "," =
++ _om_gbls.extraRsids;
+
+var s=3Ds_gi(_om_gbls.s_account);
+
+s.events=3D'';
+s.eVar47=3D"D=3DUser-Agent";
+
+//Call Helper Functions if needed (checkMeta() findsprops() findevars() =
+findqueryparams() findevents())
+
+
+/************************** CONFIG SECTION **************************/
+s.currencyCode=3D"USD"; s.trackDownloadLinks=3Dfalse; =
+s.trackExternalLinks=3Dfalse; s.trackInlineStats=3Dtrue;
+s.linkDownloadFileTypes=3D"exe,zip,wav,mp3,mov,mpg,avi,wmv,pdf,doc,docx,x=
+ls,xlsx,ppt,pptx,asx";
+
+// linkInternalFilters can get overridden on the page
+s.linkInternalFilters=3D"javascript:,msdn.microsoft.com/,technet.microsof=
+t.com/";=20
+s.linkLeaveQueryString=3Dfalse; s.linkTrackVars=3D"None"; =
+s.linkTrackEvents=3D"None";
+
+/* Page Name Plugin Config */
+s.siteID=3D""; s.defaultPage=3D""; =
+s.queryVarsList=3D"";s.pathExcludeDelim=3D";";s.pathConcatDelim=3D"";s.pa=
+thExcludeList=3D"";=20
+
+/* Plugin Config */
+s.usePlugins=3Dtrue;
+
+function s_doPlugins(s) {
+	// check for page metadata overrides
+	if (t_omni_utils.getOmniMetaTagData("t_omni_errorpage")) { s.pageType =
+=3D "errorPage"; }
+	var tvar=3D"";
+	tvar=3Dt_omni_utils.getOmniMetaTagData("t_omni_pagename");  if (tvar) { =
+s.pageName =3D tvar; }
+	tvar=3Dt_omni_utils.getOmniMetaTagData("t_omni_channel");  if (tvar) { =
+s.channel =3D tvar; }
+	tvar=3Dt_omni_utils.getOmniMetaTagData("t_omni_pagetitle");  if (tvar) =
+{ s.prop3 =3D tvar; }
+
+	t_omni_utils.omniAddPVEvent();
+=09
+	// External Campaigns=20
+	if(!s.campaign)
+		s.campaign=3Ds.getQueryParam('mc_id'); // reuse webtrends
+	if(!s.campaign)
+		s.campaign=3Ds.getQueryParam('cmxid'); // used due to comscore
+	if(!s.campaign)
+		s.campaign=3Ds.getQueryParam('ocid');  // common tracking code at =
+Microsoft
+=09
+	s.campaign=3Ds.getValOnce(s.campaign,"s_campaign",0);
+
+	s.prop31=3Ds.eVar31=3Ds.getQueryParam('query');
+	s.prop32=3Ds.eVar32=3Ds.getQueryParam('ac');
+	s.prop33=3Ds.eVar33=3Ds.getQueryParam('refinement');
+
+	// removed icid, trid, plugins for detslv, getnewrepeat, getvisitnum =
+since not needed
+=09
+	/* Plugin Example: getPagename v2.1 */
+	if(!s.pageType && !s.pageName)
+		s.pageName=3Ds.getPageName();
+
+	// removed exitLinkHandler adn downloadLinkHandler since not needed
+
+	if (_om_gbls.gAnalyticsIdStatus =3D=3D"fallback") {
+		 s.events=3Ds.apl(s.events,"event10",",",2);
+	}
+
+	/* Copy Props to eVars */
+	if(s.prop1){s.eVar1=3Ds.prop1}
+	if(s.prop2){s.eVar2=3Ds.prop2}
+	if(s.prop3){s.eVar3=3Ds.prop3}
+	if(s.prop4){s.eVar4=3Ds.prop4}
+	if(s.prop5){s.eVar5=3Ds.prop5}
+	if(s.prop6){s.eVar6=3Ds.prop6}
+	if(s.prop7){s.eVar7=3Ds.prop7}
+
+=09
+	s.eVar45 =3D s.prop45 =3D _om_gbls.gAnalyticsIdStatus;
+	s.linkTrackVars=3Ds.apl(s.linkTrackVars,"visitorID",",",2);
+	s.linkTrackVars=3Ds.apl(s.linkTrackVars,"eVar45",",",2);
+	s.linkTrackVars=3Ds.apl(s.linkTrackVars,"prop45",",",2);
+}
+s.doPlugins=3Ds_doPlugins
+/************************** PLUGINS SECTION *************************/
+
+/*
+ * Plugin: getQueryParam 2.1 - return query string parameter(s)
+ */
+s.getQueryParam=3Dnew Function("p","d","u",""
++"var =
+s=3Dthis,v=3D'',i,t;d=3Dd?d:'';u=3Du?u:(s.pageURL?s.pageURL:s.wd.locati"
++"on);if(u=3D=3D'f')u=3Ds.gtfs().location;while(p){i=3Dp.indexOf(',');i=3D=
+i<0?p"
++".length:i;t=3Ds.p_gpv(p.substring(0,i),u+'');if(t)v+=3Dv?d+t:t;p=3Dp.su=
+bs"
++"tring(i=3D=3Dp.length?i:i+1)}return v");
+s.p_gpv=3Dnew Function("k","u",""
++"var =
+s=3Dthis,v=3D'',i=3Du.indexOf('?'),q;if(k&&i>-1){q=3Du.substring(i+1);v"
++"=3Ds.pt(q,'&','p_gvf',k)}return v");
+s.p_gvf=3Dnew Function("t","k",""
++"if(t){var =
+s=3Dthis,i=3Dt.indexOf('=3D'),p=3Di<0?t:t.substring(0,i),v=3Di<0?'T"
++"rue':t.substring(i+1);if(p.toLowerCase()=3D=3Dk.toLowerCase())return =
+s."
++"epa(v)}return ''");
+
+/*
+ * Plugin: getValOnce 0.2 - get a value once per session or number of =
+days
+ */
+s.getValOnce=3Dnew Function("v","c","e",""
++"var s=3Dthis,k=3Ds.c_r(c),a=3Dnew =
+Date;e=3De?e:0;if(v){a.setTime(a.getTime("
++")+e*86400000);s.c_w(c,v,e?a:0);}return v=3D=3Dk?'':v");
+
+// removed Plugin: exitLinkHandler 0.5
+// removed Plugin: downloadLinkHandler 0.5
+// removed Plugin: getSilverlightVersion
+
+/*
+ * Plugin Utility: apl v1.1
+ */
+s.apl=3Dnew Function("l","v","d","u",""
++"var s=3Dthis,m=3D0;if(!l)l=3D'';if(u){var =
+i,n,a=3Ds.split(l,d);for(i=3D0;i<a."
++"length;i++){n=3Da[i];m=3Dm||(u=3D=3D1?(n=3D=3Dv):(n.toLowerCase()=3D=3D=
+v.toLowerCas"
++"e()));}}if(!m)l=3Dl?l+d+v:v;return l");
+
+/*
+ * Utility Function: split v1.5 (JS 1.0 compatible)
+ */
+s.split=3Dnew Function("l","d",""
++"var i,x=3D0,a=3Dnew =
+Array;while(l){i=3Dl.indexOf(d);i=3Di>-1?i:l.length;a[x"
++"++]=3Dl.substring(0,i);l=3Dl.substring(i+d.length);}return a");
+
+
+/*
+ * Custom Plugin:  getSilverlightVersion
+// removed getSilverlightVersion
+ */
+=20
+
+
+/********************************************************************
+ *
+ * Supporting functions that may be shared between plug-ins
+ *
+ *******************************************************************/
+/*
+ * Utility Function: p_gh
+ */
+s.p_gh=3Dnew Function(""
++"var s=3Dthis;if(!s.eo&&!s.lnk)return '';var =
+o=3Ds.eo?s.eo:s.lnk,y=3Ds.ot("
++"o),n=3Ds.oid(o),x=3Do.s_oidt;if(s.eo&&o=3D=3Ds.eo){while(o&&!n&&y!=3D'B=
+ODY'){"
++"o=3Do.parentElement?o.parentElement:o.parentNode;if(!o)return =
+'';y=3Ds."
++"ot(o);n=3Ds.oid(o);x=3Do.s_oidt}}return o.href?o.href:'';");
+
+s.p_gh_windows_new=3Dnew Function(""
++"var s=3Dthis;if(!s.eo&&!s.lnk)return '';var =
+o=3Ds.eo?s.eo:s.lnk,y=3Ds.ot("
++"o),n=3Ds.oid(o),x=3Do.s_oidt;if(s.eo&&o=3D=3Ds.eo){while(o&&!n&&y!=3D'B=
+ODY'){"
++"o=3Do.parentElement?o.parentElement:o.parentNode;if(!o)return =
+'';y=3Ds."
++"ot(o);n=3Ds.oid(o);x=3Do.s_oidt}}return o.href?o:'';");
+
+
+// removed getNewRepeat 1.0=20
+
+/*
+ * Plugin: getPageName v2.1 - parse URL and return
+ */
+s.getPageName=3Dnew Function("u",""
++"var =
+s=3Dthis,v=3Du?u:''+s.wd.location,x=3Dv.indexOf(':'),y=3Dv.indexOf('/',"
++"x+4),z=3Dv.indexOf('?'),c=3Ds.pathConcatDelim,e=3Ds.pathExcludeDelim,g=3D=
+s."
++"queryVarsList,d=3Ds.siteID,n=3Dd?d:'',q=3Dz<0?'':v.substring(z+1),p=3Dv=
+.sub"
++"string(y+1,q?z:v.length);z=3Dp.indexOf('#');p=3Dz<0?p:s.fl(p,z);x=3De?p=
+.i"
++"ndexOf(e):-1;p=3Dx<0?p:s.fl(p,x);p+=3D!p||p.charAt(p.length-1)=3D=3D'/'=
+?s.d"
++"efaultPage:'';y=3Dc?c:'/';while(p){x=3Dp.indexOf('/');x=3Dx<0?p.length:=
+x;"
++"z=3Ds.fl(p,x);if(!s.pt(s.pathExcludeList,',','p_c',z))n+=3Dn?y+z:z;p=3D=
+p."
++"substring(x+1)}y=3Dc?c:'?';while(g){x=3Dg.indexOf(',');x=3Dx<0?g.length=
+:x"
++";z=3Ds.fl(g,x);z=3Ds.pt(q,'&','p_c',z);if(z){n+=3Dn?y+z:z;y=3Dc?c:'&'}g=
+=3Dg.s"
++"ubstring(x+1)}return n");
+
+
+/*=20
+ * Utility Function: p_c
+ */
+s.p_c=3Dnew Function("v","c",""
++"var x=3Dv.indexOf('=3D');return =
+c.toLowerCase()=3D=3Dv.substring(0,x<0?v.le"
++"ngth:x).toLowerCase()?v:0");
+
+s.visitorNamespace=3D"microsoftsto";
+s.dc=3D112;
+
+// include media module here as necessary in future
+
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=3D'',s_objectID;function s_gi(un,pg,ss){var =
+c=3D"=3Dfun`o(~.substring(~){`Ps=3D^O~.indexOf(~#2 ~;$2~`b$2~=3Dnew =
+Fun`o(~.length~.toLowerCase()~`Ps#8c_#k^an+'],~=3Dnew =
+Object~};s.~`YMigrationServer~.toU"
++"pperCase~){$2~','~s.wd~);s.~')q=3D'~=3Dnew =
+Array~ookieDomainPeriods~.location~^LingServer~dynamicAccount~var =
+~link~s.m_~=3D=3D'~s.apv~BufferedRequests~Element~)$2x^b!Object#WObject.p=
+rototype#WObject.protot"
++"ype[x])~etTime~visitor~$w@c(~referrer~else =
+~s.pt(~s.maxDelay~}c#E(e){~#i+~=3D''~.lastIndexOf(~^wc_i~}$2~.protocol~=3D=
+new =
+Date~^wobjectID=3Ds.ppu=3D$I=3D$Iv1=3D$Iv2=3D$Iv3~for(i=3D~ction~javaEnab=
+led~onclick~Name~te"
++"rnalFilters~javascript~s.dl~@6s.b.addBehavior(\"# default# =
+~=3DparseFloat(~typeof(v)=3D=3D\"~window~cookie~while(~s.vl_g~Type~;i#U{~=
+tfs~s.un~&&s.~o^woid~browser~.parent~document~colorDepth~String~.host~s"
++".fl(~s.rep(~s.eo~'+tm@S~s.sq~parseInt(~t=3Ds.ot(o)~track~nload~j=3D'1.~=
+this~#PURL~}else{~s.vl_l~lugins~'){q=3D'~dynamicVariablePrefix~');~;for(~=
+Sampling~s.rc[un]~Event~._i~&&(~loadModule~resolution~s.c_r"
++"(~s.c_w(~s.eh~s.isie~\"m_\"+n~Secure~Height~tcf~isopera~ismac~escape(~'=
+s_~.href~screen.~s#8gi(~Version~harCode~variableProvider~.s_~)s_sv(v,n[k]=
+,i)}~')>=3D~){s.~)?'Y':'N'~u=3Dm[t+1](~i)clearTimeout(~e&"
++"&l$bSESSION'~name~home#P~;try{~,$m)~s.ssl~s.oun~s.rl[u~Width~o.type~s.v=
+l_t~=3Ds.sp(~Lifetime~s.gg('objectID~sEnabled~'+n+'~.mrq(@wun+'\"~Externa=
+lLinks~charSet~lnk~onerror~http~currencyCode~.src~disab"
++"le~.get~MigrationKey~(''+~&&!~f',~){t=3D~r=3Ds[f](~u=3Dm[t](~Opera~Math=
+.~s.ape~s.fsg~s.ns6~conne~InlineStats~&&l$bNONE'~Track~'0123456789~true~+=
+\"_c\"]~s.epa(~t.m_nl~s.va_t~m._d~n=3Ds.oid(o)~,'sqs',q);~Lea"
++"veQuery~?'&~'=3D')~n){~\"'+~){n=3D~'_'+~'+n;~\",''),~,255)}~if(~vo)~s.s=
+ampled~=3Ds.oh(o);~+(y<1900?~n]=3D~1);~&&o~:'';h=3Dh?h~;'+(n?'o.~sess~cam=
+paign~lif~ in ~s.co(~ffset~s.pe~m._l~s.c_d~s.brl~s.nrs~s[mn]~,'"
++"vo~s.pl~=3D(apn~space~\"s_gs(\")~vo._t~b.attach~2o7.net'~Listener~Year(=
+~d.create~=3Ds.n.app~)}}}~!=3D'~'||t~)+'/~s()+'~){p=3D~():''~a['!'+t]~&&c=
+){~://')i+=3D~){v=3Ds.n.~channel~100~rs,~.target~o.value~s_si(t)~"
++"')dc=3D'1~\".tl(\")~etscape~s_')t=3Dt~omePage~=3D'+~&&t~[b](e);~\"){n[k=
+]~';s.va_~a+1,b):~return~mobile~height~events~random~code~=3Ds_~=3Dun~,pe=
+v~'MSIE ~'fun~floor(~atch~transa~s.num(~m._e~s.c_gd~,'lt~tm.g~."
++"inner~;s.gl(~,f1,f2~',s.bc~page~Group,~.fromC~sByTag~')<~++)~)){~||!~+'=
+;'~i);~y+=3D~l&&~''+x~[t]=3D~[i]=3D~[n];~' =
+'+~'+v]~>=3D5)~:'')~+1))~il['+s~!a[t])~~s._c=3D^pc';`H=3D`y`5!`H`i@v`H`il=
+`K;`H`in=3D0;}s^al=3D`H`il"
++";s^an=3D`H`in;s^al[s^a$7s;`H`in++;s.an#8an;s.cls`0x,c){`Pi,y`g`5!c)c=3D=
+^O.an;`n0;i<x`8^3n=3Dx`1i,i+1)`5c`3n)>=3D0)#Zn}`4y`Cfl`0x,l){`4x?@Ux)`10,=
+l):x`Cco`0o`F!o)`4o;`Pn`B,x^Wx$Fo)$2x`3'select#T0&&x`3'filter"
++"#T0)n[x]=3Do[x];`4n`Cnum`0x){x`g+x^W`Pp=3D0;p<x`8;p#U$2(@j')`3x`1p,p#j<=
+0)`40;`41`Crep#8rep;s.sp#8sp;s.jn#8jn;@c`0x`2,h=3D@jABCDEF',i,c=3Ds.@L,n,=
+l,e,y`g;c=3Dc?c`E$g`5x){x`g+x`5c`SAUTO'^b'').c^uAt){`n0;i<x`8^3"
++"c=3Dx`1i,i+$8n=3Dx.c^uAt(i)`5n>127){l=3D0;e`g;^0n||l<4){e=3Dh`1n%16,n%1=
+6+1)+e;n=3D(n-n%16)/16;l++}#Z'%u'+e}`6c`S+')#Z'%2B';`b#Z^oc)}x=3Dy^Qx=3Dx=
+?^F^o#b),'+`G%2B'):x`5x&&c^6em=3D=3D1&&x`3'%u#T0&&x`3'%U#T0){i=3Dx`3'%^V^=
+"
++"0i>=3D0){i++`5h`18)`3x`1i,i+1)`E())>=3D0)`4x`10,i)+'u00'+x`1#Yi=3Dx`3'%=
+',i$a}`4x`Cepa`0x`2;`4x?un^o^F#b,'+`G =
+')):x`Cpt`0x,d,f,a`2,t=3Dx,z=3D0,y,r;^0t){y=3Dt`3d);y=3Dy<0?t`8:y;t=3Dt`1=
+0,y);@Yt,a)`5r)`4r;z+=3Dy+d`8;t=3Dx"
++"`1z,x`8);t=3Dz<x`8?t:''}`4''`Cisf`0t,a){`Pc=3Da`3':')`5c>=3D0)a=3Da`10,=
+c)`5t`10,2)`S$u`12);`4(t!`g$x=3D=3Da)`Cfsf`0t,a`2`5`ca,`G,'is@Wt))@d+=3D(=
+@d!`g?`G`ft;`40`Cfs`0x,f`2;@d`g;`cx,`G,'fs@Wf);`4@d`Csi`0wd`2,c`g+s"
++"_gi,a=3Dc`3\"{\"),b=3Dc`h\"}\"),m;c#8fe(a>0&&b>0?c`1#10)`5wd&&wd.^A$iwd=
+.s`Xout(#C`o =
+s_sv(o,n,k){`Pv=3Do[k],i`5v`F`xstring\"||`xnumber\")n[k]=3Dv;`bif =
+(`xarray$z`K;`n0;i<v`8;i++^x`bif (`xobject$z`B^Wi$Fv^x}"
++"}fun`o =
+$q{`Pwd=3D`y,s,i,j,c,a,b;wd^wgi`7\"un\",\"pg\",\"ss\",@wc+'\");wd.^s@w@9+=
+'\");s=3Dwd.s;s.sa(@w^5+'\"`I^4=3Dwd;`c^1,\",\",\"vo1\",t`I@M=3D^G=3Ds.`Q=
+`r=3Ds.`Q^2=3D`H`m=3D\\'\\'`5t.m_#a@n)`n0;i<@n`8^3n=3D@n[i]`5@"
++"vm=3Dt#ec=3Dt[^i]`5m$ic=3D\"\"+c`5c`3\"fun`o\")>=3D0){a=3Dc`3\"{\");b=3D=
+c`h\"}\");c=3Da>0&&b>0?c`1#10;s[^i@l=3Dc`5#H)s.^c(n)`5s[n])for(j=3D0;j<$J=
+`8;j#Us_sv(m,s[n],$J[j]$a}}`Pe,o,t@6o=3D`y.opener`5o$9^wgi@Xo^wgi(@w^5+'"=
+
++"\")`5t)$q}`e}',1)}`Cc_d`g;#If`0t,a`2`5!#Gt))`41;`40`Cc_gd`0`2,d=3D`H`M^=
+D@4,n=3Ds.fpC`L,p`5!n)n=3Ds.c`L`5d@V$K@xn?^Jn):2;n=3Dn>2?n:2;p=3Dd`h'.')`=
+5p>=3D0){^0p>=3D0&&n>1$fd`h'.',p-$8n--}$K=3Dp>0&&`cd,'.`Gc_gd@W0)?d`1"
++"p):d}}`4$K`Cc_r`0k`2;k=3D@c(k);`Pc=3D#fs.d.`z,i=3Dc`3#fk+@u,e=3Di<0?i:c=
+`3';',i),v=3Di<0?'':@mc`1i+2+k`8,e<0?c`8:e));`4v$b[[B]]'?v:''`Cc_w`0k,v,e=
+`2,d=3D#I(),l=3Ds.`z@F,t;v`g+v;l=3Dl?@Ul)`E$g`5@3@h@X(v!`g?^Jl?l:0):-"
++"60)`5t){e`l;e.s`X(e.g`X()+(t*$m0))}`jk@h^zd.`z=3Dk+'`Zv!`g?v:'[[B]]')+'=
+; path=3D/;'+(@3?' expires$we.toGMT^C()#X`f(d?' =
+domain$wd#X:'^V`4^ek)=3D=3Dv}`40`Ceh`0o,e,r,f`2,b=3D^p'+e+@ys^an,n=3D-1,l=
+,i,x`5!^gl)^gl`K;"
++"l=3D^gl;`n0;i<l`8&&n<0;i++`Fl[i].o=3D=3Do&&l[i].e=3D=3De)n=3Di`jn<0@xi;=
+l[n]`B}x=3Dl#ex.o=3Do;x.e=3De;f=3Dr?x.b:f`5r||f){x.b=3Dr?0:o[e];x.o[e]=3D=
+f`jx.b){x.o[b]=3Dx.b;`4b}`40`Ccet`0f,a,t,o,b`2,r,^l`5`T>=3D5^b!s.^m||`T>=3D=
+7#V^l`7'"
++"s`Gf`Ga`Gt`G`Pe,r@6@Ya)`er=3Ds[t](e)}`4r^Vr=3D^l(s,f,a,t)^Q$2s.^n^6u`3#=
+B4^y0)r=3Ds[b](a);else{^g(`H,'@N',0,o);@Ya`Ieh(`H,'@N',1)}}`4r`Cg^4et`0e`=
+2;`4s.^4`Cg^4oe`7'e`G`Ac;^g(`y,\"@N\",1`Ie^4=3D1;c=3Ds.t()`5c)s"
++".d.write(c`Ie^4=3D0;`4@k'`Ig^4fb`0a){`4`y`Cg^4f`0w`2,p=3Dw^9,l=3Dw`M;s.=
+^4=3Dw`5p&&p`M!=3D#ap`M^D=3D=3Dl^D^z^4=3Dp;`4s.g^4f(s.^4)}`4s.^4`Cg^4`0`2=
+`5!s.^4^z^4=3D`H`5!s.e^4)s.^4=3Ds.cet('g^4@Ws.^4,'g^4et',s.g^4oe,'g^4fb')=
+"
++"}`4s.^4`Cmrq`0u`2,l=3D@A],n,r;@A]=3D0`5l)for(n=3D0;n<l`8;n#U{r=3Dl#es.m=
+r(0,0,r.r,0,r.t,r.u)}`Cbr`0id,rs`2`5s.@R`U#W^f^pbr',rs))$L=3Drs`Cflush`U`=
+0){^O.fbr(0)`Cfbr`0id`2,br=3D^e^pbr')`5!br)br=3D$L`5br`F!s.@R`U)^f^"
++"pbr`G'`Imr(0,0,br)}$L=3D0`Cmr`0$C,q,$nid,ta,u`2,dc=3Ds.dc,t1=3Ds.`N,t2=3D=
+s.`N^j,tb=3Ds.`NBase,p=3D'.sc',ns=3Ds.`Y`r$R,un=3Ds.cls(u?u:(ns?ns:s.fun)=
+),r`B,l,imn=3D^pi_'+(un),im,b,e`5!rs`Ft1`Ft2^6ssl)t1=3Dt2^Q$2!tb)tb=3D'$V=
+"
++"`5dc)dc=3D@Udc)`9;`bdc=3D'd1'`5tb`S$V`Fdc`Sd1$r12';`6dc`Sd2$r22';p`g}t1=
+#9+'.'+dc+'.'+p+tb}rs=3D'@O'+(@8?'s'`f'://'+t1+'/b/ss/'+^5+'/'+(s.#3?'5.1=
+':'1'$dH.20.3/'+$C+'?AQB=3D1&ndh=3D1'+(q?q`f'&AQE=3D1'`5^h@Vs.^n`"
++"F`T>5.5)rs=3D^E$n4095);`brs=3D^E$n2047)`jid^zbr(id,rs);#2}`js.d.images&=
+&`T>=3D3^b!s.^m||`T>=3D7)^b@e<0||`T>=3D6.1)`F!s.rc)s.rc`B`5!^Y){^Y=3D1`5!=
+s.rl)s.rl`B;@An]`K;s`Xout('$2`y`il)`y`il['+s^an+']@J)',750)^Ql=3D@A"
++"n]`5l){r.t=3Dta;r.u#9;r.r=3Drs;l[l`8]=3Dr;`4''}imn+=3D@y^Y;^Y++}im=3D`H=
+[imn]`5!im)im=3D`H[im$7new =
+Image;im^wl=3D0;im.o^M`7'e`G^O^wl=3D1;`Pwd=3D`y,s`5wd`il){s=3Dwd`il['+s^a=
+n+'];s@J`Inrs--`5!$M)`Rm(\"rr\")}')`5!$M^znrs=3D"
++"1;`Rm('rs')}`b$M++;im@Q=3Drs`5rs`3'&pe=3D^y0^b!ta||ta`S_self$ca`S_top'|=
+|(`H.@4$xa=3D=3D`H.@4)#Vb=3De`l;^0!im^w#ae.g`X()-b.g`X()<500)e`l}`4''}`4'=
+<im'+'g sr'+'c=3D@wrs+'\" width=3D1 #4=3D1 border=3D0 =
+alt=3D\"\">'`Cgg`0v"
++"`2`5!`H[^p#g)`H[^p#g`g;`4`H[^p#g`Cglf`0t,a`Ft`10,2)`S$u`12);`Ps=3D^O,v=3D=
+s.gg(t)`5v)s#cv`Cgl`0v`2`5s.pg)`cv,`G,'gl@W0)`Crf`0x`2,y,i,j,h,l,a,b`g,c`=
+g,t`5x){y`g+x;i=3Dy`3'?')`5i>0){a=3Dy`1i+$8y=3Dy`10,#Yh=3Dy`9;i"
++"=3D0`5h`10,7)`S@O$j7;`6h`10,8)`S@Os$j8;h=3Dh`1#Yi=3Dh`3\"/\")`5i>0){h=3D=
+h`10,i)`5h`3'google^y0){a@Ea,'&')`5a`8>1){l=3D',q,ie,start,search_key,wor=
+d,kw,cd,'^Wj=3D0;j<a`8;j++@Xa[j];i=3Dt`3@u`5i>0&&l`3`G+t`10,i)+`G)"
++">=3D0)b+=3D(b@t'`ft;`bc+=3D(c@t'`ft`jb$i#Z'?'+b+'&'+c`5#b!=3Dy)x=3Dy}}}=
+}}}`4x`Chav`0`2,qs`g,fv=3Ds.`Q@iVa$nfe=3Ds.`Q@i^Zs,mn,i`5$I){mn=3D$I`10,1=
+)`E()+$I`11)`5$N){fv=3D$N.^LVars;fe=3D$N.^L^Zs}}fv=3Dfv?fv+`G+^R+`G+^R2:'=
+';"
++"`n0;i<@o`8^3`Pk=3D@o[i],v=3Ds[k],b=3Dk`10,4),x=3Dk`14),n=3D^Jx),q=3Dk`5=
+v&&k$b`Q`r'&&k$b`Q^2'`F$I||s.@M||^G`Ffv^b`G+fv+`G)`3`G+k+`G)<0)v`g`5k`S#5=
+'&&fe)v=3Ds.fs(v,fe)`jv`Fk`S^U`JD';`6k`S`YID`Jvid';`6k`S^P^Tg';v=3D^E"
++"v$1`6k`S`a^Tr';v=3D^Es.rf(v)$1`6k`Svmk'||k`S`Y@T`Jvmt';`6k`S`D^Tvmf'`5@=
+8^6`D^j)v`g}`6k`S`D^j^Tvmf'`5!@8^6`D)v`g}`6k`S@L^Tce'`5v`E()`SAUTO')v=3D'=
+ISO8859-1';`6s.em=3D=3D2)v=3D'UTF-8'}`6k`S`Y`r$R`Jns';`6k`Sc`L`"
++"Jcdp';`6k`S`z@F`Jcl';`6k`S^v`Jvvp';`6k`S@P`Jcc';`6k`S$l`Jch';`6k`S#F`oI=
+D`Jxact';`6k`S$D`Jv0';`6k`S^d`Js';`6k`S^B`Jc';`6k`S`t^t`Jj';`6k`S`p`Jv';`=
+6k`S`z@H`Jk';`6k`S^8@B`Jbw';`6k`S^8^k`Jbh';`6k`S@f`o^"
++"2`Jct';`6k`S@5`Jhp';`6k`Sp^S`Jp';`6#Gx)`Fb`Sprop`Jc@z`6b`SeVar`Jv@z`6b`=
+Slist`Jl@z`6b`Shier^Th@zv=3D^Ev$1`jv)qs+=3D'&'+q+'$w(k`10,3)$bpev'?@c(v):=
+v$a`4qs`Cltdf`0t,h@Xt?t`9$A`9:'';`Pqi=3Dh`3'?^Vh=3Dqi>=3D0?h`10"
++",qi):h`5t&&h`1h`8-(t`8#j`S.'+t)`41;`40`Cltef`0t,h@Xt?t`9$A`9:''`5t&&h`3=
+t)>=3D0)`41;`40`Clt`0h`2,lft=3Ds.`QDow^MFile^2s,lef=3Ds.`QEx`s,$E=3Ds.`QI=
+n`s;$E=3D$E?$E:`H`M^D@4;h=3Dh`9`5s.^LDow^MLinks&&lft&&`clft,`G#Jd"
++"@Wh))`4'd'`5s.^L@K&&h`10,1)$b# =
+'^blef||$E)^b!lef||`clef,`G#Je@Wh))^b!$E#W`c$E,`G#Je@Wh)))`4'e';`4''`Clc`=
+7'e`G`Ab=3D^g(^O,\"`q\"`I@M=3D$G^O`It(`I@M=3D0`5b)`4^O$y`4@k'`Ibc`7'e`G`A=
+f,^l`5s.d^6d.all^6d.all.cp"
++"pXYctnr)#2;^G=3De@Q`V?e@Q`V:e$o;^l`7\"s\",\"`Pe@6$2^G^b^G.tag`r||^G^9`V=
+||^G^9Node))s.t()`e}\");^l(s`Ieo=3D0'`Ioh`0o`2,l=3D`H`M,h=3Do^q?o^q:'',i,=
+j,k,p;i=3Dh`3':^Vj=3Dh`3'?^Vk=3Dh`3'/')`5h^bi<0||(j>=3D0&&i>j)||(k>=3D0"
++"&&i>k))$fo`k$9`k`8>1?o`k:(l`k?l`k:'^Vi=3Dl.path@4`h'/^Vh=3D(p?p+'//'`f(=
+o^D?o^D:(l^D?l^D#i)+(h`10,1)$b/'?l.path@4`10,i<0?0:i$d'`fh}`4h`Cot`0o){`P=
+t=3Do.tag`r;t=3Dt$x`E?t`E$g`5t`SSHAPE')t`g`5t`Ft`SINPUT'&&@C&"
++"&@C`E)t=3D@C`E();`6!t$9^q)t=3D'A';}`4t`Coid`0o`2,^K,p,c,n`g,x=3D0`5t@V^=
+7$fo`k;c=3Do.`q`5o^q^bt`SA$c`SAREA')^b!c#Wp||p`9`3'`t#T0))n$5`6c@x^Fs.rep=
+(^Fs.rep@Uc,\"\\r$0\"\\n$0\"\\t$0' `G^Vx=3D2}`6$p^bt`SINPUT$c`S"
++"SUBMIT')@x$p;x=3D3}`6o@Q$x`SIMAGE')n=3Do@Q`5@v^7=3D^En@7;^7t=3Dx}}`4^7`=
+Crqf`0t,un`2,e=3Dt`3@u,u=3De>=3D0?`G+t`10,e)+`G:'';`4u&&u`3`G+un+`G)>=3D0=
+?@mt`1e#j:''`Crq`0un`2,c#9`3`G),v=3D^e^psq'),q`g`5c<0)`4`cv,'&`Grq@Wun)"
++";`4`cun,`G,'rq',0)`Csqp`0t,a`2,e=3Dt`3@u,q=3De<0?'':@mt`1e+1)`Isqq[q]`g=
+`5e>=3D0)`ct`10,e),`G@r`40`Csqs`0un,q`2;^Iu[u$7q;`40`Csq`0q`2,k=3D^psq',v=
+=3D^ek),x,c=3D0;^Iq`B;^Iu`B;^Iq[q]`g;`cv,'&`Gsqp',0`Ipt(^5,`G@rv`"
++"g^Wx$F^Iu`W)^Iq[^Iu[x]]+=3D(^Iq[^Iu[x]]?`G`fx^Wx$F^Iq`W^6sqq[x]^bx=3D=3D=
+q||c<2#Vv+=3D(v@t'`f^Iq[x]+'`Zx);c++}`4^fk,v,0)`Cwdl`7'e`G`Ar=3D@k,b=3D^g=
+(`H,\"o^M\"),i,o,oc`5b)r=3D^O$y`n0;i<s.d.`Qs`8^3o=3Ds.d.`Qs[i];oc=3Do."
++"`q?\"\"+o.`q:\"\"`5(oc`3$S<0||oc`3\"^woc(\")>=3D0)$9c`3$s<0)^g(o,\"`q\"=
+,0,s.lc);}`4r^V`Hs`0`2`5`T>3^b!^h#Ws.^n||`T#h`Fs.b^6$U^Z)s.$U^Z('`q#O);`6=
+s.b^6b.add^Z$W)s.b.add^Z$W('click#O,false);`b^g(`H,'o^M"
++"',0,`Hl)}`Cvs`0x`2,v=3Ds.`Y^X,g=3Ds.`Y^X#Qk=3D^pvsn_'+^5+(g?@yg#i,n=3D^=
+ek),e`l,y=3De@S$X);e.set$Xy+10$61900:0))`5v){v*=3D$m`5!n`F!^fk,x,e))`40;n=
+=3Dx`jn%$m00>v)`40}`41`Cdyasmf`0t,m`Ft&&m&&m`3t)>=3D0)`41;`40`Cdyasf`"
++"0t,m`2,i=3Dt?t`3@u:-1,n,x`5i>=3D0&&m){`Pn=3Dt`10,i),x=3Dt`1i+1)`5`cx,`G=
+,'dyasm@Wm))`4n}`40`Cuns`0`2,x=3Ds.`OSele`o,l=3Ds.`OList,m=3Ds.`OM#E,n,i;=
+^5=3D^5`9`5x&&l`F!m)m=3D`H`M^D`5!m.toLowerCase)m`g+m;l=3Dl`9;m=3Dm`9;n=3D=
+`cl,"
++"';`Gdyas@Wm)`5n)^5=3Dn}i=3D^5`3`G`Ifun=3Di<0?^5:^5`10,i)`Csa`0un`2;^5#9=
+`5!@9)@9#9;`6(`G+@9+`G)`3`G+un+`G)<0)@9+=3D`G+un;^5s()`Cm_i`0n,a`2,m,f=3D=
+n`10,1),r,l,i`5!`Rl)`Rl`B`5!`Rnl)`Rnl`K;m=3D`Rl[n]`5!a&&m&&#H@Vm^"
++"a)`Ra(n)`5!m){m`B,m._c=3D^pm';m^an=3D`H`in;m^al=3Ds^al;m^al[m^a$7m;`H`i=
+n++;m.s=3Ds;m._n=3Dn;$J`K('_c`G_in`G_il`G_i`G_e`G_d`G_dl`Gs`Gn`G_r`G_g`G_=
+g1`G_t`G_t1`G_x`G_x1`G_rs`G_rr`G_l'`Im_l[$7m;`Rnl[`Rnl`8]=3Dn}`6m"
++"._r@Vm._m){r=3Dm._r;r._m=3Dm;l=3D$J;`n0;i<l`8;i#U$2m[l[i]])r[l[i]]=3Dm[=
+l[i]];r^al[r^a$7r;m=3D`Rl[$7r`jf=3D=3Df`E())s[$7m;`4m`Cm_a`7'n`Gg`Ge`G$2!=
+g)g=3D^i;`Ac=3Ds[g@l,m,x,f=3D0`5!c)c=3D`H[\"s_\"+g@l`5c&&s_d)s[g]`7\"s\",=
+s_"
++"ft(s_d(c)));x=3Ds[g]`5!x)x=3D`H[\\'s_\\'+g]`5!x)x=3D`H[g];m=3D`Ri(n,1)`=
+5x^b!m^a||g!=3D^i#Vm^a=3Df=3D1`5(\"\"+x)`3\"fun`o\")>=3D0)x(s);`b`Rm(\"x\=
+",n,x,e)}m=3D`Ri(n,1)`5@pl)@pl=3D@p=3D0;`ut();`4f'`Im_m`0t,n,d,e@X@yt;`Ps=
+=3D^"
++"O,i,x,m,f=3D@yt,r=3D0,u`5`R#a`Rnl)`n0;i<`Rnl`8^3x=3D`Rnl[i]`5!n||x=3D=3D=
+@vm=3D`Ri(x);u=3Dm[t]`5u`F@Uu)`3#C`o^y0`Fd&&e)@Zd,e);`6d)@Zd);`b@Z)}`ju)r=
+=3D1;u=3Dm[t+1]`5u@Vm[f]`F@Uu)`3#C`o^y0`Fd&&e)@1d,e);`6d)@1d);`b@1)}}m"
++"[f]=3D1`5u)r=3D1}}`4r`Cm_ll`0`2,g=3D`Rdl,i,o`5g)`n0;i<g`8^3o=3Dg[i]`5o)=
+s.^c(o.n,o.u,o.d,o.l,o.e,$8g#d0}`C^c`0n,u,d,l,e,ln`2,m=3D0,i,g,o=3D0#N,c=3D=
+s.h?s.h:s.b,b,^l`5@vi=3Dn`3':')`5i>=3D0){g=3Dn`1i+$8n=3Dn`10,i)}`bg=3D^i;=
+m=3D"
++"`Ri(n)`j(l||(n@V`Ra(n,g)))&&u^6d&&c^6$Y`V`Fd){@p=3D1;@pl=3D1`jln`F@8)u=3D=
+^Fu,'@O:`G@Os:^Vi=3D^ps:'+s^an+':@I:'+g;b=3D'`Ao=3Ds.d@S`VById(@wi+'\")`5=
+s$9`F!o.#a`H.'+g+'){o.l=3D1`5o.@2o.#Yo.i=3D0;`Ra(\"@I\",@wg+'@w(e?'"
++",@we+'\"'`f')}';f2=3Db+'o.c++`5!`d)`d=3D250`5!o.l$9.c<(`d*2)/$m)o.i=3Ds=
+`Xout(o.f2@7}';f1`7'e',b+'}^V^l`7's`Gc`Gi`Gu`Gf1`Gf2`G`Pe,o=3D0@6o=3Ds.$Y=
+`V(\"script\")`5o){@C=3D\"text/`t\"$Bid=3Di;o.defer=3D@k;o.o^M=3Do.onre"
++"adystatechange=3Df1;o.f2=3Df2;o.l=3D0;'`f'o@Q=3Du;c.appendChild(o)$Bc=3D=
+0;o.i=3Ds`Xout(f2@7'`f'}`eo=3D0}`4o^Vo=3D^l(s,c,i,u#N)^Qo`B;o.n=3Dn+':'+g=
+;o.u=3Du;o.d=3Dd;o.l=3Dl;o.e=3De;g=3D`Rdl`5!g)g=3D`Rdl`K;i=3D0;^0i<g`8&&g=
+[i])i++;g#d"
++"o}}`6@vm=3D`Ri(n);#H=3D1}`4m`Cvo1`0t,a`Fa[t]||$h)^O#ca[t]`Cvo2`0t,a`F#l=
+{a#c^O[t]`5#l$h=3D1}`Cdlt`7'`Ad`l,i,vo,f=3D0`5`ul)`n0;i<`ul`8^3vo=3D`ul[i=
+]`5vo`F!`Rm(\"d\")||d.g`X()-$T>=3D`d){`ul#d0;s.t($3}`bf=3D1}`j`u@2`"
++"ui`Idli=3D0`5f`F!`ui)`ui=3Ds`Xout(`ut,`d)}`b`ul=3D0'`Idl`0vo`2,d`l`5!$3=
+vo`B;`c^1,`G$O2',$3;$T=3Dd.g`X()`5!`ul)`ul`K;`ul[`ul`8]=3Dvo`5!`d)`d=3D25=
+0;`ut()`Ct`0vo,id`2,trk=3D1,tm`l,sed=3DMath&&@b#6?@b#D@b#6()*$m000000"
++"00000):#K`X(),$C=3D's'+@b#D#K`X()/10800000)%10+sed,y=3Dtm@S$X),vt=3Dtm@=
+SDate($d^HMonth($d'$6y+1900:y)+' ^HHour$e:^HMinute$e:^HSecond$e =
+^HDay()+#f#K`XzoneO$H(),^l,^4=3Ds.g^4(),ta`g,q`g,qs`g,#7`g,vb`B#M^1`Iu"
++"ns(`Im_ll()`5!s.td){`Ptl=3D^4`M,a,o,i,x`g,c`g,v`g,p`g,bw`g,bh`g,^N0',k=3D=
+^f^pcc`G@k',0@0,hp`g,ct`g,pn=3D0,ps`5^C&&^C.prototype){^N1'`5j.m#E){^N2'`=
+5tm.setUTCDate){^N3'`5^h^6^n&&`T#h^N4'`5pn.toPrecisio@v^N"
++"5';a`K`5a.forEach){^N6';i=3D0;o`B;^l`7'o`G`Pe,i=3D0@6i=3Dnew =
+Iterator(o)`e}`4i^Vi=3D^l(o)`5i&&i.next)^N7'}}}}`j`T>=3D4)x=3D^rwidth+'x'=
++^r#4`5s.isns||s.^m`F`T>=3D3$k`p(@0`5`T>=3D4){c=3D^rpixelDepth;bw=3D`H#L@=
+B;bh=3D`H#L^"
++"k}}$P=3Ds.n.p^S}`6^h`F`T>=3D4$k`p(@0;c=3D^r^B`5`T#h{bw=3Ds.d.^A`V.o$H@B=
+;bh=3Ds.d.^A`V.o$H^k`5!s.^n^6b){^l`7's`Gtl`G`Pe,hp=3D0`vh$v\");hp=3Ds.b.i=
+sH$v(tl)?\"Y\":\"N\"`e}`4hp^Vhp=3D^l(s,tl);^l`7's`G`Pe,ct=3D0`vclientCa"
++"ps\");ct=3Ds.b.@f`o^2`e}`4ct^Vct=3D^l(s$a`br`g`j$P)^0pn<$P`8&&pn<30){ps=
+=3D^E$P[pn].@4@7#X`5p`3ps)<0)p+=3Dps;pn++}s.^d=3Dx;s.^B=3Dc;s.`t^t=3Dj;s.=
+`p=3Dv;s.`z@H=3Dk;s.^8@B=3Dbw;s.^8^k=3Dbh;s.@f`o^2=3Dct;s.@5=3Dhp;s.p^S=3D=
+p;s.td=3D"
++"1`j$3{`c^1,`G$O2',vb`Ipt(^1,`G$O1',$3`js.useP^S)s.doP^S(s);`Pl=3D`H`M,r=
+=3D^4.^A.`a`5!s.^P)s.^P=3Dl^q?l^q:l`5!s.`a@Vs._1_`a^z`a=3Dr;s._1_`a=3D1`j=
+(vo&&$T)#W`Rm('d'#V`Rm('g')`5s.@M||^G){`Po=3D^G?^G:s.@M`5!o)`4'';"
++"`Pp=3Ds.#P`r,w=3D1,^K,@q,x=3D^7t,h,l,i,oc`5^G$9=3D=3D^G){^0o@Vn$x$bBODY=
+'){o=3Do^9`V?o^9`V:o^9Node`5!o)`4'';^K;@q;x=3D^7t}oc=3Do.`q?''+o.`q:''`5(=
+oc`3$S>=3D0$9c`3\"^woc(\")<0)||oc`3$s>=3D0)`4''}ta=3Dn?o$o:1;h$5i=3Dh`3'?=
+^Vh=3D"
++"s.`Q@s^C||i<0?h:h`10,#Yl=3Ds.`Q`r;t=3Ds.`Q^2?s.`Q^2`9:s.lt(h)`5t^bh||l)=
+)q+=3D'&pe=3D@M_'+(t`Sd$c`Se'?@c(t):'o')+(h@tpev1`Zh)`f(l@tpev2`Zl):'^V`b=
+trk=3D0`5s.^L@g`F!p$fs.^P;w=3D0}^K;i=3Do.sourceIndex`5@G')@x@G^Vx=3D1"
++";i=3D1`jp&&n$x)qs=3D'&pid`Z^Ep,255))+(w@tpidt$ww`f'&oid`Z^En@7)+(x@toid=
+t$wx`f'&ot`Zt)+(i@toi$wi#i}`j!trk@Vqs)`4'';$4=3Ds.vs(sed)`5trk`F$4)#7=3Ds=
+.mr($C,(vt@tt`Zvt)`fs.hav()+q+(qs?qs:s.rq(^5)),0,id,ta);qs`g;"
++"`Rm('t')`5s.p_r)s.p_r(`I`a`g}^I(qs);^Q`u($3;`j$3`c^1,`G$O1',vb`I@M=3D^G=
+=3Ds.`Q`r=3Ds.`Q^2=3D`H`m`g`5s.pg)`H^w@M=3D`H^weo=3D`H^w`Q`r=3D`H^w`Q^2`g=
+`5!id@Vs.tc^ztc=3D1;s.flush`U()}`4#7`Ctl`0o,t,n,vo`2;s.@M=3D$Go`I`Q^2=3Dt=
+"
++";s.`Q`r=3Dn;s.t($3}`5pg){`H^wco`0o){`P^s\"_\",1,$8`4$Go)`Cwd^wgs`0u@v`P=
+^sun,1,$8`4s.t()`Cwd^wdc`0u@v`P^sun,$8`4s.t()}}@8=3D(`H`M`k`9`3'@Os^y0`Id=
+=3D^A;s.b=3Ds.d.body`5s.d@S`V#S`r^zh=3Ds.d@S`V#S`r('HEAD')`5s.h"
++")s.h=3Ds.h[0]}s.n=3Dnavigator;s.u=3Ds.n.userAgent;@e=3Ds.u`3'N$t6/^V`Pa=
+pn$Z`r,v$Z^t,ie=3Dv`3#B'),o=3Ds.u`3'@a =
+'),i`5v`3'@a^y0||o>0)apn=3D'@a';^h$Q`SMicrosoft Internet =
+Explorer'`Iisns$Q`SN$t'`I^m$Q`S@a'`I^n=3D(s.u`"
++"3'Mac^y0)`5o>0)`T`ws.u`1o+6));`6ie>0){`T=3D^Ji=3Dv`1ie+5))`5`T>3)`T`wi)=
+}`6@e>0)`T`ws.u`1@e+10));`b`T`wv`Iem=3D0`5^C#R^u){i=3D^o^C#R^u(256))`E(`I=
+em=3D(i`S%C4%80'?2:(i`S%U0$m'?1:0))}s.sa(un`Ivl_l=3D'^U,`YID,vmk,"
++"`Y@T,`D,`D^j,ppu,@L,`Y`r$R,c`L,`z@F,#P`r,^P,`a,@P#0l@E^R,`G`Ivl_t=3D^R+=
+',^v,$l,server,#P^2,#F`oID,purchaseID,$D,state,zip,#5,products,`Q`r,`Q^2'=
+^W`Pn=3D1;n<51;n#U@D+=3D',prop@I,eVar@I,hier@I,list@z^R2=3D',"
++"tnt,pe#A1#A2#A3,^d,^B,`t^t,`p,`z@H,^8@B,^8^k,@f`o^2,@5,p^S';@D+=3D^R2;@=
+o@E@D,`G`Ivl_g=3D@D+',`N,`N^j,`NBase,fpC`L,@R`U,#3,`Y^X,`Y^X#Q`OSele`o,`O=
+List,`OM#E,^LDow^MLinks,^L@K,^L@g,`Q@s^C,`QDow^MFile^2s,`"
++"QEx`s,`QIn`s,`Q@iVa$n`Q@i^Zs,`Q`rs,@M,eo,_1_`a#0g@E^1,`G`Ipg=3Dpg#M^1)`=
+5!ss)`Hs()",
+w=3Dwindow,l=3Dw.s_c_il,n=3Dnavigator,u=3Dn.userAgent,v=3Dn.appVersion,e=3D=
+v.indexOf('MSIE =
+'),m=3Du.indexOf('Netscape6/'),a,i,s;if(un){un=3Dun.toLowerCase();if(l)fo=
+r(i=3D0;i<l.length;i++){s=3Dl[i];if(!s._c||s._c=3D=3D's_c'){if(s.oun=3D=3D=
+un)return s;else if(s.fs&&s.sa&&s.fs(s.oun,un)){s.sa(un);return =
+s}}}}w.s_an=3D'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv=
+wxyz';
+w.s_sp=3Dnew Function("x","d","var a=3Dnew =
+Array,i=3D0,j;if(x){if(x.split)a=3Dx.split(d);else =
+if(!d)for(i=3D0;i<x.length;i++)a[a.length]=3Dx.substring(i,i+1);else =
+while(i>=3D0){j=3Dx.indexOf(d,i);a[a.length]=3Dx.subst"
++"ring(i,j<0?x.length:j);i=3Dj;if(i>=3D0)i+=3Dd.length}}return a");
+w.s_jn=3Dnew Function("a","d","var =
+x=3D'',i,j=3Da.length;if(a&&j>0){x=3Da[0];if(j>1){if(a.join)x=3Da.join(d)=
+;else for(i=3D1;i<j;i++)x+=3Dd+a[i]}}return x");
+w.s_rep=3Dnew Function("x","o","n","return s_jn(s_sp(x,o),n)");
+w.s_d=3Dnew Function("x","var t=3D'`^@$#',l=3Ds_an,l2=3Dnew =
+Object,x2,d,b=3D0,k,i=3Dx.lastIndexOf('~~'),j,v,w;if(i>0){d=3Dx.substring=
+(0,i);x=3Dx.substring(i+2);l=3Ds_sp(l,'');for(i=3D0;i<62;i++)l2[l[i]]=3Di=
+;t=3Ds_sp(t,'');d"
++"=3Ds_sp(d,'~');i=3D0;while(i<5){v=3D0;if(x.indexOf(t[i])>=3D0) =
+{x2=3Ds_sp(x,t[i]);for(j=3D1;j<x2.length;j++){k=3Dx2[j].substring(0,1);w=3D=
+t[i]+k;if(k!=3D' =
+'){v=3D1;w=3Dd[b+l2[k]]}x2[j]=3Dw+x2[j].substring(1)}}if(v)x=3Ds_jn("
++"x2,'');else{w=3Dt[i]+' =
+';if(x.indexOf(w)>=3D0)x=3Ds_rep(x,w,t[i]);i++;b+=3D62}}}return x");
+w.s_fe=3Dnew Function("c","return =
+s_rep(s_rep(s_rep(c,'\\\\','\\\\\\\\'),'\"','\\\\\"'),\"\\n\",\"\\\\n\")"=
+);
+w.s_fa=3Dnew Function("f","var =
+s=3Df.indexOf('(')+1,e=3Df.indexOf(')'),a=3D'',c;while(s>=3D0&&s<e){c=3Df=
+.substring(s,s+1);if(c=3D=3D',')a+=3D'\",\"';else if((\"\\n\\r\\t =
+\").indexOf(c)<0)a+=3Dc;s++}return a?'\"'+a+'\"':"
++"a");
+w.s_ft=3Dnew Function("c","c+=3D'';var =
+s,e,o,a,d,q,f,h,x;s=3Dc.indexOf('=3Dfunction(');while(s>=3D0){s++;d=3D1;q=
+=3D'';x=3D0;f=3Dc.substring(s);a=3Ds_fa(f);e=3Do=3Dc.indexOf('{',s);e++;w=
+hile(d>0){h=3Dc.substring(e,e+1);if(q){i"
++"f(h=3D=3Dq&&!x)q=3D'';if(h=3D=3D'\\\\')x=3Dx?0:1;else =
+x=3D0}else{if(h=3D=3D'\"'||h=3D=3D\"'\")q=3Dh;if(h=3D=3D'{')d++;if(h=3D=3D=
+'}')d--}if(d>0)e++}c=3Dc.substring(0,s)+'new =
+Function('+(a?a+',':'')+'\"'+s_fe(c.substring(o+1,e))+'\")"
++"'+c.substring(e+1);s=3Dc.indexOf('=3Dfunction(')}return c;");
+c=3Ds_d(c);if(e>0){a=3DparseInt(i=3Dv.substring(e+5));if(a>3)a=3DparseFlo=
+at(i)}else if(m>0)a=3DparseFloat(u.substring(m+10));else =
+a=3DparseFloat(v);if(a>=3D5&&v.indexOf('Opera')<0&&u.indexOf('Opera')<0){=
+w.s_c=3Dnew Function("un","pg","ss","var s=3Dthis;"+c);return new =
+s_c(un,pg,ss)}else s=3Dnew Function("un","pg","ss","var s=3Dnew =
+Object;"+s_ft(c)+";return s");return s(un,pg,ss)}
+
+//-----------------
+// omniHelper file
+// ----------------
+
+(function () {
+var tvar;
+
+s.linkInternalFilters=3D"javascript:,"+_om_gbls.host;
+if(_om_gbls.host.indexOf("msdn") > -1) =
+s.linkInternalFilters=3D"javascript:,msdn.microsoft.com,blogs.msdn.com";
+if(_om_gbls.href.indexOf("technet") > -1) =
+s.linkInternalFilters=3D"javascript:,technet.microsoft.com,blogs.technet.=
+com,microsoft.com/technet/";
+
+s.pageName =3D _om_gbls.host.replace(/.microsoft.com/,'') + ":"+ =
+_om_gbls.cleanupPath(_om_gbls.path); // normalize pathname and strip out =
+(.*)
+s.server =3D _om_gbls.host;
+s.channel =3D _om_gbls.host.replace(/.microsoft.com/,'');
+s.prop1 =3D (_om_gbls.site) ? _om_gbls.site : s.channel;
+s.prop2 =3D (_om_gbls.market) ? _om_gbls.market : "none";=20
+s.prop3 =3D (_om_gbls.path.indexOf("search") =3D=3D -1) ? document.title =
+: s.pageName;
+tvar =3D t_omni_utils.getOmniMetaTagData("t_omni_title"); if (tvar) =
+s.prop3 =3D tvar;
+
+var skipEnd =3D (_om_gbls.path.indexOf('\.') > -1) ? 1 : 0;
+var temppath2 =3D =
+t_omni_utils.getOmniPath(_om_gbls.cleanupPath(_om_gbls.path.substring(1))=
+,0,skipEnd);
+var temppatharr =3D temppath2.split('\:');
+if (temppatharr.length > 0) s.prop4=3Ds.channel+": "+temppatharr[0];
+if (temppatharr.length > 1) s.prop5=3Ds.prop4+": "+temppatharr[1];
+if (temppatharr.length > 2) s.prop6=3Ds.prop5+": "+temppatharr[2];
+if (temppatharr.length > 3) s.prop7=3Ds.prop6+": "+temppatharr[3];
+if (temppatharr.length > 4) s.prop8=3Ds.prop7+": "+temppatharr[4];
+s.prop8 =3D _om_gbls.center;
+s.prop9 =3D _om_gbls.app;
+s.prop10 =3D window.location.href.toLowerCase();
+s.prop11 =3D (temppatharr.length > 1 && =
+temppatharr[1].indexOf('library')>-1) ? 'library' : 'non-library';
+s.prop12 =3D _om_gbls.host + _om_gbls.path;
+
+try { tvar =3D t_omni_utils.getOmniMetaTagData("search.shortid"); if =
+(tvar) s.prop13 =3D tvar; } catch(e) {}
+try { tvar =3D t_omni_utils.getOmniMetaTagData("dcs.dcsuri"); if (tvar) =
+s.prop15 =3D tvar; } catch(e) {}
+try {
+	if (typeof(wtsp) !=3D=3D 'undefined') s.prop16 =3D wtsp;
+	if (typeof(wt_sp) !=3D=3D 'undefined' && !s.prop16) s.prop16 =3D wt_sp;
+	tvar =3D t_omni_utils.getOmniMetaTagData("wt.sp"); if (tvar && =
+!s.prop16) s.prop16 =3D tvar;
+} catch(e) {}
+
+if (s.prop13) s.prop19 =3D s.prop13 + ":	 " + s.prop3;
+}
+)();
+
+try {
+s.visitorID =3D t_omni_utils.setOmniID();
+s.t();
+} catch(e) {
+	t_omni_utils.logError(e,"error in s.t call");
+}
+
+
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://blogs.technet.com/wt.js
+
+//Tag Version: MNP 2.2-no dcsAdSearch/2008-10-01
+//This tag has been modified to remove the dcsAdSearch function.
+var gTagVer =3D "MNP 2.2b/2008-10-01";
+var gService =3D true;
+var gTimeZone =3D -8;
+function dcsCookie(){
+	if (typeof(dcsOther)=3D=3D"function"){
+		dcsOther();
+	}
+	else if (typeof(dcsPlugin)=3D=3D"function"){
+		dcsPlugin();
+	}
+	else if (typeof(dcsFPC)=3D=3D"function"){
+		dcsFPC(gTimeZone);
+	}
+}
+function dcsGetCookie(name){
+	var pos=3Ddocument.cookie.indexOf(name+"=3D");
+	if (pos!=3D-1){
+		var start=3Dpos+name.length+1;
+		var end=3Ddocument.cookie.indexOf(";",start);
+		if (end=3D=3D-1){
+			end=3Ddocument.cookie.length;
+		}
+		return unescape(document.cookie.substring(start,end));
+	}
+	return null;
+}
+function dcsGetCrumb(name,crumb){
+	var aCookie=3DdcsGetCookie(name).split(":");
+	for (var i=3D0;i<aCookie.length;i++){
+		var aCrumb=3DaCookie[i].split("=3D");
+		if (crumb=3D=3DaCrumb[0]){
+			return aCrumb[1];
+		}
+	}
+	return null;
+}
+function dcsGetIdCrumb(name,crumb){
+	var cookie=3DdcsGetCookie(name);
+	var id=3Dcookie.substring(0,cookie.indexOf(":lv=3D"));
+	var aCrumb=3Did.split("=3D");
+	for (var i=3D0;i<aCrumb.length;i++){
+		if (crumb=3D=3DaCrumb[0]){
+			return aCrumb[1];
+		}
+	}
+	return null;
+}
+function dcsFPC(offset){
+	if (typeof(offset)=3D=3D"undefined"){
+		return;
+	}
+	if (document.cookie.indexOf("WTLOPTOUT=3D")!=3D-1){
+		return;
+	}
+	var name=3DgFpc;
+	var dCur=3Dnew Date();
+	var adj=3D(dCur.getTimezoneOffset()*60000)+(offset*3600000);
+	dCur.setTime(dCur.getTime()+adj);
+	var dExp=3Dnew Date(dCur.getTime()+315360000000);
+	var dSes=3Dnew Date(dCur.getTime());
+	if (document.cookie.indexOf(name+"=3D")=3D=3D-1){
+		if ((typeof(gWtId)!=3D"undefined")&&(gWtId!=3D"")){
+			WT.co_f=3DgWtId;
+		}
+		else if ((typeof(gTempWtId)!=3D"undefined")&&(gTempWtId!=3D"")){
+			WT.co_f=3DgTempWtId;
+			WT.vt_f=3D"1";
+		}
+		else{
+			WT.co_f=3D"2";
+			var cur=3DdCur.getTime().toString();
+			for (var i=3D2;i<=3D(32-cur.length);i++){
+				WT.co_f+=3DMath.floor(Math.random()*16.0).toString(16);
+			}
+			WT.co_f+=3Dcur;
+			WT.vt_f=3D"1";
+		}
+		if (typeof(gWtAccountRollup)=3D=3D"undefined"){
+			WT.vt_f_a=3D"1";
+		}
+		WT.vt_f_s=3D"1";
+		WT.vt_f_d=3D"1";
+		WT.vt_f_tlh=3DWT.vt_f_tlv=3D"0";
+	}
+	else{
+		var id=3DdcsGetIdCrumb(name,"id");
+		var lv=3DparseInt(dcsGetCrumb(name,"lv"));
+		var ss=3DparseInt(dcsGetCrumb(name,"ss"));
+		if ((id=3D=3Dnull)||(id=3D=3D"null")||isNaN(lv)||isNaN(ss)){
+			return;
+		}
+		WT.co_f=3Did;
+		var dLst=3Dnew Date(lv);
+		WT.vt_f_tlh=3DMath.floor((dLst.getTime()-adj)/1000);
+		dSes.setTime(ss);
+		if =
+((dCur.getTime()>(dLst.getTime()+1800000))||(dCur.getTime()>(dSes.getTime=
+()+28800000))){
+			WT.vt_f_tlv=3DMath.floor((dSes.getTime()-adj)/1000);
+			dSes.setTime(dCur.getTime());
+			WT.vt_f_s=3D"1";
+		}
+		if =
+((dCur.getDay()!=3DdLst.getDay())||(dCur.getMonth()!=3DdLst.getMonth())||=
+(dCur.getYear()!=3DdLst.getYear())){
+			WT.vt_f_d=3D"1";
+		}
+	}
+	WT.co_f=3Descape(WT.co_f);
+	WT.vt_sid=3DWT.co_f+"."+(dSes.getTime()-adj);
+	var expiry=3D"; expires=3D"+dExp.toGMTString();
+	=
+document.cookie=3Dname+"=3D"+"id=3D"+WT.co_f+":lv=3D"+dCur.getTime().toSt=
+ring()+":ss=3D"+dSes.getTime().toString()+expiry+"; =
+path=3D/"+(((typeof(gFpcDom)!=3D"undefined")&&(gFpcDom!=3D""))?("; =
+domain=3D"+gFpcDom):(""));
+	if (document.cookie.indexOf(name+"=3D")=3D=3D-1){
+		=
+WT.co_f=3DWT.vt_sid=3DWT.vt_f_s=3DWT.vt_f_d=3DWT.vt_f_tlh=3DWT.vt_f_tlv=3D=
+"";
+		WT.vt_f=3DWT.vt_f_a=3D"2";
+	}
+}
+
+var gFpcDom=3D".microsoft.com";
+
+function dcsEvt(evt,tag){
+	var e=3Devt.target||evt.srcElement;
+	while (e.tagName&&(e.tagName!=3Dtag)){
+		e=3De.parentElement||e.parentNode;
+	}
+	return e;
+}
+function dcsBind(event,func){
+	if ((typeof(window[func])=3D=3D"function")&&document.body){
+		if (document.body.addEventListener){
+			document.body.addEventListener(event, window[func], true);
+		}
+		else if(document.body.attachEvent){
+			document.body.attachEvent("on"+event, window[func]);
+		}
+	}
+}
+function dcsET(){
+	var =
+e=3D(navigator.appVersion.indexOf("MSIE")!=3D-1)?"click":"mousedown";
+	dcsBind(e,"dcsDownload");
+	dcsBind(e,"dcsFormButton");
+	dcsBind("keypress","dcsFormButton");
+	dcsBind(e,"dcsImageMap");
+}
+function dcsMultiTrack(){
+	if (arguments.length%2=3D=3D0){
+		for (var i=3D0;i<arguments.length;i+=3D2){
+			if (arguments[i].indexOf('WT.')=3D=3D0){
+				WT[arguments[i].substring(3)]=3Darguments[i+1];
+			}
+			else if (arguments[i].indexOf('DCS.')=3D=3D0){
+				DCS[arguments[i].substring(4)]=3Darguments[i+1];
+			}
+			else if (arguments[i].indexOf('DCSext.')=3D=3D0){
+				DCSext[arguments[i].substring(7)]=3Darguments[i+1];
+			}
+		}
+		var dCurrent=3Dnew Date();
+		DCS.dcsdat=3DdCurrent.getTime();
+		dcsTag();
+	}
+}
+function dcsSetVar(){
+	if =
+((arguments.length%2=3D=3D0)&&(navigator.appVersion.indexOf("MSIE")!=3D-1=
+)){
+		for (var i=3D0;i<arguments.length;i+=3D2){
+			if (arguments[i].indexOf('WT.')=3D=3D0){
+				if (dcsSetVarValidate(arguments[i])){
+					WT["setvar_"+arguments[i].substring(3)]=3Darguments[i+1];
+				}
+				else{WT[arguments[i].substring(3)]=3Darguments[i+1];}
+			}
+			else if (arguments[i].indexOf('DCS.')=3D=3D0){
+				if (dcsSetVarValidate(arguments[i])){
+					DCS["setvar_"+arguments[i].substring(4)]=3Darguments[i+1];
+				}
+				else{DCS[arguments[i].substring(4)]=3Darguments[i+1];}
+
+			}
+			else if (arguments[i].indexOf('DCSext.')=3D=3D0){
+				if (dcsSetVarValidate(arguments[i])){
+					DCSext["setvar_"+arguments[i].substring(7)]=3Darguments[i+1];
+				}
+				else{DCSext[arguments[i].substring(7)]=3Darguments[i+1];}
+			}
+		}
+    }
+}
+function dcsSetVarValidate(validate){
+	var wtParamList =3D "DCS.dcssip,DCS.dcsuri,DCS.dcsqry,WT.ti,WT.mc_id";
+	wtParamList =3D wtParamList.split(",");
+	for(var i=3D0;i<wtParamList.length;i++){
+		if(wtParamList[i]=3D=3Dvalidate){
+			return 1;
+		}
+	}
+	return 0;
+}
+function dcsSetVarCap(e){
+	var gCap =3D e.onclick.toString();
+	var gStart =3D =
+gCap.substring(gCap.indexOf("dcsSetVar(")+10,gCap.length);
+  	var gEnd =3D =
+gStart.substring(0,gStart.indexOf(");")).replace(/\s"/gi,"").replace(/"/g=
+i,"");
+  	var gSplit =3D gEnd.split(",");
+  	if (gSplit.length!=3D-1){
+		for (var i=3D0;i<gSplit.length;i+=3D2){
+    		if (gSplit[i].indexOf('WT.')=3D=3D0){
+				if (dcsSetVarValidate(gSplit[i])){
+					WT["setvar_"+gSplit[i].substring(3)]=3DgSplit[i+1];
+				}
+				else{WT[gSplit[i].substring(3)]=3DgSplit[i+1];}
+			}
+			else if (gSplit[i].indexOf('DCS.')=3D=3D0){
+				if (dcsSetVarValidate(gSplit[i])){
+					DCS["setvar_"+gSplit[i].substring(4)]=3DgSplit[i+1];
+				}
+				else{DCS[gSplit[i].substring(4)]=3DgSplit[i+1];}
+
+			}
+			else if (gSplit[i].indexOf('DCSext.')=3D=3D0){
+				if (dcsSetVarValidate(gSplit[i])){
+					DCSext["setvar_"+gSplit[i].substring(7)]=3DgSplit[i+1];
+				}
+				else{DCSext[gSplit[i].substring(7)]=3DgSplit[i+1];}
+			}
+		}
+  	}
+}
+function dcsDownload(evt){
+	evt=3Devt||(window.event||"");
+	if (evt){
+		var e=3DdcsEvt(evt,"A");
+		var f=3DdcsEvt(evt,"IMG");
+		if(e){
+			if =
+(e.hostname&&e.href&&e.protocol&&(e.protocol.indexOf("http")!=3D-1)){
+				dcsNavigation(e);
+				=
+if((navigator.appVersion.indexOf("MSIE")=3D=3D-1)&&(e.onclick)){dcsSetVar=
+Cap(e);}
+       			var =
+gPath=3De.pathname?((e.pathname.indexOf("/")!=3D0)?"/"+e.pathname:e.pathn=
+ame):"/";
+       			var gPath=3DDCS.setvar_dcsuri||gPath;
+       			var gHost=3DDCS.setvar_dcssip||e.hostname;
+       			var gQry=3DDCS.setvar_dcsqry||e.search||"";
+				if(f.alt){gTitle=3Df.alt;}
+				=
+else{if(document.all){gTitle=3De.innerText||e.innerHTML||"";}else{gTitle=3D=
+e.text||e.innerHTML||"";}}
+				gTitle=3DWT.setvar_ti||gTitle;
+				WT.mc_id=3DWT.setvar_mc_id||"";
+				=
+WT.sp=3DWT.ad=3DDCS.setvar_dcsuri=3DDCS.setvar_dcssip=3DDCS.setvar_dcsqry=
+=3DWT.setvar_ti=3D"";
+				=
+dcsMultiTrack("DCS.dcssip",gHost,"DCS.dcsuri",gPath,"DCS.dcsqry",gQry,"WT=
+.ti","Link:"+gTitle,"WT.dl","1","WT.sp","","WT.ad","");
+				=
+DCS.dcssip=3DDCS.dcsuri=3DDCS.dcsqry=3DWT.ti=3DWT.dl=3DgTitle=3DgPath=3Dg=
+Qry=3DgHost=3D"";
+			}
+		}
+	}
+}
+function dcsNavigation(wtnode){
+	try{
+	var wtCount=3D0;
+	while(wtCount!=3D1){
+		if(wtnode.parentNode.tagName!=3D"DIV"){
+			wtnode=3Dwtnode.parentNode;
+		}
+		if(wtnode.parentNode.tagName=3D=3D"DIV"){
+			=
+if((wtnode.parentNode.getAttribute('id'))||(wtnode.parentNode.className))=
+{
+				DCSext.wtNavigation =3D =
+wtnode.parentNode.getAttribute("id")||wtnode.parentNode.className;
+				wtCount=3D1;
+			}
+			else{
+				wtnode=3Dwtnode.parentNode;
+			}
+		}
+	}}
+	catch(error){}
+}
+function dcsImageMap(evt){
+	evt=3Devt||(window.event||"");
+	if (evt){
+		var e=3DdcsEvt(evt,"AREA");
+		if(e){
+			if =
+(e.hostname&&e.href&&e.protocol&&(e.protocol.indexOf("http")!=3D-1)){
+				dcsNavigation(e);
+				=
+if((navigator.appVersion.indexOf("MSIE")=3D=3D-1)&&(e.onclick)){dcsSetVar=
+Cap(e);}
+				var =
+gPath=3De.pathname?((e.pathname.indexOf("/")!=3D0)?"/"+e.pathname:e.pathn=
+ame):"/";
+       			var gHost=3DDCS.setvar_dcssip||e.hostname;
+       			var gQry=3DDCS.setvar_dcsqry||e.search||"";
+				=
+dcsMultiTrack("DCS.dcssip",gHost,"DCS.dcsuri",gPath,"DCS.dcsqry",gQry,"WT=
+.ti","Link:Image Map","WT.dl","1","WT.sp","","WT.ad","");
+				=
+DCS.dcssip=3DDCS.dcsuri=3DDCS.dcsqry=3DWT.ti=3DWT.dl=3DgPath=3DgHost=3DgQ=
+ry=3D"";
+			}
+		}
+	}
+}
+function dcsFormButton(evt){
+	evt=3Devt||(window.event||"");
+	if (evt){
+		var e=3DdcsEvt(evt,"INPUT");
+		var type=3De.type||"";
+		if =
+(type&&((type=3D=3D"submit")||(type=3D=3D"image")||(type=3D=3D"button")||=
+(type=3D=3D"reset"))||((type=3D=3D"text")&&((evt.which||evt.keyCode)=3D=3D=
+13))){
+			var gUri=3DgTitle=3DgMethod=3Dqry=3D"";
+			if(e.form){
+				if((WT.z_collect_form_data =3D=3D e.form.name) || =
+(WT.z_collect_form_data =3D=3D e.form.className) || =
+(WT.z_collect_form_data =3D=3D 'all')){
+					var elems=3De.form.elements;
+					for (var i=3D0;i<elems.length;i++){
+						var etype=3Delems[i].type;
+						if (etype=3D=3D"text"){
+							=
+qry+=3D((qry=3D=3D"")?"":"&")+escape(elems[i].name)+"=3D"+escape(elems[i]=
+.value);
+						}
+					}
+				}
+				gUri=3De.form.action||window.location.pathname;
+				gTitle=3De.form.id||e.form.className||e.form.name||"Unknown";
+				gMethod=3De.form.method||"Unknown";
+			}
+			else{
+				gUri=3Dwindow.location.pathname;
+				gTitle=3De.name||e.id||"Unknown";
+				gMethod=3D"Input";
+			}
+			=
+if((gUri!=3D"")&&(gTitle!=3D"")&&(gMethod!=3D"")&&(evt.keyCode!=3D9)){
+				=
+dcsMultiTrack("DCS.dcsuri",gUri,"DCS.dcsqry",qry,"WT.ti","FormButton:"+gT=
+itle,"WT.dl","2","WT.fm",gMethod,"WT.ad","","WT.mc_id","","WT.sp","");
+			}
+			=
+DCS.dcsuri=3DDCS.dcsqry=3Dqry=3DWT.ti=3DWT.dl=3DWT.fm=3DgUri=3DgTitle=3Dg=
+Method=3D"";
+		}
+	}
+}
+function dcsNvr(){
+	if (document.cookie.indexOf("WTLOPTOUT=3D")!=3D-1){
+		return;
+	}
+	var cur=3Dnew Date();
+	var exp=3Dnew Date(cur.getTime()+315360000000);
+	var cfields=3D{name:"WT_NVR",value:"",expiry:"; =
+expires=3D"+exp.toGMTString(),path:"; path=3D/",domain:"; =
+domain=3D"+window.location.hostname};
+	var cdata=3DdcsNvrRead(cfields.name);
+	var isnew=3DdcsNvrProcess(cdata);
+	if (isnew||dcsNvrFind(cfields.name,",")){
+		var c=3DdcsNvrCompose(cdata,cfields);
+		for (var i=3D0;i<c.length;i++){
+			document.cookie=3Dc[i];
+		}
+	}
+	if (isnew){
+		var val=3D(document.cookie.indexOf(cfields.name+"=3D")!=3D-1)?"1":"2";
+		for (var i=3D0;i<cdata.length;i++){
+			if (cdata[i][1]){
+				WT["vt_nvr"+(i+1)]=3Dval;
+			}
+		}
+	}
+}
+
+function dcsNvrRead(name){
+	var data=3Dnew Array();
+	var num=3D0;
+	var re=3D/,/g;
+	var value=3DdcsNvrGetCookie(name);
+	while(value){
+		var levels=3Dvalue.split(":");
+		for (var i=3D0;i<levels.length;i++){
+			var crumbs=3Dlevels[i].split("=3D");
+			var level=3DparseInt(crumbs[0]);
+			var paths=3Dcrumbs[1].replace(re,"|").split("|");
+			if (typeof(data[level])!=3D"object"){
+				data[level]=3Dnew Array(paths,false);
+			}
+			else{
+				data[level][0]=3Ddata[level][0].concat(paths);
+			}
+		}
+		num++;
+		value=3DdcsNvrGetCookie(name+num);
+	}
+	return data;
+}
+
+function dcsNvrFind(name,tofind){
+	var found=3Dfalse;
+	var num=3D0;
+	var value=3DdcsNvrGetCookie(name);
+	while(value){
+		if (value.indexOf(tofind)!=3D-1){
+			found=3Dtrue;
+			break;
+		}
+		num++;
+		value=3DdcsNvrGetCookie(name+num);
+	}
+	return found;
+}
+
+function dcsNvrGetCookie(name){
+	var pos=3Ddocument.cookie.indexOf(name+"=3D");
+	if (pos!=3D-1){
+		var start=3Dpos+name.length+1;
+		var end=3Ddocument.cookie.indexOf(";",start);
+		if (end=3D=3D-1){
+			end=3Ddocument.cookie.length;
+		}
+		return document.cookie.substring(start,end);
+	}
+	return null;
+}
+
+function dcsNvrProcess(data){
+	var newv=3Dfalse;
+	var maxlevel=3D3;
+	var curlevel=3D0;
+	var splitp=3Dnew Array();
+	var p=3Dwindow.location.pathname;
+	var =
+curpath=3Dp.substring(p.indexOf("/")+1,p.lastIndexOf("/")).toLowerCase();=
+
+	var badchars=3D{"%09":/\t/g,"%20":/ /g,"%2C":/,/g,"%3B":/;/g};
+	var tmp=3Dnew String(curpath);
+	for (var ch in badchars){
+		tmp=3Dtmp.replace(badchars[ch],ch);
+	}
+	curpath=3Dtmp;
+
+	if (curpath.length>1){
+		splitp=3Dcurpath.split("/",maxlevel);
+		curlevel=3Dsplitp.length;
+		curpath=3Dsplitp.join("/");
+	}
+	if (data.length>0){
+		var found=3Dfalse;
+		if (data.length>curlevel){
+			for (var i=3D0;i<data[curlevel][0].length;i++){
+				if (data[curlevel][0][i]=3D=3Dcurpath){
+					found=3Dtrue;
+					break;
+				}
+			}
+			if (!found){
+				data[curlevel][0][data[curlevel][0].length]=3Dcurpath;
+				data[curlevel][1]=3Dtrue;
+				newv=3Dtrue;
+			}
+		}
+		else{
+			for (var i=3D0;i<(curlevel+1);i++){
+				if (typeof(data[i])!=3D"object"){
+					data[i]=3Dnew =
+Array([(i=3D=3D0)?"/":splitp.slice(0,i).join("/")],true);
+				}
+			}
+			newv=3Dtrue;
+		}
+	}
+	else{
+		for (var i=3D0;i<(curlevel+1);i++){
+			data[i]=3Dnew =
+Array([(i=3D=3D0)?"/":splitp.slice(0,i).join("/")],true);
+		}
+		newv=3Dtrue;
+	}
+	return newv;
+}
+
+function dcsNvrCompose(data,fields){
+	var cookies=3Dnew Array();
+	var paths=3Dnew Array();
+	var num=3D0;
+	var maxnum=3D10;
+	var maxval=3D4000;
+	var maxed=3Dfalse;
+	for (var i=3D0;(i<data.length)&&!maxed;i++){
+		paths=3Ddata[i][0];
+		var newpath=3Di+"=3D";
+		for (var j=3D0;(j<paths.length)&&!maxed;j++){
+			newpath+=3D((j=3D=3D0)?"":"|")+paths[j];
+			if =
+(((fields.name+num).length+fields.value.length+newpath.length+1)<=3Dmaxva=
+l){
+				if ((fields.value.length>0)&&(j=3D=3D0)){
+					fields.value+=3D":";
+				}
+				fields.value+=3Dnewpath;
+			}
+			else if (fields.value.length>0){
+				=
+cookies[num]=3Dfields.name+(num||"")+"=3D"+fields.value+fields.expiry+fie=
+lds.path+fields.domain;
+				fields.value=3Di+"=3D"+paths[j];
+				if ((++num)>(maxnum-1)){
+					maxed=3Dtrue;
+				}
+			}
+			newpath=3D"";
+		}
+	}
+	if (!maxed){
+		=
+cookies[num]=3Dfields.name+(num||"")+"=3D"+fields.value+fields.expiry+fie=
+lds.path+fields.domain;
+	}
+	return cookies;
+}
+function dcsAdv(){
+	if ((typeof(gTrackEvents)!=3D"undefined")&&gTrackEvents){
+		WT.wtsv=3D1;
+		if(typeof(WT.sp)!=3D"undefined"){WT.sv_sp=3DWT.sp;}
+		dcsFunc("dcsET");
+	}
+	dcsFunc("dcsCookie");
+	dcsFunc("dcsNvr");
+	DCSext.wtEvtSrc=3DDCS.dcssip+DCS.dcsuri;
+}
+
+var gImages=3Dnew Array;
+var gIndex=3D0;
+var DCS=3Dnew Object();
+var WT=3Dnew Object();
+var DCSext=3Dnew Object();
+var gQP=3Dnew Array();
+var gI18n=3Dfalse;
+if (window.RegExp){
+	var RE=3D{"%09":/\t/g,"%20":/ =
+/g,"%23":/\#/g,"%26":/\&/g,"%2B":/\+/g,"%3F":/\?/g,"%5C":/\\/g};
+	var I18NRE=3D{"%25":/\%/g};
+}
+
+function dcsVar(){
+	var dCurrent=3Dnew Date();
+	WT.tz=3DdCurrent.getTimezoneOffset()/60*-1;
+	if (WT.tz=3D=3D0){
+		WT.tz=3D"0";
+	}
+	WT.bh=3DdCurrent.getHours();
+	=
+WT.ul=3Dnavigator.appName=3D=3D"Netscape"?navigator.language:navigator.us=
+erLanguage;
+	if (typeof(screen)=3D=3D"object"){
+		=
+WT.cd=3Dnavigator.appName=3D=3D"Netscape"?screen.pixelDepth:screen.colorD=
+epth;
+		WT.sr=3Dscreen.width+"x"+screen.height;
+	}
+	if (typeof(navigator.javaEnabled())=3D=3D"boolean"){
+		WT.jo=3Dnavigator.javaEnabled()?"Yes":"No";
+	}
+	if (document.title){
+		=
+WT.ti=3DgI18n?dcsEscape(dcsEncode(document.title),I18NRE):document.title;=
+
+	}
+	WT.js=3D"Yes";
+	WT.jv=3DdcsJV();
+	if (document.body&&document.body.addBehavior){
+		document.body.addBehavior("#default#clientCaps");
+		if (document.body.connectionType){
+			WT.ct=3Ddocument.body.connectionType;
+		}
+		document.body.addBehavior("#default#homePage");
+		WT.hp=3Ddocument.body.isHomePage(location.href)?"1":"0";
+	}
+	if (parseInt(navigator.appVersion)>3){
+		if ((navigator.appName=3D=3D"Microsoft Internet =
+Explorer")&&document.body){
+			WT.bs=3Ddocument.body.offsetWidth+"x"+document.body.offsetHeight;
+		}
+		else if (navigator.appName=3D=3D"Netscape"){
+			WT.bs=3Dwindow.innerWidth+"x"+window.innerHeight;
+		}
+	}
+	WT.fi=3D"No";
+	WT.fv=3D(function(){
+		var i,flash;
+		if (window.ActiveXObject){
+			for(i=3D10;i>0;i--){
+				try{
+					flash=3Dnew ActiveXObject("ShockwaveFlash.ShockwaveFlash."+i);
+					WT.fi=3D"Yes";
+					return i+".0";
+				}
+				catch(e){
+				}
+			}
+		}
+		else if (navigator.plugins&&navigator.plugins.length){
+			for (i=3D0;i<navigator.plugins.length;i++){
+				if (navigator.plugins[i].name.indexOf('Shockwave Flash')!=3D-1){
+					WT.fi=3D"Yes";
+					return navigator.plugins[i].description.split(" ")[2];
+				}
+			}
+		}
+		return "";
+	})();
+	WT.sli=3D(function(){
+    try{
+    	if(navigator.userAgent.indexOf('MSIE')!=3D-1){
+    		var wtsli =3D new ActiveXObject('AgControl.AgControl');
+      	if(wtsli){return "Installed";}
+      }
+      else{
+				if (navigator.plugins["Silverlight Plug-In"]){
+        	return "Installed";
+        }
+      }
+ 		}
+    catch(e){}
+    return "Not Installed";
+	})();
+	WT.slv=3D(function(){
+		var i,j,slv;
+    if =
+((typeof(Silverlight)=3D=3D"object")&&(typeof(Silverlight.isInstalled)=3D=
+=3D"function")){
+			for(j=3D9;j>=3D0;j--){
+				for(i=3D3;i>0;i--){
+					slv=3Di+"."+j;
+					if (Silverlight.isInstalled(slv)){
+						return slv;
+					}
+				}
+			}
+		}
+		return "Version Unavailable";
+	})();
+	if (gI18n){
+		WT.em=3D(typeof(encodeURIComponent)=3D=3D"function")?"uri":"esc";
+		if (typeof(document.defaultCharset)=3D=3D"string"){
+			WT.le=3Ddocument.defaultCharset;
+		}
+		else if (typeof(document.characterSet)=3D=3D"string"){
+			WT.le=3Ddocument.characterSet;
+		}
+	}
+	WT.dl=3D"0";
+	WT.dcsvid=3DdcsGetCookie("MC1");
+	DCS.dcsdat=3DdCurrent.getTime();
+	DCS.dcssip=3Dwindow.location.hostname;
+	DCS.dcsuri=3Dwindow.location.pathname;
+	var gDirLevels =3D 5;
+	var gFpath =3D =
+window.location.pathname.substring(window.location.pathname.indexOf('/')+=
+1,window.location.pathname.lastIndexOf('/')+1).toLowerCase();
+	if(gFpath=3D=3D''){gFpath=3D"/";}
+	else{
+		var gSplit=3DgFpath.split("/");
+		gFpath=3D"";
+		for(var i=3D1;i<gSplit.length&&i<=3DgDirLevels;i++){
+			gFpath+=3D"/";
+			for(var b=3D0;b<i;b++){
+					gFpath+=3DgSplit[b]+"/";
+			}
+			if(i!=3DgDirLevels&&i!=3DgSplit.length-1){
+				gFpath+=3D";";
+			}
+		}
+	}
+	DCSext.wtDrillDir=3DgFpath;
+	if (window.location.search){
+		DCS.dcsqry=3Dwindow.location.search;
+		if (gQP.length>0){
+			for (var i=3D0;i<gQP.length;i++){
+				var pos=3DDCS.dcsqry.indexOf(gQP[i]);
+				if (pos!=3D-1){
+					var front=3DDCS.dcsqry.substring(0,pos);
+					var =
+end=3DDCS.dcsqry.substring(pos+gQP[i].length,DCS.dcsqry.length);
+					DCS.dcsqry=3Dfront+end;
+				}
+			}
+		}
+	}
+	if =
+((window.document.referrer!=3D"")&&(window.document.referrer!=3D"-")){
+		if (!(navigator.appName=3D=3D"Microsoft Internet =
+Explorer"&&parseInt(navigator.appVersion)<4)){
+			DCS.dcsref=3DgI18n?dcsEscape(window.document.referrer, =
+I18NRE):window.document.referrer;
+		}
+	}
+}
+function dcsA(N,V){
+	return "&"+N+"=3D"+dcsEscape(V, RE);
+}
+function dcsEscape(S, REL){
+	if (typeof(REL)!=3D"undefined"){
+		var retStr =3D new String(S);
+		for (R in REL){
+			retStr =3D retStr.replace(REL[R],R);
+		}
+		return retStr;
+	}
+	else{
+		return escape(S);
+	}
+}
+function dcsEncode(S){
+	return =
+(typeof(encodeURIComponent)=3D=3D"function")?encodeURIComponent(S):escape=
+(S);
+}
+function dcsCreateImage(dcsSrc){
+	if (document.images){
+		gImages[gIndex]=3Dnew Image;
+		gImages[gIndex].src=3DdcsSrc;
+		gIndex++;
+	}
+	else{
+		document.write('<IMG ALT=3D"" BORDER=3D"0" NAME=3D"DCSIMG" WIDTH=3D"1" =
+HEIGHT=3D"1" SRC=3D"'+dcsSrc+'">');
+	}
+}
+function dcsMeta(){
+	var elems;
+	if (document.all){
+		elems=3Ddocument.all.tags("meta");
+	}
+	else if (document.documentElement){
+		elems=3Ddocument.getElementsByTagName("meta");
+	}
+	if (typeof(elems)!=3D"undefined"){
+		for (var i=3D1;i<=3Delems.length;i++){
+			var meta=3Delems.item(i-1);
+			if (meta.name){
+				if (meta.name.indexOf('WT.')=3D=3D0){
+					=
+WT[meta.name.substring(3)]=3D(gI18n&&(meta.name.indexOf('WT.ti')=3D=3D0))=
+?dcsEscape(dcsEncode(meta.content),I18NRE):meta.content;
+				}
+				else if (meta.name.indexOf('DCSext.')=3D=3D0){
+					DCSext[meta.name.substring(7)]=3Dmeta.content;
+				}
+				else if (meta.name.indexOf('DCS.')=3D=3D0){
+					=
+DCS[meta.name.substring(4)]=3D(gI18n&&(meta.name.indexOf('DCS.dcsref')=3D=
+=3D0))?dcsEscape(meta.content,I18NRE):meta.content;
+				}
+			}
+		}
+	}
+}
+function dcsTag(){
+	if (document.cookie.indexOf("WTLOPTOUT=3D")!=3D-1){
+		return;
+	}
+	var =
+P=3D"http"+(window.location.protocol.indexOf('https:')=3D=3D0?'s':'')+":/=
+/"+gDomain+(gDcsId=3D=3D""?'':'/'+gDcsId)+"/dcs.gif?";
+	for (N in DCS){
+		if (DCS[N]) {
+			P+=3DdcsA(N,DCS[N]);
+		}
+	}
+	for (N in WT){
+		if (WT[N]) {
+			P+=3DdcsA("WT."+N,WT[N]);
+		}
+	}
+	for (N in DCSext){
+		if (DCSext[N]) {
+			P+=3DdcsA(N,DCSext[N]);
+		}
+	}
+	if (P.length>2048&&navigator.userAgent.indexOf('MSIE')>=3D0){
+		P=3DP.substring(0,2040)+"&WT.tu=3D1";
+	}
+	dcsCreateImage(P);
+}
+function dcsJV(){
+	var agt=3Dnavigator.userAgent.toLowerCase();
+	var major=3DparseInt(navigator.appVersion);
+	var mac=3D(agt.indexOf("mac")!=3D-1);
+	var =
+nn=3D((agt.indexOf("mozilla")!=3D-1)&&(agt.indexOf("compatible")=3D=3D-1)=
+);
+	var nn4=3D(nn&&(major=3D=3D4));
+	var nn6up=3D(nn&&(major>=3D5));
+	var ie=3D((agt.indexOf("msie")!=3D-1)&&(agt.indexOf("opera")=3D=3D-1));
+	var ie4=3D(ie&&(major=3D=3D4)&&(agt.indexOf("msie 4")!=3D-1));
+	var ie5up=3D(ie&&!ie4);
+	var op=3D(agt.indexOf("opera")!=3D-1);
+	var op5=3D(agt.indexOf("opera 5")!=3D-1||agt.indexOf("opera/5")!=3D-1);
+	var op6=3D(agt.indexOf("opera 6")!=3D-1||agt.indexOf("opera/6")!=3D-1);
+	var op7up=3D(op&&!op5&&!op6);
+	var jv=3D"1.1";
+	if (nn6up||op7up){
+		jv=3D"1.5";
+	}
+	else if ((mac&&ie5up)||op6){
+		jv=3D"1.4";
+	}
+	else if (ie5up||nn4||op5){
+		jv=3D"1.3";
+	}
+	else if (ie4){
+		jv=3D"1.2";
+	}
+	return jv;
+}
+function dcsFunc(func){
+	if (typeof(window[func])=3D=3D"function"){
+		window[func]();
+	}
+}
+function dcsDebug()
+{
+	var wtVars=3D"\nTag Version =3D "+gTagVer+"\nDomain =3D =
+"+gDomain+"\nDCSId =3D "+gDcsId;
+	for(N in DCS){wtVars+=3D"\nDCS."+N+" =3D "+DCS[N];}
+	for(N in WT){wtVars+=3D"\nWT."+N+" =3D "+WT[N];}
+	for(N in DCSext){wtVars+=3D"\nDCSext."+N+" =3D "+DCSext[N];}
+	alert(wtVars);
+}
+if(typeof(wtMnpDisabled)=3D=3D"undefined"||!wtMnpDisabled){
+   dcsVar();
+   dcsMeta();
+   dcsFunc("dcsAdv");
+   dcsTag();
+}
+------=_NextPart_000_0000_01C9F0FB.B4CF45B0--

@@ -1,0 +1,48 @@
+(2000000 rows affected)
+
+	                                                                                             
+	                      
+
+	 --------------------------------------------------------------------------------------------
+	 -------------------- 
+
+	 Start Select top 2000000 rows into tempdb..arch_daily_currency from GPS..arch_daily_currency
+	 Feb 20 2008  3:59:30 
+
+(1 row affected)
+(2000000 rows affected)
+
+	                                                                                           
+	                      
+
+	 ------------------------------------------------------------------------------------------
+	 -------------------- 
+
+	 End Select top 2000000 rows into tempdb..arch_daily_currency from GPS..arch_daily_currency
+	 Feb 20 2008  3:59:55 
+
+(1 row affected)
+                                                                             
+ ------------------------------------------------------ -------------------- 
+ Start select count(*) from tempdb..arch_daily_currency Feb 20 2008  3:59:55 
+
+(1 row affected)
+             
+ ----------- 
+     2000000 
+
+(1 row affected)
+                                                                           
+ ---------------------------------------------------- -------------------- 
+ End select count(*) from tempdb..arch_daily_currency Feb 20 2008  4:00:00 
+
+(1 row affected)
+ name                 rowtotal    reserved        data           
+	 index_size      unused          
+ -------------------- ----------- --------------- ---------------
+	 --------------- --------------- 
+ arch_daily_currency  2000000     266682 KB       266668 KB      
+	 0 KB            14 KB           
+
+(1 row affected)
+(return status = 0)
