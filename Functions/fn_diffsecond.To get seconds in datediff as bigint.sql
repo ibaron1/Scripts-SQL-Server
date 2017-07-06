@@ -1,4 +1,12 @@
-﻿create function dbo.fn_diffsecond 
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER OFF
+GO
+-- ==================================================================
+-- Author: Eli Baron
+-- Create date: 2017-06-09
+-- ==================================================================
+create function dbo.fn_diffsecond 
 (@datel datetime,
 @date2 datetime
 )
