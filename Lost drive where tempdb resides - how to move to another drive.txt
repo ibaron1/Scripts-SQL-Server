@@ -1,0 +1,21 @@
+http://www.sqlservercentral.com/Forums/Topic1040397-1550-1.aspx
+
+I had tempdb sitting on the E: drive. It was the only database on the E: drive and we actually lost the E: drive.
+I need to move tempdb to a different drive (F:\Tempdb) but SQL services are offline.
+Is it possible to move tempdb while SQL Services are not running?
+Any information is greatly appreciated.
+
+---------- answer --------------
+No, you'll need to start SQL in it's minimal config mode, then run the ALTER DATABASE to change the tempDB location
+
+Start SQL from the command line with the following (I think this is right):
+sqlservr.exe -m -f -T3608
+
+With that, SQL will be started single user, minimal config. One connection can then be made (and only one), you can run the alter database to move tempDB, then restart SQL normally and it should start fine.
+
+
+------- trace flag 3608 --------------
+http://technet.microsoft.com/en-us/library/ms188396.aspx
+
+Prevents SQL Server from automatically starting and recovering any database except the master database. Databases will be started and recovered when accessed. Some features, such as snapshot isolation and read committed snapshot, might not work. Use for Moving System Databases and Moving User Databases. Do not use during normal operation.
+ 
