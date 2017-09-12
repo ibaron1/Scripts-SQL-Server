@@ -2,10 +2,10 @@ use TFM_Archive
 go
 
 
-if object_id('tfm.ExpiredArchivedDataProcessing') is not null
-  drop table tfm.ExpiredArchivedDataProcessing;
+if object_id('core.ExpiredArchivedDataProcessing') is not null
+  drop table core.ExpiredArchivedDataProcessing;
 
-create table tfm.ExpiredArchivedDataProcessing
+create table core.ExpiredArchivedDataProcessing
 (DbName varchar(128) not null,
  AppDataType varchar(20) null,
  workflowId int not null,
@@ -20,12 +20,12 @@ create table tfm.ExpiredArchivedDataProcessing
  EndDate datetime null,
  Error varchar(4000) null);
 
- create unique clustered index idx_ExpiredArchivedDataProcessing on tfm.ExpiredArchivedDataProcessing(AppDataType,workflowId,Tbl);
+ create unique clustered index idx_ExpiredArchivedDataProcessing on core.ExpiredArchivedDataProcessing(AppDataType,workflowId,Tbl);
 
- if object_id('tfm.ExpiredArchivedDataProcessing_History') is not null
-  drop table tfm.ExpiredArchivedDataProcessing_History;
+ if object_id('core.ExpiredArchivedDataProcessing_History') is not null
+  drop table core.ExpiredArchivedDataProcessing_History;
 
-create table tfm.ExpiredArchivedDataProcessing_History
+create table core.ExpiredArchivedDataProcessing_History
 (DbName varchar(128) not null,
  AppDataType varchar(20) null,
  workflowId int not null,
@@ -40,19 +40,19 @@ create table tfm.ExpiredArchivedDataProcessing_History
  EndDate datetime null,
  Error varchar(4000) null);
 
-create clustered index idx_ExpiredArchivedDataProcessing on tfm.ExpiredArchivedDataProcessing_History(AppDataType,workflowId,Tbl,LastDate);
+create clustered index idx_ExpiredArchivedDataProcessing on core.ExpiredArchivedDataProcessing_History(AppDataType,workflowId,Tbl,LastDate);
 
-if object_id('tfm.ControlPurgeOfExpiredArchivedData') is not null
-  drop table tfm.ControlPurgeOfExpiredArchivedData;
+if object_id('core.ControlPurgeOfExpiredArchivedData') is not null
+  drop table core.ControlPurgeOfExpiredArchivedData;
 
-create table tfm.ControlPurgeOfExpiredArchivedData
+create table core.ControlPurgeOfExpiredArchivedData
 (DbName varchar(128) not null,
- DbSize_MB int null,
- Orig_DbSpace_Used_MB int null,
- Orig_DbAvailable_Space_MB int null,
+ DbSize_GB dec(10,2) null,
+ Orig_DbSpace_Used_GB dec(10,2) null,
+ Orig_DbAvailable_Space_GB dec(10,2) null,
  Orig_Percent_Used varchar(4) null,
- Updated_DbSpace_Used_MB int null,
- Updated_DbAvailable_Space_MB int null,
+ Updated_DbSpace_Used_GB dec(10,2) null,
+ Updated_DbAvailable_Space_GB dec(10,2) null,
  Updated_Percent_Used varchar(4) null,
  AppDataType varchar(20) null,
  DataPurgeStarted datetime null,
@@ -60,17 +60,17 @@ create table tfm.ControlPurgeOfExpiredArchivedData
  CurentRunEnded datetime null,
  DataPurgeEnded datetime null);
 
- if object_id('tfm.ControlPurgeOfExpiredArchivedData_History') is not null
-  drop table tfm.ControlPurgeOfExpiredArchivedData_History;
+ if object_id('core.ControlPurgeOfExpiredArchivedData_History') is not null
+  drop table core.ControlPurgeOfExpiredArchivedData_History;
 
-create table tfm.ControlPurgeOfExpiredArchivedData_History
+create table core.ControlPurgeOfExpiredArchivedData_History
 (DbName varchar(128) not null,
- DbSize_MB int null,
- Orig_DbSpace_Used_MB int null,
- Orig_DbAvailable_Space_MB int null,
+ DbSize_GB dec(10,2) null,
+ Orig_DbSpace_Used_GB dec(10,2) null,
+ Orig_DbAvailable_Space_GB dec(10,2) null,
  Orig_Percent_Used varchar(4) null,
- Updated_DbSpace_Used_MB int null,
- Updated_DbAvailable_Space_MB int null,
+ Updated_DbSpace_Used_GB dec(10,2) null,
+ Updated_DbAvailable_Space_GB dec(10,2) null,
  Updated_Percent_Used varchar(4) null,
  AppDataType varchar(20) null,
  DataPurgeStarted datetime null,

@@ -1,10 +1,39 @@
 use TFM_Archive
 go
 
-if object_id('tfm.DataArchivingAndPurgingConfig') is not null
-  drop table tfm.DataArchivingAndPurgingConfig
+
+create schema core;
 go
-create table tfm.DataArchivingAndPurgingConfig
+
+if object_id('core.TblList') is not null
+  drop table core.TblList
+go
+create table core.TblList
+(schemaName varchar(20), Tbl varchar(128) not null);
+
+insert core.TblList
+values
+('tfm','Payload')
+,('tfm','RequestPayloadSummary')
+,('tfm','Activity')
+,('tfm','Step')
+,('tfm','RequestKeyAttributes')
+,('tfm','Request')
+,('tfm','Error')
+,('tfmload','Payload')
+,('tfmload','Activity')
+,('tfmload','Step')
+,('tfmload','RequestKeyAttributes')
+,('tfmload','RequestLoad')
+,('tfmload','Request')
+,('tfmload','FileLoad')
+,('tfmload','Error')	
+go
+
+if object_id('core.DataArchivingAndPurgingConfig') is not null
+  drop table core.DataArchivingAndPurgingConfig
+go
+create table core.DataArchivingAndPurgingConfig
 (DbName varchar(128) not null,
  DbArchivingName varchar(128) not null,
  AppDataType varchar(20),
@@ -14,13 +43,13 @@ create table tfm.DataArchivingAndPurgingConfig
  RetentionDaysForArchiving int null,
  ArchivingBatchSize int not null);
 
-create unique clustered index idx_DataArchivingAndPurgingConfig on tfm.DataArchivingAndPurgingConfig(workflowId,Tbl)
+create unique clustered index idx_DataArchivingAndPurgingConfig on core.DataArchivingAndPurgingConfig(AppDataType,workflowId,Tbl)
 go
 
-if object_id('tfm.ArchivingDataProcessing') is not null
-  drop table tfm.ArchivingDataProcessing;
+if object_id('core.ArchivingDataProcessing') is not null
+  drop table core.ArchivingDataProcessing;
 
-create table tfm.ArchivingDataProcessing
+create table core.ArchivingDataProcessing
 (DbName varchar(128) not null,
  AppDataType varchar(20) null,
  workflowId int not null,
@@ -35,12 +64,12 @@ create table tfm.ArchivingDataProcessing
  EndDate datetime null,
  Error varchar(4000) null);
 
- create unique clustered index idx_ArchivingDataProcessing on tfm.ArchivingDataProcessing(AppDataType,workflowId,Tbl);
+ create unique clustered index idx_ArchivingDataProcessing on core.ArchivingDataProcessing(AppDataType,workflowId,Tbl);
 
- if object_id('tfm.ArchivingDataProcessing_History') is not null
-  drop table tfm.ArchivingDataProcessing_History;
+ if object_id('core.ArchivingDataProcessing_History') is not null
+  drop table core.ArchivingDataProcessing_History;
 
-create table tfm.ArchivingDataProcessing_History
+create table core.ArchivingDataProcessing_History
 (DbName varchar(128) not null,
  AppDataType varchar(20) null,
  workflowId int not null,
@@ -55,20 +84,37 @@ create table tfm.ArchivingDataProcessing_History
  EndDate datetime null,
  Error varchar(4000) null);
 
-create clustered index idx_ArchivingDataProcessing on tfm.ArchivingDataProcessing_History(AppDataType,workflowId,Tbl,LastDate);
+create clustered index idx_ArchivingDataProcessing on core.ArchivingDataProcessing_History(AppDataType,workflowId,Tbl,LastDate);
 
+ if object_id('core.ControlOfDataArchiving') is not null
+  drop table core.ControlOfDataArchiving;
 
- if object_id('tfm.ControlOfDataArchiving_History') is not null
-  drop table tfm.ControlOfDataArchiving_History;
-
-create table tfm.ControlOfDataArchiving_History
+create table core.ControlOfDataArchiving
 (DbName varchar(128) not null,
- DbSize_MB int null,
- Orig_DbSpace_Used_MB int null,
- Orig_DbAvailable_Space_MB int null,
+ DbSize_GB dec(10,2) null,
+ Orig_DbSpace_Used_GB dec(10,2) null,
+ Orig_DbAvailable_Space_GB dec(10,2) null,
  Orig_Percent_Used varchar(4) null,
- Updated_DbSpace_Used_MB int null,
- Updated_DbAvailable_Space_MB int null,
+ Updated_DbSpace_Used_GB dec(10,2) null,
+ Updated_DbAvailable_Space_GB dec(10,2) null,
+ Updated_Percent_Used varchar(4) null,
+ AppDataType varchar(20) null,
+ DataArchivingStarted datetime null,
+ CurrentRunStarted datetime null,
+ CurentRunEnded datetime null,
+ DataArchivingEnded datetime null);
+
+ if object_id('core.ControlOfDataArchiving_History') is not null
+  drop table core.ControlOfDataArchiving_History;
+
+create table core.ControlOfDataArchiving_History
+(DbName varchar(128) not null,
+ DbSize_GB dec(10,2) null,
+ Orig_DbSpace_Used_GB dec(10,2) null,
+ Orig_DbAvailable_Space_GB dec(10,2) null,
+ Orig_Percent_Used varchar(4) null,
+ Updated_DbSpace_Used_GB dec(10,2) null,
+ Updated_DbAvailable_Space_GB dec(10,2) null,
  Updated_Percent_Used varchar(4) null,
  AppDataType varchar(20) null,
  DataArchivingStarted datetime null,
@@ -78,25 +124,3 @@ create table tfm.ControlOfDataArchiving_History
 
 go
 
-use TFM
-go
-
-if object_id('tfm.ControlOfDataArchiving') is not null
-  drop table tfm.ControlOfDataArchiving;
-
-create table tfm.ControlOfDataArchiving
-(DbName varchar(128) not null,
- DbSize_MB int null,
- Orig_DbSpace_Used_MB int null,
- Orig_DbAvailable_Space_MB int null,
- Orig_Percent_Used varchar(4) null,
- Updated_DbSpace_Used_MB int null,
- Updated_DbAvailable_Space_MB int null,
- Updated_Percent_Used varchar(4) null,
- AppDataType varchar(20) null,
- DataArchivingStarted datetime null,
- CurrentRunStarted datetime null,
- CurentRunEnded datetime null,
- DataArchivingEnded datetime null);
-
-go
