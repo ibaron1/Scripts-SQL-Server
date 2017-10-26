@@ -40,7 +40,7 @@ from tfm.FileLoad as fl
 join deleted as d
 on fl.loadId = d.loadId
 
-if trigger_nestlevel(object_id('tfm.FileLoad') , 'AFTER' , 'DML' ) <= 1 
+if trigger_nestlevel(object_id('tfm.trg_FileLoadReplay') , 'AFTER' , 'DML' ) <= 1 
   return
   
 
