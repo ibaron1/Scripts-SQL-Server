@@ -32,16 +32,17 @@ begin
 	join deleted as d
 	on le.loadId = d.loadId
 	and (le.replay = d.replay or le.replay is null and d.replay is null)
+
+	update fl
+	set replay = isnull(d.replay,0) + 1
+	from tfm.FileLoad as fl
+	join deleted as d
+	on fl.loadId = d.loadId
 end
 
-update fl
-set replay = isnull(d.replay,0) + 1
-from tfm.FileLoad as fl
-join deleted as d
-on fl.loadId = d.loadId
 
 if trigger_nestlevel(object_id('tfm.trg_FileLoadReplay') , 'AFTER' , 'DML' ) <= 1 
   return
-  
+
 
 GO
