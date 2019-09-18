@@ -1,2 +1,0 @@
-select DB_NAME(database_id) as DbName, OBJECT_NAME(object_id, database_id) as ObjName,* 
-from sys.dm_exec_procedure_stats

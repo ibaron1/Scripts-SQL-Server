@@ -1,1 +1,0 @@
-select DB_NAME()as [Database], DATABASEPROPERTYEX (DB_NAME() , 'Collation') as [Collation]

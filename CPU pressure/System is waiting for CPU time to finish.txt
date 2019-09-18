@@ -1,6 +1,0 @@
-select AVG (runnable_tasks_count) from sys.dm_os_schedulers where status = 'VISIBLE ONLINE'
-
-/*
-Using above TSQL if you get the result greater than 0 (numbers >0) then it means 
-your SQL System is waiting for CPU time to finish that particupar process.
-*/
