@@ -1,0 +1,20 @@
+Partition pruning is a performance optimization technique that analyzes query conditions to determine and eliminate unnecessary partitions from being scanned, improving data retrieval speed and reducing query costs. 
+Here's a more detailed explanation:
+What it is:
+Partition pruning is a mechanism used by database systems (like BigQuery, Oracle, TiDB, etc.) to optimize queries on partitioned tables. 
+How it works:
+When a table is partitioned, data is organized into multiple partitions based on a specific column or columns. 
+Partition pruning analyzes the WHERE clause (or other filter conditions) of a query to identify which partitions are not needed to retrieve the requested data. 
+The system then skips scanning these irrelevant partitions, significantly reducing the amount of data that needs to be read and processed. 
+Benefits:
+Faster Queries: By scanning only the necessary partitions, partition pruning can dramatically reduce query execution time. 
+Reduced I/O: Less data needs to be read from storage, leading to lower I/O costs and improved resource utilization. 
+Improved Cost Efficiency: Since less data is processed, the cost of running queries can be reduced. 
+Types of Partition Pruning:
+Static Partition Pruning: Occurs when the filter conditions in the WHERE clause are constant values, allowing the system to determine which partitions are irrelevant at query planning time. 
+Dynamic Partition Pruning: Used when the filter conditions involve calculations or functions, requiring the system to collect information about partitions during query execution to determine which ones are needed. 
+Examples:
+If a table is partitioned by year and you query for data from 2023, partition pruning can skip scanning partitions for other years. 
+In Snowflake, partition pruning is used to eliminate irrelevant micro-partitions based on filters applied in the query. 
+Related Concepts:
+Predicate Pushdown: A related optimization where filter conditions are pushed down to the data source (e.g., Parquet files) to reduce the amount of data that needs to be read. 
